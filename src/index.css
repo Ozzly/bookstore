@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+body {
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  padding: 20px;
+}
+
+main {
+  justify-content: center;
+}
