@@ -9,3 +9,10 @@ body {
 main {
   justify-content: center;
 }
+
+.book-card {
+  background-color: #313244;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

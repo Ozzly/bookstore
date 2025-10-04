@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Search from './components/Search'
+import BookCard from './components/BookCard';
+import { useDebounce } from "use-debounce";
+
 
 const API_BASE_URL = "https://openlibrary.org";
 const API_OPTIONS = {
@@ -14,13 +17,14 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [bookList, setBookList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 1000);
 
-  const fetchBooks = async () => {
+  const fetchBooks = async (query = '') => {
     setIsLoading(true);
     setErrorMessage('');
 
     try {
-      const endpoint = `${API_BASE_URL}/search.json?title=the will of the many`;
+      const endpoint = query ? `${API_BASE_URL}/search.json?title=${encodeURIComponent(query)}` : `${API_BASE_URL}/search.json?q=the`;
       const response = await fetch(endpoint, API_OPTIONS);
       if (!response.ok) {
         throw new Error('Failed to fetch books');
@@ -46,8 +50,8 @@ const App = () => {
   }
 
   useEffect(() => {
-    fetchBooks();
-  }, [])
+    debouncedSearchTerm !== '' && fetchBooks(debouncedSearchTerm);
+  }, [debouncedSearchTerm])
 
   return (
     <main>
@@ -61,22 +65,12 @@ const App = () => {
         ) : errorMessage ? (
           <p className='text-red-500'>{errorMessage}</p>
         ) : (
-          bookList.map((book) => (
-
-            <div key={book.key} className='
-              border border-gray-300 rounded-lg p-4 m-2
-              hover:shadow-lg transition-shadow duration-300
-              '>
-              <h3>{book.title}</h3>
-              <p>{book.author_name}</p>
-              {book.cover_i ? (
-                <img src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`} alt={book.title} />
-
-              ) :
-                (<p>No cover image available</p>)
-              }
-            </div>
-          ))
+          <ul className='grid gap-4'> 
+          {bookList.map((book) => (
+            <BookCard key={book.key} book={book} />
+            
+          ))}
+          </ul>
         )}
       </div>
     </main>
