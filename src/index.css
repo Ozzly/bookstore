@@ -10,9 +10,53 @@ main {
   justify-content: center;
 }
 
+.search-input {
+  background-color: #45475a;
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  color: #cdd6f4;
+}
+
+.search-input:focus {
+  outline: 2px solid #cba6f7;
+}
+
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
 .book-card {
+  width: 200px;
+  min-width: 200px;
+  height: 400px;
+  min-height: 400px;
   background-color: #313244;
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.book-card:hover {
+  outline: 2px solid #cba6f7;
+
+}
+
+.book-card-image-container {
+  position: relative;
+}
+
+.book-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+
+
+
+

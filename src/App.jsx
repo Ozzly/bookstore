@@ -65,7 +65,7 @@ const App = () => {
         ) : errorMessage ? (
           <p className='text-red-500'>{errorMessage}</p>
         ) : (
-          <ul className='grid gap-4'> 
+          <ul className='book-list'>
           {bookList.map((book) => (
             <BookCard key={book.key} book={book} />
             

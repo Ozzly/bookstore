@@ -8,6 +8,7 @@ function Search({ searchTerm, setSearchTerm }) {
             placeholder='Search for your book'
             value={searchTerm}
             onChange={(event) => setSearchTerm(event.target.value)}
+            className='search-input'
         />
     </div>
   )
