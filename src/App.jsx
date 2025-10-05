@@ -100,6 +100,7 @@ const App = () => {
   
 
   return (
+    <div className='app-container'>
     <main>
       <header>Store book info</header>
 
@@ -130,6 +131,7 @@ const App = () => {
         )}
       </div>
     </main>
+    </div>
   )
 }
 
