@@ -91,18 +91,36 @@ main {
   text-align: center;
 }
 
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  gap: 2px;
+}
+
 .mark-as-read-button {
   margin-top: 12px;
-  width: 100%;
-  padding: 8px;
+  width: 80%;
+  padding: 6px;
   background-color: #cba6f7;
   color: #1e1e2e;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px 2px 2px 10px;
   cursor: pointer;
   font-weight: bold;
 }
 
+.dropdown-button {
+  margin-top: 12px;
+  width: 20%;
+  padding: 6px;
+  background-color: #cba6f7;
+  color: #1e1e2e;
+  border: none;
+  border-radius: 2px 10px 10px 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
 
 
 

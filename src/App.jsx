@@ -18,6 +18,10 @@ const App = () => {
   const [bookList, setBookList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [debouncedSearchTerm] = useDebounce(searchTerm, 1000);
+  const [readBooks, setReadBooks] = useState(() => {
+    const stored = localStorage.getItem('readBooks');
+    return stored ? JSON.parse(stored) : [];
+  });
 
   const fetchBooks = async (query = '') => {
     setIsLoading(true);
@@ -49,9 +53,23 @@ const App = () => {
     }
   }
 
+  const toggleReadStatus = (bookKey) => {
+    setReadBooks((prevReadBooks) => {
+      if (prevReadBooks.includes(bookKey)) {
+        return prevReadBooks.filter((key) => key !== bookKey);
+      } else {
+        return [...prevReadBooks, bookKey];
+      }
+    });
+  }
+
   useEffect(() => {
     debouncedSearchTerm !== '' && fetchBooks(debouncedSearchTerm);
   }, [debouncedSearchTerm])
+
+  useEffect(() => {
+    localStorage.setItem('readBooks', JSON.stringify(readBooks));
+  }, [readBooks]);
 
   return (
     <main>
@@ -67,7 +85,12 @@ const App = () => {
         ) : (
           <ul className='book-list'>
           {bookList.map((book) => (
-            <BookCard key={book.key} book={book} />
+            <BookCard 
+            key={book.key} 
+            book={book}
+            read={readBooks.includes(book.key)}
+            onToggleReadStatus={() => toggleReadStatus(book.key)}
+            />
             
           ))}
           </ul>
