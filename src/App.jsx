@@ -22,6 +22,7 @@ const App = () => {
     const stored = localStorage.getItem('readBooks');
     return stored ? JSON.parse(stored) : [];
   });
+  // const [readBooksDetails, setReadBooksDetails] = useState([]);
 
   useEffect(() => {
     debouncedSearchTerm !== '' && fetchBooksQuery(debouncedSearchTerm);
@@ -31,12 +32,28 @@ const App = () => {
     localStorage.setItem('readBooks', JSON.stringify(readBooks));
   }, [readBooks]);
 
+  // useEffect(() => {
+  //   readBooks.length === 0 ? setReadBooksDetails([]) : fetchWorksByKeys(readBooks);
+  // }, [readBooks, debouncedSearchTerm]);
+
+  // const fetchWorksByKeys = async (keys) => {
+  //   const details = await Promise.all(
+  //     keys.map (async (key) => {
+  //       const response = await fetch(`${API_BASE_URL}${key}.json`, API_OPTIONS);
+  //       if (!response.ok) return null;
+  //       return await response.json();
+  //     })
+  //   );
+  //   setReadBooksDetails(details);
+  //   console.log(details);
+  // }
+
   const fetchBooksQuery = async (query = '') => {
     setIsLoading(true);
     setErrorMessage('');
 
     try {
-      const endpoint = query ? `${API_BASE_URL}/search.json?title=${encodeURIComponent(query)}` : `${API_BASE_URL}/search.json?q=the`;
+      const endpoint = `${API_BASE_URL}/search.json?title=${encodeURIComponent(query)}`;
       const response = await fetch(endpoint, API_OPTIONS);
       if (!response.ok) {
         throw new Error('Failed to fetch books');
@@ -61,12 +78,21 @@ const App = () => {
     }
   }
 
-  const toggleReadStatus = (bookKey) => {
+  const toggleReadStatus = (book) => {
     setReadBooks((prevReadBooks) => {
-      if (prevReadBooks.includes(bookKey)) {
-        return prevReadBooks.filter((key) => key !== bookKey);
+      const exists = prevReadBooks.some(b => b.key === book.key);
+
+      if (exists) {
+        return prevReadBooks.filter((b) => b.key !== book.key);
       } else {
-        return [...prevReadBooks, bookKey];
+        return [...prevReadBooks, {
+          key: book.key, 
+          title: book.title, 
+          author_name: book.author_name, 
+          cover_i: book.cover_i,
+          edition_count: book.edition_count,
+          first_publish_year: book.first_publish_year,
+        }];
       }
     });
   }
@@ -77,11 +103,23 @@ const App = () => {
     <main>
       <header>Store book info</header>
 
+      {/* <div className='books-summary-section'>
+        <h2>Read Books</h2>
+        <div>
+          <BookList books={readBooks} readBooks={readBooks} toggleReadStatus={toggleReadStatus} />
+        </div>
+      </div> */}
+      
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div>
         <h2>All Books</h2>
         {debouncedSearchTerm == '' ? (
-          <p>Start typing to search for books</p>
+          <>
+            <p>Showing Read Books</p>
+            <BookList books={readBooks} readBooks={readBooks} toggleReadStatus={toggleReadStatus} />
+
+          </>
+          
         ) : isLoading ? (
           <p>Loading...</p>
         ) : errorMessage ? (
