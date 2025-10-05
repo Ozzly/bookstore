@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Search from './components/Search'
-import BookCard from './components/BookCard';
+import BookList from './components/BookList';
 import { useDebounce } from "use-debounce";
 
 
@@ -15,7 +15,7 @@ const API_OPTIONS = {
 const App = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [bookList, setBookList] = useState([]);
+  const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [debouncedSearchTerm] = useDebounce(searchTerm, 1000);
   const [readBooks, setReadBooks] = useState(() => {
@@ -23,7 +23,15 @@ const App = () => {
     return stored ? JSON.parse(stored) : [];
   });
 
-  const fetchBooks = async (query = '') => {
+  useEffect(() => {
+    debouncedSearchTerm !== '' && fetchBooksQuery(debouncedSearchTerm);
+  }, [debouncedSearchTerm])
+
+  useEffect(() => {
+    localStorage.setItem('readBooks', JSON.stringify(readBooks));
+  }, [readBooks]);
+
+  const fetchBooksQuery = async (query = '') => {
     setIsLoading(true);
     setErrorMessage('');
 
@@ -39,11 +47,11 @@ const App = () => {
 
       if (data.Response === 'False') {
         setErrorMessage(data.Error || "Failed to fetch movies");
-        setBookList([]);
+        setBooks([]);
         return;
       }
 
-      setBookList(data.docs || [])
+      setBooks(data.docs || [])
 
     } catch (error) {
       console.log(`Error fetching book: ${error}`);
@@ -63,13 +71,7 @@ const App = () => {
     });
   }
 
-  useEffect(() => {
-    debouncedSearchTerm !== '' && fetchBooks(debouncedSearchTerm);
-  }, [debouncedSearchTerm])
-
-  useEffect(() => {
-    localStorage.setItem('readBooks', JSON.stringify(readBooks));
-  }, [readBooks]);
+  
 
   return (
     <main>
@@ -78,22 +80,15 @@ const App = () => {
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div>
         <h2>All Books</h2>
-        {isLoading ? (
+        {debouncedSearchTerm == '' ? (
+          <p>Start typing to search for books</p>
+        ) : isLoading ? (
           <p>Loading...</p>
         ) : errorMessage ? (
           <p className='text-red-500'>{errorMessage}</p>
         ) : (
-          <ul className='book-list'>
-          {bookList.map((book) => (
-            <BookCard 
-            key={book.key} 
-            book={book}
-            read={readBooks.includes(book.key)}
-            onToggleReadStatus={() => toggleReadStatus(book.key)}
-            />
-            
-          ))}
-          </ul>
+          <BookList books={books} readBooks={readBooks} toggleReadStatus={toggleReadStatus} />
+          
         )}
       </div>
     </main>
