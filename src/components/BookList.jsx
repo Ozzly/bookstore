@@ -9,7 +9,7 @@ function BookList({books, readBooks, toggleReadStatus}) {
             <BookCard 
             key={book.key} 
             book={book}
-            isMarkedRead={readBooks.includes(book)}
+            isMarkedRead={readBooks.some(b => b.key === book.key)}
             onToggleReadStatus={() => toggleReadStatus(book)}
             />
             
