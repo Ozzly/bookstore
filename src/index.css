@@ -3,7 +3,6 @@
 body {
   background-color: #1e1e2e;
   color: #cdd6f4;
-  padding: 20px;
 }
 
 .app-container {
@@ -16,16 +15,60 @@ main {
   max-width: 1100px;
 }
 
-.search-input {
-  background-color: #45475a;
-  border: none;
+.app-header {
+  text-align: center;
+  margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  padding: 10px 0;
+  z-index: 10;
+  background-color: #1e1e2e;
+  border-bottom: 2px solid #45475a;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 10px;;
+  border: 2px solid #313244;
+
+
+}
+
+.search-container:focus-within {
+  border-color: #cba6f7;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
   border-radius: 10px;
   padding: 8px;
+}
+
+
+.search-input {
+  border: none;
   color: #cdd6f4;
+  min-width: 200px;
+  max-width: 500px;
+  width: 400px;;
 }
 
 .search-input:focus {
-  outline: 2px solid #cba6f7;
+  outline: none;
+}
+
+.search-icon {
+  background-color: #313244;
+  height: 100%;
+  width: 40px;
+  border-radius: 8px;
 }
 
 .book-list {

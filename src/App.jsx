@@ -102,7 +102,10 @@ const App = () => {
   return (
     <div className='app-container'>
     <main>
-      <header>Store book info</header>
+      <div className='app-header'>
+        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+
+      </div>
 
       {/* <div className='books-summary-section'>
         <h2>Read Books</h2>
@@ -111,7 +114,6 @@ const App = () => {
         </div>
       </div> */}
       
-      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <div>
         <h2>All Books</h2>
         {debouncedSearchTerm == '' ? (
