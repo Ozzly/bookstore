@@ -6,64 +6,6 @@ body {
   color: #cdd6f4;
 }
 
-.app-header {
-  text-align: center;
-  margin-bottom: 20px;
-  position: sticky;
-  top: 0;
-  padding: 10px 0;
-  z-index: 10;
-  background-color: #1e1e2e;
-  border-bottom: 2px solid #45475a;
-}
-
-.search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
-  width: fit-content;
-  max-width: 100%;
-  border-radius: 10px;
-  border: 3px solid #313244;
-}
-
-.search-container:focus-within {
-  border-color: #cba6f7;
-}
-
-.search-box {
-  display: flex;
-  align-items: center;
-  border-radius: 10px;
-  padding: 8px;
-}
-
-.search-input {
-  border: none;
-  color: #cdd6f4;
-  min-width: 200px;
-  max-width: 500px;
-  width: 400px;
-}
-
-.search-input:focus {
-  outline: none;
-}
-
-.search-icon {
-  background-color: #313244;
-  height: 100%;
-  width: 40px;
-  border-radius: 0 8px 8px 0;
-  transition: background-color 0.5s ease;
-}
-
-.search-icon:active {
-  background-color: #45475a;
-}
-
 .book-list {
   display: flex;
   flex-wrap: wrap;
