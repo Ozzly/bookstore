@@ -22,7 +22,10 @@ const App = () => {
     const stored = localStorage.getItem("readBooks");
     return stored ? JSON.parse(stored) : [];
   });
-  // const [readBooksDetails, setReadBooksDetails] = useState([]);
+  const [planToReadBooks, setPlanToReadBooks] = useState(() => {
+    const stored = localStorage.getItem("planToReadBooks");
+    return stored ? JSON.parse(stored) : [];
+  });
 
   useEffect(() => {
     debouncedSearchTerm !== "" && fetchBooksQuery(debouncedSearchTerm);
@@ -102,8 +105,31 @@ const App = () => {
     });
   };
 
+  const togglePlanToReadStatus = (book) => {
+    setPlanToReadBooks((prevPlanToReadBooks) => {
+      const exists = prevPlanToReadBooks.some((b) => b.key === book.key);
+
+      if (exists) {
+        return prevPlanToReadBooks.filter((b) => b.key !== book.key);
+      } else {
+        return [
+          ...prevPlanToReadBooks,
+          {
+            key: book.key,
+            title: book.title,
+            author_name: book.author_name,
+            cover_i: book.cover_i,
+            edition_count: book.edition_count,
+            first_publish_year: book.first_publish_year,
+            language: book.language,
+          },
+        ];
+      }
+    });
+  };
+
   return (
-    <div className="flex items-center flex-col text-ctp-text h-screen bg-ctp-base">
+    <div className="flex items-center flex-col text-ctp-text">
       <div className="w-full border-b-2 border-ctp-overlay0 sticky top-0 bg-ctp-base z-10 mb-3">
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
@@ -117,6 +143,8 @@ const App = () => {
               books={readBooks}
               readBooks={readBooks}
               toggleReadStatus={toggleReadStatus}
+              planToReadBooks={planToReadBooks}
+              togglePlanToReadStatus={togglePlanToReadStatus}
             />
           </>
         ) : isLoading ? (
@@ -140,6 +168,8 @@ const App = () => {
               books={books}
               readBooks={readBooks}
               toggleReadStatus={toggleReadStatus}
+              planToReadBooks={planToReadBooks}
+              togglePlanToReadStatus={togglePlanToReadStatus}
             />
           </>
         )}
