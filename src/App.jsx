@@ -95,6 +95,7 @@ const App = () => {
             cover_i: book.cover_i,
             edition_count: book.edition_count,
             first_publish_year: book.first_publish_year,
+            language: book.language,
           },
         ];
       }
@@ -102,7 +103,7 @@ const App = () => {
   };
 
   return (
-    <div className="flex items-center flex-col text-ctp-text">
+    <div className="flex items-center flex-col text-ctp-text h-screen bg-ctp-base">
       <div className="w-full border-b-2 border-ctp-overlay0 sticky top-0 bg-ctp-base z-10 mb-3">
         <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       </div>
