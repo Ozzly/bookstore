@@ -49,15 +49,15 @@ function BookCard({
       </p>
       <div className="flex justify-around text-ctp-subtext0 text-sm">
         <p>{first_publish_year || "N/A"}</p>
-        <p>{language ? `[${language[0]}]` : "N/A"}</p>
+        {/* <p>{language ? `[${language[0]}]` : "N/A"}</p> */}
       </div>
 
-      <div className="flex justify-center gap-0.5">
+      <div className="flex justify-center">
         <button
           onClick={onToggleReadStatus}
           title={isMarkedRead ? "Remove from Read" : "Mark as Read"}
           disabled={isPlannedToRead}
-          className={`border-ctp-mauve border-3 rounded-l-xl rounded-r-sm font-bold w-2/5 mt-3 p-2 transition duration-400 
+          className={`border-ctp-mauve border-3 rounded-l-xl border-r-2 font-bold w-2/5 mt-3 p-2 transition duration-400 
           ${
             isPlannedToRead
               ? "cursor-not-allowed border-3 border-ctp-overlay0 text-ctp-overlay0"
@@ -85,7 +85,7 @@ function BookCard({
           onClick={onTogglePlanToReadStatus}
           title="Add to Plan to Read"
           disabled={isMarkedRead}
-          className={`border-ctp-mauve border-3 rounded-sm font-bold w-2/5 mt-3 p-2 transition duration-400
+          className={`border-ctp-mauve border-3 border-x-2 font-bold w-2/5 mt-3 p-2 transition duration-400
             ${
               isMarkedRead
                 ? "cursor-not-allowed border-3 border-ctp-overlay0 text-ctp-overlay0"
@@ -112,23 +112,9 @@ function BookCard({
 
         <button
           onClick={() => setShowDropdown((prev) => !prev)}
-          className="bg-ctp-mauve text-ctp-base rounded-r-xl rounded-l-sm font-bold w-1/5 mt-3 p-2 hover:bg-ctp-mauve/80 transition active:scale-95 justify-center flex items-center"
+          className="bg-ctp-overlay border-ctp-mauve border-3 border-l-2 rounded-r-xl font-bold w-1/5 mt-3 p-2 hover:bg-ctp-mauve/80 transition active:scale-95 text-ctp-mauve hover:text-ctp-base"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width="1em"
-            height="1em"
-          >
-            <path
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="4"
-              d="m6 10l6 6l6-6"
-            ></path>
-          </svg>
+          +
         </button>
       </div>
       {showDropdown && (

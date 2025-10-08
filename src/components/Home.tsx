@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Search from "./components/Search";
-import BookList from "./components/BookList";
+import Search from "./Search.js";
+import BookList from "./BookList.js";
 import { useDebounce } from "use-debounce";
 import { BarLoader } from "react-spinners";
 
@@ -34,6 +34,10 @@ const App = () => {
   useEffect(() => {
     localStorage.setItem("readBooks", JSON.stringify(readBooks));
   }, [readBooks]);
+
+  useEffect(() => {
+    localStorage.setItem("planToReadBooks", JSON.stringify(planToReadBooks));
+  }, [planToReadBooks]);
 
   // useEffect(() => {
   //   readBooks.length === 0 ? setReadBooksDetails([]) : fetchWorksByKeys(readBooks);
@@ -141,6 +145,17 @@ const App = () => {
             </h2>
             <BookList
               books={readBooks}
+              readBooks={readBooks}
+              toggleReadStatus={toggleReadStatus}
+              planToReadBooks={planToReadBooks}
+              togglePlanToReadStatus={togglePlanToReadStatus}
+            />
+
+            <h2 className="text-xl font-bold text-center mb-2">
+              Plan to Read Books
+            </h2>
+            <BookList
+              books={planToReadBooks}
               readBooks={readBooks}
               toggleReadStatus={toggleReadStatus}
               planToReadBooks={planToReadBooks}
