@@ -1,5 +1,14 @@
 import React from "react";
 import BookCard from "./BookCard.js";
+import type { Book } from "../types.js";
+
+interface BookListProps {
+  books: Book[];
+  readBooks: Book[];
+  toggleReadStatus: (book: Book) => void;
+  planToReadBooks: Book[];
+  togglePlanToReadStatus: (book: Book) => void;
+}
 
 function BookList({
   books,
@@ -7,7 +16,7 @@ function BookList({
   toggleReadStatus,
   planToReadBooks,
   togglePlanToReadStatus,
-}) {
+}: BookListProps) {
   return (
     <ul className="flex flex-wrap justify-center gap-4">
       {books.map((book) => (

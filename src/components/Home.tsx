@@ -3,6 +3,7 @@ import Search from "./Search.js";
 import BookList from "./BookList.js";
 import { useDebounce } from "use-debounce";
 import { BarLoader } from "react-spinners";
+import type { Book } from "../types.js";
 
 const API_BASE_URL = "https://openlibrary.org";
 const API_OPTIONS = {
@@ -86,8 +87,8 @@ const App = () => {
     }
   };
 
-  const toggleReadStatus = (book) => {
-    setReadBooks((prevReadBooks) => {
+  const toggleReadStatus = (book: Book) => {
+    setReadBooks((prevReadBooks: [Book]) => {
       const exists = prevReadBooks.some((b) => b.key === book.key);
 
       if (exists) {
@@ -102,15 +103,14 @@ const App = () => {
             cover_i: book.cover_i,
             edition_count: book.edition_count,
             first_publish_year: book.first_publish_year,
-            language: book.language,
           },
         ];
       }
     });
   };
 
-  const togglePlanToReadStatus = (book) => {
-    setPlanToReadBooks((prevPlanToReadBooks) => {
+  const togglePlanToReadStatus = (book: Book) => {
+    setPlanToReadBooks((prevPlanToReadBooks: [Book]) => {
       const exists = prevPlanToReadBooks.some((b) => b.key === book.key);
 
       if (exists) {
@@ -125,7 +125,6 @@ const App = () => {
             cover_i: book.cover_i,
             edition_count: book.edition_count,
             first_publish_year: book.first_publish_year,
-            language: book.language,
           },
         ];
       }
@@ -168,7 +167,7 @@ const App = () => {
               Fetching Results for "{debouncedSearchTerm}"
             </h2>
             <div className="justify-center flex">
-              <BarLoader loading="true" color="#cba6f7" width="50%" />
+              <BarLoader loading={true} color="#cba6f7" width="50%" />
             </div>
           </>
         ) : errorMessage ? (

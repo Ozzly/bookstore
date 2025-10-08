@@ -1,20 +1,22 @@
 import React from "react";
 import { useState } from "react";
+import type { Book } from "../types.js";
+
+interface BookCardProps {
+  book: Book;
+  isMarkedRead: boolean;
+  onToggleReadStatus: () => void;
+  isPlannedToRead: boolean;
+  onTogglePlanToReadStatus: () => void;
+}
 
 function BookCard({
-  book: {
-    title,
-    author_name,
-    edition_count,
-    first_publish_year,
-    cover_i,
-    language,
-  },
+  book: { title, author_name, edition_count, first_publish_year, cover_i },
   isMarkedRead,
   onToggleReadStatus,
   isPlannedToRead,
   onTogglePlanToReadStatus,
-}) {
+}: BookCardProps) {
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
@@ -42,10 +44,10 @@ function BookCard({
         {title}
       </h3>
       <p
-        title={author_name}
+        title={author_name ? author_name.join(", ") : "Unknown Author"}
         className="text-center text-ctp-subtext1 whitespace-nowrap overflow-hidden text-ellipsis"
       >
-        {author_name ? `By ${author_name.join(", ")}` : "Unknown Author"}
+        {author_name ? `${author_name.join(", ")}` : "Unknown Author"}
       </p>
       <div className="flex justify-around text-ctp-subtext0 text-sm">
         <p>{first_publish_year || "N/A"}</p>
@@ -100,7 +102,7 @@ function BookCard({
             viewBox="0 0 24 24"
             stroke-width="2"
             stroke="currentColor"
-            class="size-6 mx-auto"
+            className="size-6 mx-auto"
           >
             <path
               stroke-linecap="round"
