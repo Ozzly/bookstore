@@ -133,9 +133,7 @@ const App = () => {
 
   return (
     <div className="flex items-center flex-col text-ctp-text">
-      <div className="w-full border-b-2 border-ctp-overlay0 sticky top-0 bg-ctp-base z-10 mb-3">
-        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      </div>
+      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <main className="w-full max-w-6xl">
         {debouncedSearchTerm == "" ? (
           <>
