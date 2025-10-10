@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { createBrowserRouter } from "react-router";
-import { RouterProvider } from "react-router/dom";
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home.js";
+import Layout from "./components/Layout.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: Home,
+    element: (
+      <Layout>
+        <Home />
+      </Layout>
+    ),
     errorElement: <div>Page Not Found</div>,
   },
   {
     path: "/books",
-    element: <div>Books</div>,
+    element: (
+      <Layout>
+        <div>Books</div>
+      </Layout>
+    ),
   },
 ]);
 
