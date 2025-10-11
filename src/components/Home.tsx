@@ -127,9 +127,7 @@ const App = () => {
             <BookSearchList
               books={booksFromStore}
               readBooks={readBooks}
-              toggleReadStatus={toggleReadStatus}
               planToReadBooks={planToReadBooks}
-              togglePlanToReadStatus={togglePlanToReadStatus}
             />
           </>
         )}

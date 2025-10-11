@@ -57,14 +57,21 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
 type LibraryStore = {
   completedBooks: Book[];
   planToReadBooks: Book[];
+  addCompletedBook: (book: Book) => void;
+  removeCompletedBook: (bookKey: string) => void;
   toggleCompletedBook: (book: Book) => void;
+  addPlanToRead: (book: Book) => void;
+  removePlanToRead: (bookKey: string) => void;
+  togglePlanToRead: (book: Book) => void;
 };
 
 export const useLibraryStore = create<LibraryStore>((set, get) => ({
   completedBooks: localStorage.getItem("completedBooks")
     ? JSON.parse(localStorage.getItem("completedBooks"))
     : [],
-  planToReadBooks: [],
+  planToReadBooks: localStorage.getItem("planToReadBooks")
+    ? JSON.parse(localStorage.getItem("planToReadBooks"))
+    : [],
 
   addCompletedBook: (book: Book) => {
     const { completedBooks } = get();
@@ -88,6 +95,31 @@ export const useLibraryStore = create<LibraryStore>((set, get) => ({
       removeCompletedBook(book.key);
     } else {
       addCompletedBook(book);
+    }
+  },
+
+  addPlanToRead: (book: Book) => {
+    const { planToReadBooks } = get();
+    const updatedBooks = [...planToReadBooks, book];
+    set({ planToReadBooks: updatedBooks });
+    localStorage.setItem("planToReadBooks", JSON.stringify(updatedBooks));
+  },
+
+  removePlanToRead: (bookKey: string) => {
+    const { planToReadBooks } = get();
+    const updatedBooks = planToReadBooks.filter((b) => b.key !== bookKey);
+    set({ completedBooks: updatedBooks });
+    localStorage.setItem("completedBooks", JSON.stringify(updatedBooks));
+  },
+
+  togglePlanToRead: (book: Book) => {
+    const { planToReadBooks, addPlanToRead, removePlanToRead } = get();
+    const exists = planToReadBooks.some((b) => b.key === book.key);
+
+    if (exists) {
+      removePlanToRead(book.key);
+    } else {
+      addPlanToRead(book);
     }
   },
 }));

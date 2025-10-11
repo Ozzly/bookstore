@@ -6,9 +6,7 @@ import { useLibraryStore } from "../store.js";
 interface BookCardProps {
   book: Book;
   isMarkedRead: boolean;
-  onToggleReadStatus: () => void;
   isPlannedToRead: boolean;
-  onTogglePlanToReadStatus: () => void;
 }
 
 function BookCard({ book, isMarkedRead, isPlannedToRead }: BookCardProps) {
@@ -16,6 +14,7 @@ function BookCard({ book, isMarkedRead, isPlannedToRead }: BookCardProps) {
   const toggleCompletedBook = useLibraryStore(
     (state) => state.toggleCompletedBook
   );
+  const togglePlanToRead = useLibraryStore((state) => state.togglePlanToRead);
   const { title, author_name, edition_count, first_publish_year, cover_i } =
     book;
 
@@ -84,9 +83,7 @@ function BookCard({ book, isMarkedRead, isPlannedToRead }: BookCardProps) {
           </svg>
         </button>
         <button
-          onClick={() => {
-            console.log("plan to read");
-          }}
+          onClick={() => togglePlanToRead(book)}
           title="Add to Plan to Read"
           disabled={isMarkedRead}
           className={`border-ctp-mauve border-3 border-x-2 font-bold w-2/5 mt-3 p-2 transition duration-400

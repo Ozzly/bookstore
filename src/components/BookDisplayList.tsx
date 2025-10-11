@@ -7,18 +7,27 @@ function BookDisplayList() {
   const plannedBooks = useLibraryStore((state) => state.planToReadBooks);
 
   return (
-    <div className="flex gap-4 border-2 border-ctp-surface1">
-      yo
-      {completedBooks.map((book) => (
-        <BookCard
-          key={book.key}
-          book={book}
-          isMarkedRead={true}
-          isPlannedToRead={false}
-          onTogglePlanToReadStatus={() => {}}
-          onToggleReadStatus={() => {}}
-        />
-      ))}
+    <div>
+      <div className="flex gap-4 border-2 border-ctp-surface1">
+        {completedBooks.map((book) => (
+          <BookCard
+            key={book.key}
+            book={book}
+            isMarkedRead={true}
+            isPlannedToRead={false}
+          />
+        ))}
+      </div>
+      <div className="flex gap-4 border-2 border-ctp-surface1">
+        {plannedBooks.map((book) => (
+          <BookCard
+            key={book.key}
+            book={book}
+            isMarkedRead={false}
+            isPlannedToRead={true}
+          />
+        ))}
+      </div>
     </div>
   );
 }
