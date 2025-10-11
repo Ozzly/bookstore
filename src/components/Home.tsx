@@ -1,29 +1,14 @@
 import React, { useEffect, useState } from "react";
 import BookSearchList from "./BookSearchList.js";
 import { BarLoader } from "react-spinners";
-import { useSearchStore } from "../store.js";
+import { useSearchStore, useLibraryStore } from "../store.js";
 
 const App = () => {
-  const [readBooks, setReadBooks] = useState(() => {
-    const stored = localStorage.getItem("readBooks");
-    return stored ? JSON.parse(stored) : [];
-  });
-  const [planToReadBooks, setPlanToReadBooks] = useState(() => {
-    const stored = localStorage.getItem("planToReadBooks");
-    return stored ? JSON.parse(stored) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("readBooks", JSON.stringify(readBooks));
-  }, [readBooks]);
-
-  useEffect(() => {
-    localStorage.setItem("planToReadBooks", JSON.stringify(planToReadBooks));
-  }, [planToReadBooks]);
-
   const booksFromStore = useSearchStore((state) => state.books);
   const searchTerm = useSearchStore((state) => state.searchTerm);
   const isLoading = useSearchStore((state) => state.isLoading);
+  const completedBooks = useLibraryStore((state) => state.completedBooks);
+  const plannedBooks = useLibraryStore((state) => state.planToReadBooks);
 
   return (
     <div className="flex items-center flex-col text-ctp-text">
@@ -46,8 +31,8 @@ const App = () => {
 
             <BookSearchList
               books={booksFromStore}
-              readBooks={readBooks}
-              planToReadBooks={planToReadBooks}
+              readBooks={completedBooks}
+              planToReadBooks={plannedBooks}
             />
           </>
         )}
