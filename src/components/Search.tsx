@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSearchStore } from "../store.js";
+import { useDebounce } from "use-debounce";
 
 function Search() {
   const searchTerm = useSearchStore((state) => state.searchTerm);
   const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
   const fetchBooksQuery = useSearchStore((state) => state.fetchBooksQuery);
+
+  const [searchDebounce] = useDebounce(searchTerm, 1000);
+  useEffect(() => {
+    fetchBooksQuery();
+  }, [searchDebounce]);
+
   return (
     <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 mb-3 text-ctp-text">
       <div className="flex justify-center w-full">
@@ -16,7 +23,6 @@ function Search() {
               value={searchTerm}
               onChange={(event) => {
                 setSearchTerm(event.target.value);
-                fetchBooksQuery();
               }}
               className="focus:outline-none w-md"
             />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Search from "./Search.js";
 import BookSearchList from "./BookSearchList.js";
-import { useDebounce } from "use-debounce";
 import { BarLoader } from "react-spinners";
 import type { Book } from "../types.js";
 import { useSearchStore } from "../store.js";
