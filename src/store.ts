@@ -53,3 +53,27 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
     }
   },
 }));
+
+type LibraryStore = {
+  completedBooks: Book[];
+  planToReadBooks: Book[];
+};
+
+export const useLibraryStore = create<LibraryStore>((set, get) => ({
+  completedBooks: [],
+  planToReadBooks: [],
+
+  addCompletedBook: (book: Book) => {
+    const { completedBooks } = get();
+    const updatedBooks = [...completedBooks, book];
+    set({ completedBooks: updatedBooks });
+    localStorage.setItem("completedBooks", JSON.stringify(updatedBooks));
+  },
+
+  removeCompletedBook: (bookKey: string) => {
+    const { completedBooks } = get();
+    const updatedBooks = completedBooks.filter((b) => b.key !== bookKey);
+    set({ completedBooks: updatedBooks });
+    localStorage.setItem("completedBooks", JSON.stringify(updatedBooks));
+  },
+}));

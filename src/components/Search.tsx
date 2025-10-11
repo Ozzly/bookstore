@@ -6,7 +6,7 @@ function Search() {
   const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
   const fetchBooksQuery = useSearchStore((state) => state.fetchBooksQuery);
   return (
-    <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 mb-3">
+    <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 mb-3 text-ctp-text">
       <div className="flex justify-center w-full">
         <div className="flex items-center border-3 border-ctp-surface0 rounded-xl focus-within:border-ctp-mauve transition-colors mb-3 mt-3">
           <div className="p-2">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Search from "./Search.js";
-import BookList from "./BookList.js";
+import BookSearchList from "./BookSearchList.js";
 import { useDebounce } from "use-debounce";
 import { BarLoader } from "react-spinners";
 import type { Book } from "../types.js";
@@ -17,7 +17,6 @@ const API_OPTIONS = {
 const App = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [books, setBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   // const [debouncedSearchTerm] = useDebounce(searchTerm, 1000);
   const [readBooks, setReadBooks] = useState(() => {
     const stored = localStorage.getItem("readBooks");
@@ -101,39 +100,17 @@ const App = () => {
   };
 
   const booksFromStore = useSearchStore((state) => state.books);
+  const searchTerm = useSearchStore((state) => state.searchTerm);
+  const isLoading = useSearchStore((state) => state.isLoading);
 
   return (
     <div className="flex items-center flex-col text-ctp-text">
-      <Search />
+      {/* <Search /> */}
       <main className="w-full max-w-6xl">
-        {"1" == "" ? (
-          <>
-            <h2 className="text-xl font-bold text-center mb-2">
-              Finished Books
-            </h2>
-            <BookList
-              books={readBooks}
-              readBooks={readBooks}
-              toggleReadStatus={toggleReadStatus}
-              planToReadBooks={planToReadBooks}
-              togglePlanToReadStatus={togglePlanToReadStatus}
-            />
-
-            <h2 className="text-xl font-bold text-center mb-2">
-              Plan to Read Books
-            </h2>
-            <BookList
-              books={planToReadBooks}
-              readBooks={readBooks}
-              toggleReadStatus={toggleReadStatus}
-              planToReadBooks={planToReadBooks}
-              togglePlanToReadStatus={togglePlanToReadStatus}
-            />
-          </>
-        ) : isLoading ? (
+        {isLoading ? (
           <>
             <h2 className="text-xl font-bold text-center mb-6">
-              Fetching Results for ...
+              Fetching Results for "{searchTerm}"
             </h2>
             <div className="justify-center flex">
               <BarLoader loading={true} color="#cba6f7" width="50%" />
@@ -144,10 +121,10 @@ const App = () => {
         ) : (
           <>
             <h2 className="text-xl font-bold text-center mb-2">
-              Search Results for .."
+              Search Results for "{searchTerm}"
             </h2>
 
-            <BookList
+            <BookSearchList
               books={booksFromStore}
               readBooks={readBooks}
               toggleReadStatus={toggleReadStatus}

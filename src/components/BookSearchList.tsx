@@ -10,7 +10,7 @@ interface BookListProps {
   togglePlanToReadStatus: (book: Book) => void;
 }
 
-function BookList({
+function BookSearchList({
   books,
   readBooks,
   toggleReadStatus,
@@ -35,4 +35,4 @@ function BookList({
   );
 }
 
-export default BookList;
+export default BookSearchList;

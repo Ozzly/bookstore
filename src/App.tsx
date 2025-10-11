@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { createBrowserRouter } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Home from "./components/Home.js";
+import Search from "./components/Search.js";
+import Books from "./pages/Books.js";
 
 const router = createBrowserRouter([
   {
@@ -11,10 +13,17 @@ const router = createBrowserRouter([
   },
   {
     path: "/books",
-    element: <div>Books</div>,
+    Component: Books,
   },
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <Search />
+      <div className="px-4">
+        <RouterProvider router={router} />
+      </div>
+    </>
+  );
 }
