@@ -1,6 +1,10 @@
 import React from "react";
+import { useSearchStore } from "../store.js";
 
-function Search({ searchTerm, setSearchTerm }) {
+function Search() {
+  const searchTerm = useSearchStore((state) => state.searchTerm);
+  const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
+  const fetchBooksQuery = useSearchStore((state) => state.fetchBooksQuery);
   return (
     <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 mb-3">
       <div className="flex justify-center w-full">
@@ -10,7 +14,10 @@ function Search({ searchTerm, setSearchTerm }) {
               type="text"
               placeholder="Search for your book"
               value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
+              onChange={(event) => {
+                setSearchTerm(event.target.value);
+                fetchBooksQuery();
+              }}
               className="focus:outline-none w-md"
             />
             <button

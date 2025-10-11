@@ -4,6 +4,7 @@ import BookList from "./BookList.js";
 import { useDebounce } from "use-debounce";
 import { BarLoader } from "react-spinners";
 import type { Book } from "../types.js";
+import { useSearchStore } from "../store.js";
 
 const API_BASE_URL = "https://openlibrary.org";
 const API_OPTIONS = {
@@ -14,11 +15,10 @@ const API_OPTIONS = {
 };
 
 const App = () => {
-  const [searchTerm, setSearchTerm] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [debouncedSearchTerm] = useDebounce(searchTerm, 1000);
+  // const [debouncedSearchTerm] = useDebounce(searchTerm, 1000);
   const [readBooks, setReadBooks] = useState(() => {
     const stored = localStorage.getItem("readBooks");
     return stored ? JSON.parse(stored) : [];
@@ -28,9 +28,9 @@ const App = () => {
     return stored ? JSON.parse(stored) : [];
   });
 
-  useEffect(() => {
-    debouncedSearchTerm !== "" && fetchBooksQuery(debouncedSearchTerm);
-  }, [debouncedSearchTerm]);
+  // useEffect(() => {
+  //   debouncedSearchTerm !== "" && fetchBooksQuery(debouncedSearchTerm);
+  // }, [debouncedSearchTerm]);
 
   useEffect(() => {
     localStorage.setItem("readBooks", JSON.stringify(readBooks));
@@ -55,37 +55,6 @@ const App = () => {
   //   setReadBooksDetails(details);
   //   console.log(details);
   // }
-
-  const fetchBooksQuery = async (query = "") => {
-    setIsLoading(true);
-    setErrorMessage("");
-
-    try {
-      const endpoint = `${API_BASE_URL}/search.json?title=${encodeURIComponent(
-        query
-      )}`;
-      const response = await fetch(endpoint, API_OPTIONS);
-      if (!response.ok) {
-        throw new Error("Failed to fetch books");
-      }
-
-      const data = await response.json();
-      console.log(data);
-
-      if (data.Response === "False") {
-        setErrorMessage(data.Error || "Failed to fetch movies");
-        setBooks([]);
-        return;
-      }
-
-      setBooks(data.docs || []);
-    } catch (error) {
-      console.log(`Error fetching book: ${error}`);
-      setErrorMessage("Error fetching books.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const toggleReadStatus = (book: Book) => {
     setReadBooks((prevReadBooks: [Book]) => {
@@ -131,11 +100,13 @@ const App = () => {
     });
   };
 
+  const booksFromStore = useSearchStore((state) => state.books);
+
   return (
     <div className="flex items-center flex-col text-ctp-text">
-      <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Search />
       <main className="w-full max-w-6xl">
-        {debouncedSearchTerm == "" ? (
+        {"1" == "" ? (
           <>
             <h2 className="text-xl font-bold text-center mb-2">
               Finished Books
@@ -162,7 +133,7 @@ const App = () => {
         ) : isLoading ? (
           <>
             <h2 className="text-xl font-bold text-center mb-6">
-              Fetching Results for "{debouncedSearchTerm}"
+              Fetching Results for ...
             </h2>
             <div className="justify-center flex">
               <BarLoader loading={true} color="#cba6f7" width="50%" />
@@ -173,11 +144,11 @@ const App = () => {
         ) : (
           <>
             <h2 className="text-xl font-bold text-center mb-2">
-              Search Results for "{debouncedSearchTerm}"
+              Search Results for .."
             </h2>
 
             <BookList
-              books={books}
+              books={booksFromStore}
               readBooks={readBooks}
               toggleReadStatus={toggleReadStatus}
               planToReadBooks={planToReadBooks}

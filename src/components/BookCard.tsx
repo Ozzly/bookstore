@@ -20,7 +20,7 @@ function BookCard({
   const [showDropdown, setShowDropdown] = useState(false);
 
   return (
-    <div className="w-[250px] min-w-[250px] h-full p-4 bg-ctp-surface0 rounded-lg border-3 border-ctp-overlay0 hover:scale-102 hover:shadow-xl transition shadow-lg">
+    <div className="w-[250px] min-w-[250px] h-full p-4 bg-ctp-surface0 rounded-lg border-ctp-surface1 hover:scale-102 hover:shadow-xl transition shadow-lg">
       <div className="max-h-[330px] h-[330px] relative overflow-hidden bg-[#454545] rounded-lg flex justify-center items-center shadow-lg">
         <img
           src={
