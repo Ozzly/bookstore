@@ -1,7 +1,8 @@
 import React from "react";
+import BookDisplayList from "../components/BookDisplayList.js";
 
 function Books() {
-  return <div>This is the books page.</div>;
+  return <BookDisplayList />;
 }
 
 export default Books;

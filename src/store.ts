@@ -57,10 +57,13 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
 type LibraryStore = {
   completedBooks: Book[];
   planToReadBooks: Book[];
+  toggleCompletedBook: (book: Book) => void;
 };
 
 export const useLibraryStore = create<LibraryStore>((set, get) => ({
-  completedBooks: [],
+  completedBooks: localStorage.getItem("completedBooks")
+    ? JSON.parse(localStorage.getItem("completedBooks"))
+    : [],
   planToReadBooks: [],
 
   addCompletedBook: (book: Book) => {
@@ -75,5 +78,16 @@ export const useLibraryStore = create<LibraryStore>((set, get) => ({
     const updatedBooks = completedBooks.filter((b) => b.key !== bookKey);
     set({ completedBooks: updatedBooks });
     localStorage.setItem("completedBooks", JSON.stringify(updatedBooks));
+  },
+
+  toggleCompletedBook: (book: Book) => {
+    const { completedBooks, addCompletedBook, removeCompletedBook } = get();
+    const exists = completedBooks.some((b) => b.key === book.key);
+
+    if (exists) {
+      removeCompletedBook(book.key);
+    } else {
+      addCompletedBook(book);
+    }
   },
 }));

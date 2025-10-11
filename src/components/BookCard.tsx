@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import type { Book } from "../types.js";
+import { useLibraryStore } from "../store.js";
 
 interface BookCardProps {
   book: Book;
@@ -10,14 +11,13 @@ interface BookCardProps {
   onTogglePlanToReadStatus: () => void;
 }
 
-function BookCard({
-  book: { title, author_name, edition_count, first_publish_year, cover_i },
-  isMarkedRead,
-  onToggleReadStatus,
-  isPlannedToRead,
-  onTogglePlanToReadStatus,
-}: BookCardProps) {
+function BookCard({ book, isMarkedRead, isPlannedToRead }: BookCardProps) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const toggleCompletedBook = useLibraryStore(
+    (state) => state.toggleCompletedBook
+  );
+  const { title, author_name, edition_count, first_publish_year, cover_i } =
+    book;
 
   return (
     <div className="w-[250px] min-w-[250px] h-full p-4 bg-ctp-surface0 rounded-lg border-ctp-surface1 hover:scale-102 hover:shadow-xl transition shadow-lg">
@@ -56,7 +56,7 @@ function BookCard({
 
       <div className="flex justify-center">
         <button
-          onClick={onToggleReadStatus}
+          onClick={() => toggleCompletedBook(book)}
           title={isMarkedRead ? "Remove from Read" : "Mark as Read"}
           disabled={isPlannedToRead}
           className={`border-ctp-mauve border-3 rounded-l-xl border-r-2 font-bold w-2/5 mt-3 p-2 transition duration-400 
@@ -84,7 +84,9 @@ function BookCard({
           </svg>
         </button>
         <button
-          onClick={onTogglePlanToReadStatus}
+          onClick={() => {
+            console.log("plan to read");
+          }}
           title="Add to Plan to Read"
           disabled={isMarkedRead}
           className={`border-ctp-mauve border-3 border-x-2 font-bold w-2/5 mt-3 p-2 transition duration-400
