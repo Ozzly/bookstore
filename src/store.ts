@@ -66,12 +66,14 @@ type LibraryStore = {
 };
 
 export const useLibraryStore = create<LibraryStore>((set, get) => ({
-  completedBooks: localStorage.getItem("completedBooks")
-    ? JSON.parse(localStorage.getItem("completedBooks"))
-    : [],
-  planToReadBooks: localStorage.getItem("planToReadBooks")
-    ? JSON.parse(localStorage.getItem("planToReadBooks"))
-    : [],
+  completedBooks: (() => {
+    const stored = localStorage.getItem("completedBooks");
+    return stored ? JSON.parse(stored) : [];
+  })(),
+  planToReadBooks: (() => {
+    const stored = localStorage.getItem("planToReadBooks");
+    return stored ? JSON.parse(stored) : [];
+  })(),
 
   addCompletedBook: (book: Book) => {
     const { completedBooks } = get();
@@ -108,8 +110,8 @@ export const useLibraryStore = create<LibraryStore>((set, get) => ({
   removePlanToRead: (bookKey: string) => {
     const { planToReadBooks } = get();
     const updatedBooks = planToReadBooks.filter((b) => b.key !== bookKey);
-    set({ completedBooks: updatedBooks });
-    localStorage.setItem("completedBooks", JSON.stringify(updatedBooks));
+    set({ planToReadBooks: updatedBooks });
+    localStorage.setItem("planToReadBooks", JSON.stringify(updatedBooks));
   },
 
   togglePlanToRead: (book: Book) => {
