@@ -12,9 +12,10 @@ const App = () => {
 
   return (
     <div className="flex items-center flex-col text-ctp-text">
-      {/* <Search /> */}
       <main className="w-full max-w-6xl">
-        {isLoading ? (
+        {searchTerm == "" ? (
+          <div className="text-center">Try searching for a book</div>
+        ) : isLoading ? (
           <>
             <h2 className="text-xl font-bold text-center mb-6">
               Fetching Results for "{searchTerm}"

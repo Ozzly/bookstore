@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Outlet } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Home from "./components/Home.js";
 import Search from "./components/Search.js";
 import Books from "./pages/Books.js";
+import Header from "./components/Header.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: Home,
+    Component: Layout,
     errorElement: <div>Page Not Found</div>,
-  },
-  {
-    path: "/books",
-    Component: Books,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "/books",
+        Component: Books,
+      },
+    ],
   },
 ]);
 
-export default function App() {
+function Layout() {
   return (
     <>
-      <Search />
-      <div className="px-4">
-        <RouterProvider router={router} />
+      <Header />
+      <div className="px-4 mb-4">
+        <Outlet />
       </div>
     </>
   );
+}
+
+export default function App() {
+  return <RouterProvider router={router} />;
 }
