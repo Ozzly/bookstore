@@ -1,5 +1,5 @@
 import React from "react";
-import Search from "./Search.js";
+import Search from "./SearchInput.js";
 import { Link } from "react-router";
 
 function Header() {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { createBrowserRouter, Outlet } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Home from "./components/Home.js";
-import Search from "./components/Search.js";
+import Search from "./components/SearchInput.js";
 import Books from "./pages/Books.js";
 import Header from "./components/Header.js";
 
