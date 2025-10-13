@@ -25,7 +25,7 @@ function Search() {
           onChange={(event) => {
             setSearchTerm(event.target.value);
           }}
-          className="focus:outline-none w-md"
+          className="focus:outline-none w-3xs sm:w-sm"
         />
         <button
           onClick={() => setSearchTerm("")}
