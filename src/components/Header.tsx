@@ -1,17 +1,33 @@
 import React from "react";
 import Search from "./SearchInput.js";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 
 function Header() {
   return (
     <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 mb-3 text-ctp-text flex justify-center">
       <div className="grid grid-cols-6 items-center text-center divide-x-1 divide divide-ctp-surface1 px-4">
-        <Link to="/">
-          <div className="py-2 hover:bg-ctp-surface0 ">Home</div>
-        </Link>
-        <Link to="/books">
-          <div className="py-2 hover:bg-ctp-surface0 ">Books</div>
-        </Link>
+        <NavLink to="/">
+          {({ isActive }) => (
+            <div
+              className={`py-2 hover:bg-ctp-surface0 ${
+                isActive ? "font-bold text-ctp-mauve" : ""
+              } `}
+            >
+              Search
+            </div>
+          )}
+        </NavLink>
+        <NavLink to="/books">
+          {({ isActive }) => (
+            <div
+              className={`py-2 hover:bg-ctp-surface0 ${
+                isActive ? "font-bold text-ctp-mauve" : ""
+              } `}
+            >
+              Books
+            </div>
+          )}
+        </NavLink>
         <div className="py-2 hover:bg-ctp-surface0 line-through">Manga</div>
         <div className="py-2 hover:bg-ctp-surface0 line-through">Anime</div>
         <div className="py-2 hover:bg-ctp-surface0 line-through">Movies</div>
