@@ -51,7 +51,11 @@ function Header() {
 
       <Select.Root
         value={searchCategory}
-        onValueChange={(value) => setSearchCategory(value as Category)}
+        onValueChange={(value) => {
+          setSearchCategory(value as Category);
+          console.log(value);
+          console.log(value as Category);
+        }}
       >
         <Select.Trigger
           className="border-3 border-ctp-surface0 rounded-xl w-33 ml-3 my-3 flex items-center px-3 gap-2 hover:border-ctp-mauve justify-between"

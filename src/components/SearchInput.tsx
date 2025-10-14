@@ -3,6 +3,7 @@ import { useSearchStore } from "../stores/searchUIStore.js";
 import { useDebounce } from "use-debounce";
 import { useNavigate } from "react-router";
 import { useBookStore } from "../stores/bookStore.js";
+import { useAnimeStore } from "../stores/animeStore.js";
 
 function Search() {
   const searchTerm = useSearchStore((state) => state.searchTerm);
@@ -10,9 +11,21 @@ function Search() {
   const fetchBooksQuery = useBookStore((state) => state.fetchBooksQuery);
   const navigate = useNavigate();
   const searchCategory = useSearchStore((state) => state.searchCategory);
+  const fetchAnimeQuery = useAnimeStore((state) => state.fetchAnimeQuery);
 
   const [searchDebounce] = useDebounce(searchTerm, 1000);
   useEffect(() => {
+    console.log(searchCategory);
+    switch (searchCategory) {
+      case "books":
+        console.log("fetching books");
+        fetchBooksQuery(searchDebounce);
+        break;
+      case "anime":
+        console.log("fetching anime");
+        fetchAnimeQuery(searchDebounce);
+        break;
+    }
     fetchBooksQuery(searchDebounce);
     navigate("/");
   }, [searchDebounce]);
