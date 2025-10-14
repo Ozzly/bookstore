@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import type { Book } from "../types.js";
-import { useLibraryStore } from "../stores/bookStore.js";
+import { useBookStore } from "../stores/bookStore.js";
 
 interface BookCardProps {
   book: Book;
@@ -11,10 +11,10 @@ interface BookCardProps {
 
 function BookCard({ book, isMarkedRead, isPlannedToRead }: BookCardProps) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const toggleCompletedBook = useLibraryStore(
+  const toggleCompletedBook = useBookStore(
     (state) => state.toggleCompletedBook
   );
-  const togglePlanToRead = useLibraryStore((state) => state.togglePlanToRead);
+  const togglePlanToRead = useBookStore((state) => state.togglePlanToRead);
   const { title, author_name, edition_count, first_publish_year, cover_i } =
     book;
 

@@ -1,16 +1,6 @@
 import { create } from "zustand";
 import type { Book, Category } from "../types.js";
 
-type SearchStore = {
-  searchTerm: string;
-  isLoading: boolean;
-  books: Book[];
-  searchCategory: Category;
-  setSearchTerm: (searchTerm: string) => void;
-  setSearchCategory: (category: Category) => void;
-  fetchBooksQuery: () => Promise<void>;
-};
-
 const API_BASE_URL = "https://openlibrary.org";
 const API_OPTIONS = {
   method: "GET",
@@ -19,19 +9,29 @@ const API_OPTIONS = {
   },
 };
 
-export const useSearchStore = create<SearchStore>((set, get) => ({
-  searchTerm: "",
+type BookStore = {
+  isLoading: boolean;
+  bookResults: Book[];
+  fetchBooksQuery: (searchTerm: string) => Promise<void>;
+  completedBooks: Book[];
+  planToReadBooks: Book[];
+  addCompletedBook: (book: Book) => void;
+  removeCompletedBook: (bookKey: string) => void;
+  toggleCompletedBook: (book: Book) => void;
+  addPlanToRead: (book: Book) => void;
+  removePlanToRead: (bookKey: string) => void;
+  togglePlanToRead: (book: Book) => void;
+};
+
+export const useBookStore = create<BookStore>((set, get) => ({
   isLoading: true,
-  books: [],
-  searchCategory: "books",
-  setSearchTerm: (searchTerm: string) => set({ searchTerm }),
-  setSearchCategory: (category: Category) => set({ searchCategory: category }),
-  fetchBooksQuery: async () => {
+  bookResults: [],
+  fetchBooksQuery: async (searchTerm) => {
     set({ isLoading: true });
 
     try {
       const endpoint = `${API_BASE_URL}/search.json?title=${encodeURIComponent(
-        get().searchTerm
+        searchTerm
       )}`;
       const response = await fetch(endpoint, API_OPTIONS);
       if (!response.ok) {
@@ -43,11 +43,11 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
 
       if (data.Response === "False") {
         // setErrorMessage(data.Error || "Failed to fetch movies");
-        set({ books: [] });
+        set({ bookResults: [] });
         return;
       }
 
-      set({ books: data.docs || [] });
+      set({ bookResults: data.docs || [] });
     } catch (error) {
       console.log(`Error fetching book: ${error}`);
       //   setErrorMessage("Error fetching books.");
@@ -56,20 +56,7 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
       console.log(`Finished fetching books`);
     }
   },
-}));
 
-type LibraryStore = {
-  completedBooks: Book[];
-  planToReadBooks: Book[];
-  addCompletedBook: (book: Book) => void;
-  removeCompletedBook: (bookKey: string) => void;
-  toggleCompletedBook: (book: Book) => void;
-  addPlanToRead: (book: Book) => void;
-  removePlanToRead: (bookKey: string) => void;
-  togglePlanToRead: (book: Book) => void;
-};
-
-export const useLibraryStore = create<LibraryStore>((set, get) => ({
   completedBooks: (() => {
     const stored = localStorage.getItem("completedBooks");
     return stored ? JSON.parse(stored) : [];

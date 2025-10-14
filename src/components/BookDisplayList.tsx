@@ -1,10 +1,10 @@
 import React from "react";
 import BookCard from "./BookCard.js";
-import { useLibraryStore } from "../stores/bookStore.js";
+import { useBookStore } from "../stores/bookStore.js";
 
 function BookDisplayList() {
-  const completedBooks = useLibraryStore((state) => state.completedBooks);
-  const plannedBooks = useLibraryStore((state) => state.planToReadBooks);
+  const completedBooks = useBookStore((state) => state.completedBooks);
+  const plannedBooks = useBookStore((state) => state.planToReadBooks);
 
   return (
     <div className="flex justify-center">

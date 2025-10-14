@@ -2,7 +2,7 @@ import React from "react";
 import Search from "./SearchInput.js";
 import { Link, NavLink } from "react-router";
 import { Select } from "radix-ui";
-import { useSearchStore } from "../stores/bookStore.js";
+import { useSearchStore } from "../stores/searchUIStore.js";
 import {
   CheckIcon,
   ChevronDownIcon,

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import BookSearchList from "./BookSearchList.js";
 import { BarLoader } from "react-spinners";
-import { useSearchStore, useLibraryStore } from "../stores/bookStore.js";
+import { useBookStore } from "../stores/bookStore.js";
+import { useSearchStore } from "../stores/searchUIStore.js";
 
 const App = () => {
-  const booksFromStore = useSearchStore((state) => state.books);
+  const booksFromStore = useBookStore((state) => state.bookResults);
   const searchTerm = useSearchStore((state) => state.searchTerm);
-  const isLoading = useSearchStore((state) => state.isLoading);
-  const completedBooks = useLibraryStore((state) => state.completedBooks);
-  const plannedBooks = useLibraryStore((state) => state.planToReadBooks);
+  const isLoading = useBookStore((state) => state.isLoading);
+  const completedBooks = useBookStore((state) => state.completedBooks);
+  const plannedBooks = useBookStore((state) => state.planToReadBooks);
 
   return (
     <div className="flex items-center flex-col text-ctp-text">

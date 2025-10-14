@@ -1,18 +1,19 @@
 import React, { useEffect } from "react";
-import { useSearchStore } from "../stores/bookStore.js";
+import { useSearchStore } from "../stores/searchUIStore.js";
 import { useDebounce } from "use-debounce";
 import { useNavigate } from "react-router";
+import { useBookStore } from "../stores/bookStore.js";
 
 function Search() {
   const searchTerm = useSearchStore((state) => state.searchTerm);
   const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
-  const fetchBooksQuery = useSearchStore((state) => state.fetchBooksQuery);
+  const fetchBooksQuery = useBookStore((state) => state.fetchBooksQuery);
   const navigate = useNavigate();
   const searchCategory = useSearchStore((state) => state.searchCategory);
 
   const [searchDebounce] = useDebounce(searchTerm, 1000);
   useEffect(() => {
-    fetchBooksQuery();
+    fetchBooksQuery(searchDebounce);
     navigate("/");
   }, [searchDebounce]);
 
