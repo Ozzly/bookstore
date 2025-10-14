@@ -26,7 +26,6 @@ function Search() {
         fetchAnimeQuery(searchDebounce);
         break;
     }
-    fetchBooksQuery(searchDebounce);
     navigate("/");
   }, [searchDebounce]);
 
