@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSearchStore } from "../store.js";
+import { useSearchStore } from "../stores/bookStore.js";
 import { useDebounce } from "use-debounce";
 import { useNavigate } from "react-router";
 

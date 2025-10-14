@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Book } from "./types.js";
+import type { Book } from "../types.js";
 
 type SearchStore = {
   searchTerm: string;

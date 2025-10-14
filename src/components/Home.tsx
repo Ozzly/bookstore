@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import BookSearchList from "./BookSearchList.js";
 import { BarLoader } from "react-spinners";
-import { useSearchStore, useLibraryStore } from "../store.js";
+import { useSearchStore, useLibraryStore } from "../stores/bookStore.js";
 
 const App = () => {
   const booksFromStore = useSearchStore((state) => state.books);

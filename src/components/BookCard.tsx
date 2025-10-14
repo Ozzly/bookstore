@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import type { Book } from "../types.js";
-import { useLibraryStore } from "../store.js";
+import { useLibraryStore } from "../stores/bookStore.js";
 
 interface BookCardProps {
   book: Book;

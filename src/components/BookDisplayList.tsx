@@ -1,6 +1,6 @@
 import React from "react";
 import BookCard from "./BookCard.js";
-import { useLibraryStore } from "../store.js";
+import { useLibraryStore } from "../stores/bookStore.js";
 
 function BookDisplayList() {
   const completedBooks = useLibraryStore((state) => state.completedBooks);
