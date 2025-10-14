@@ -8,6 +8,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
 } from "@radix-ui/react-icons";
+import type { Category } from "../types.js";
 
 function Header() {
   const searchCategory = useSearchStore((state) => state.searchCategory);
@@ -50,7 +51,7 @@ function Header() {
 
       <Select.Root
         value={searchCategory}
-        onValueChange={(value) => setSearchCategory(value as any)}
+        onValueChange={(value) => setSearchCategory(value as Category)}
       >
         <Select.Trigger
           className="border-3 border-ctp-surface0 rounded-xl w-33 ml-3 my-3 flex items-center px-3 gap-2 hover:border-ctp-mauve justify-between"
@@ -72,8 +73,8 @@ function Header() {
             </Select.ScrollUpButton>
             <Select.Viewport className="">
               <SelectItem value="books">Books</SelectItem>
-              <SelectItem value="manga">Manga</SelectItem>
               <SelectItem value="anime">Anime</SelectItem>
+              <SelectItem value="manga">Manga</SelectItem>
               <SelectItem value="movies">Movies</SelectItem>
               <SelectItem value="shows">Shows</SelectItem>
             </Select.Viewport>

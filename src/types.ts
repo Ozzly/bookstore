@@ -6,3 +6,5 @@ export interface Book {
   first_publish_year: number;
   cover_i: number;
 }
+
+export type Category = "books" | "anime" | "manga" | "movies" | "shows";

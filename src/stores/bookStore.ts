@@ -1,15 +1,13 @@
 import { create } from "zustand";
-import type { Book } from "../types.js";
+import type { Book, Category } from "../types.js";
 
 type SearchStore = {
   searchTerm: string;
   isLoading: boolean;
   books: Book[];
-  searchCategory: "books" | "manga" | "anime" | "movies" | "shows";
+  searchCategory: Category;
   setSearchTerm: (searchTerm: string) => void;
-  setSearchCategory: (
-    category: "books" | "manga" | "anime" | "movies" | "shows"
-  ) => void;
+  setSearchCategory: (category: Category) => void;
   fetchBooksQuery: () => Promise<void>;
 };
 
@@ -27,9 +25,7 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
   books: [],
   searchCategory: "books",
   setSearchTerm: (searchTerm: string) => set({ searchTerm }),
-  setSearchCategory: (
-    category: "books" | "manga" | "anime" | "movies" | "shows"
-  ) => set({ searchCategory: category }),
+  setSearchCategory: (category: Category) => set({ searchCategory: category }),
   fetchBooksQuery: async () => {
     set({ isLoading: true });
 
