@@ -5,7 +5,11 @@ type SearchStore = {
   searchTerm: string;
   isLoading: boolean;
   books: Book[];
+  searchCategory: "books" | "manga" | "anime" | "movies" | "shows";
   setSearchTerm: (searchTerm: string) => void;
+  setSearchCategory: (
+    category: "books" | "manga" | "anime" | "movies" | "shows"
+  ) => void;
   fetchBooksQuery: () => Promise<void>;
 };
 
@@ -21,7 +25,11 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
   searchTerm: "",
   isLoading: true,
   books: [],
+  searchCategory: "books",
   setSearchTerm: (searchTerm: string) => set({ searchTerm }),
+  setSearchCategory: (
+    category: "books" | "manga" | "anime" | "movies" | "shows"
+  ) => set({ searchCategory: category }),
   fetchBooksQuery: async () => {
     set({ isLoading: true });
 

@@ -8,6 +8,7 @@ function Search() {
   const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
   const fetchBooksQuery = useSearchStore((state) => state.fetchBooksQuery);
   const navigate = useNavigate();
+  const searchCategory = useSearchStore((state) => state.searchCategory);
 
   const [searchDebounce] = useDebounce(searchTerm, 1000);
   useEffect(() => {
@@ -20,7 +21,7 @@ function Search() {
       <div className="p-2">
         <input
           type="text"
-          placeholder="Search for your book"
+          placeholder={`Searching by ${searchCategory}`}
           value={searchTerm}
           onChange={(event) => {
             setSearchTerm(event.target.value);
