@@ -5,6 +5,7 @@ import Home from "./components/Home.js";
 import Search from "./components/SearchInput.js";
 import Books from "./pages/Books.js";
 import Header from "./components/Header.js";
+import Anime from "./pages/Anime.js";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/books",
         Component: Books,
+      },
+      {
+        path: "/anime",
+        Component: Anime,
       },
     ],
   },

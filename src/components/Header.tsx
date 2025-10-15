@@ -28,7 +28,7 @@ function Header() {
             </div>
           )}
         </NavLink>
-        <NavLink to="/books">
+        <NavLink to="/books" onClick={() => setSearchCategory("books")}>
           {({ isActive }) => (
             <div
               className={`py-2 hover:bg-ctp-surface0 ${
@@ -39,8 +39,18 @@ function Header() {
             </div>
           )}
         </NavLink>
+        <NavLink to="/anime" onClick={() => setSearchCategory("anime")}>
+          {({ isActive }) => (
+            <div
+              className={`py-2 hover:bg-ctp-surface0 ${
+                isActive ? "font-bold text-ctp-mauve" : ""
+              } `}
+            >
+              Anime
+            </div>
+          )}
+        </NavLink>
         <div className="py-2 hover:bg-ctp-surface0 line-through">Manga</div>
-        <div className="py-2 hover:bg-ctp-surface0 line-through">Anime</div>
         <div className="py-2 hover:bg-ctp-surface0 line-through">Movies</div>
         <div className="pl-2 py-2 hover:bg-ctp-surface0 line-through">
           TV Shows
