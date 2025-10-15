@@ -8,3 +8,12 @@ export interface Book {
 }
 
 export type Category = "books" | "anime" | "manga" | "movies" | "shows";
+
+export interface Anime {
+  mal_id: number;
+  title: string;
+  score: number;
+  cover_image: string;
+  episodes: number;
+  year: number;
+}
