@@ -26,7 +26,7 @@ function Search() {
         fetchAnimeQuery(searchDebounce);
         break;
     }
-    navigate("/");
+    navigate(`/${searchCategory}`);
   }, [searchDebounce]);
 
   return (
