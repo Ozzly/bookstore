@@ -6,7 +6,8 @@ interface AnimeCardProps {
 }
 
 function AnimeCard({ anime }: AnimeCardProps) {
-  const { mal_id, title, score, cover_image, episodes, year } = anime;
+  const { mal_id, title, score, cover_image, episodes, year, release_season } =
+    anime;
   return (
     <div className="size-fit p-4 bg-ctp-surface0 rounded-lg border-ctp-surface1 hover:scale-102 hover:shadow-xl transition shadow-lg">
       <div className="flex h-full gap-4 text-ctp-text">
@@ -19,6 +20,10 @@ function AnimeCard({ anime }: AnimeCardProps) {
         </div>
         <div className="w-[200px]">
           <h2 className="font-bold">{title}</h2>
+          <p className="text-sm mb-2">{release_season}</p>
+          <p className="text-sm mb-2">{episodes || "N/A"} episodes</p>
+
+          <h3>{score}★</h3>
         </div>
       </div>
     </div>
