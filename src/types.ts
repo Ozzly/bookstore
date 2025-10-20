@@ -16,4 +16,5 @@ export interface Anime {
   cover_image: string;
   episodes: number;
   year: number;
+  release_season: string;
 }

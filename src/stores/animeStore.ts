@@ -10,6 +10,18 @@ type AnimeStore = {
 };
 
 const transformAPIData = (data: any): Anime => {
+  function getSeason(month: number): string {
+    if ([12, 1, 2].includes(month)) return "Winter";
+    if ([3, 4, 5].includes(month)) return "Spring";
+    if ([6, 7, 8].includes(month)) return "Summer";
+    if ([9, 10, 11].includes(month)) return "Fall";
+    return "Unknown";
+  }
+
+  const releaseSeason = `${getSeason(data.aired.prop.from.month)} ${
+    data.aired.prop.from.year
+  }`;
+
   return {
     mal_id: data.mal_id,
     title: data.title,
@@ -17,6 +29,7 @@ const transformAPIData = (data: any): Anime => {
     cover_image: data.images.jpg.image_url,
     episodes: data.episodes,
     year: data.year,
+    release_season: releaseSeason,
   };
 };
 
