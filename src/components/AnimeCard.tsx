@@ -1,8 +1,9 @@
-import React from "react";
+import type { ReactNode } from "react";
 import type { Anime } from "../types.js";
 
 interface AnimeCardProps {
   anime: Anime;
+  children?: ReactNode;
 }
 
 function AnimeCard({ anime, children }: AnimeCardProps) {
@@ -38,6 +39,7 @@ function AnimeCard({ anime, children }: AnimeCardProps) {
           <p className="text-center">
             {episodes || "N/A"} {episodes > 1 ? "episodes" : "episode"}
           </p>
+          <div className="absolute bottom-0">{children}</div>
         </div>
       </div>
     </div>
