@@ -19,11 +19,19 @@ function AnimeCard({ anime }: AnimeCardProps) {
           />
         </div>
         <div className="w-[200px]">
-          <h2 className="font-bold">{title}</h2>
-          <p className="text-sm mb-2">{release_season}</p>
-          <p className="text-sm mb-2">{episodes || "N/A"} episodes</p>
-
-          <h3>{score}★</h3>
+          <h2
+            className="font-bold line-clamp-2 leading-tight mb-2"
+            title={title}
+          >
+            {title}
+          </h2>
+          <div className="flex justify-around">
+            <p className="">{release_season}</p>
+            <p>{score}★</p>
+          </div>
+          <p className="text-center">
+            {episodes || "N/A"} {episodes > 1 ? "episodes" : "episode"}
+          </p>
         </div>
       </div>
     </div>
