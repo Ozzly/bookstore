@@ -17,4 +17,5 @@ export interface Anime {
   episodes: number;
   year: number;
   release_season: string;
+  studio: string; // Replace with array for multiple studios later
 }

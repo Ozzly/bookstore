@@ -30,6 +30,7 @@ const transformAPIData = (data: any): Anime => {
     episodes: data.episodes,
     year: data.year,
     release_season: releaseSeason,
+    studio: data.studios[0]?.name || "Unknown", // Should replace with logic to handle multiple studios
   };
 };
 

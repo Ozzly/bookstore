@@ -5,9 +5,17 @@ interface AnimeCardProps {
   anime: Anime;
 }
 
-function AnimeCard({ anime }: AnimeCardProps) {
-  const { mal_id, title, score, cover_image, episodes, year, release_season } =
-    anime;
+function AnimeCard({ anime, children }: AnimeCardProps) {
+  const {
+    mal_id,
+    title,
+    score,
+    cover_image,
+    episodes,
+    year,
+    release_season,
+    studio,
+  } = anime;
   return (
     <div className="size-fit p-4 bg-ctp-surface0 rounded-lg border-ctp-surface1 hover:scale-102 hover:shadow-xl transition shadow-lg">
       <div className="flex h-full gap-4 text-ctp-text">
@@ -18,13 +26,11 @@ function AnimeCard({ anime }: AnimeCardProps) {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="w-[200px]">
-          <h2
-            className="font-bold line-clamp-2 leading-tight mb-2"
-            title={title}
-          >
+        <div className="w-[190px] relative">
+          <h2 className="font-bold line-clamp-2 leading-tight" title={title}>
             {title}
           </h2>
+          <p className="text-center text-sm mb-2">{studio}</p>
           <div className="flex justify-around">
             <p className="">{release_season}</p>
             <p>{score}★</p>
