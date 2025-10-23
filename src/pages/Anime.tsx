@@ -10,13 +10,17 @@ import {
 
 function Anime() {
   const animeSearchResults = useAnimeStore((state) => state.animeResults);
+  const addWatchedAnime = useAnimeStore((state) => state.addWatchedAnime);
   return (
     <div className="flex justify-center">
       <div className="flex flex-wrap justify-center gap-3 w-[1600px]">
         {animeSearchResults.map((anime) => (
           <AnimeCard key={anime.mal_id} anime={anime}>
             <div className="">
-              <button className="border-3 border-ctp-mauve rounded-l-lg p-1 border-r-2">
+              <button
+                className="border-3 border-ctp-mauve rounded-l-lg p-1 border-r-2"
+                onClick={() => addWatchedAnime(anime)}
+              >
                 Mark as Watched
               </button>
               <DropdownMenu.Root>
