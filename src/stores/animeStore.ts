@@ -6,6 +6,7 @@ const API_BASE_URL = "https://api.jikan.moe/v4";
 type AnimeStore = {
   isLoading: boolean;
   animeResults: Anime[];
+  watchedAnime: Anime[];
   fetchAnimeQuery: (searchTerm: string) => Promise<void>;
 };
 
@@ -34,9 +35,21 @@ const transformAPIData = (data: any): Anime => {
   };
 };
 
-export const useAnimeStore = create<AnimeStore>((set) => ({
+export const useAnimeStore = create<AnimeStore>((set, get) => ({
   isLoading: false,
   animeResults: [],
+
+  watchedAnime: (() => {
+    const stored = localStorage.getItem("watchedAnime");
+    return stored ? JSON.parse(stored) : [];
+  })(),
+
+  addWatchedAnime: (anime: Anime) => {
+    const { watchedAnime } = get();
+    const updatedAnime = [...watchedAnime, anime];
+    set({ watchedAnime: updatedAnime });
+    localStorage.setItem("watchedAnime", JSON.stringify(updatedAnime));
+  },
 
   fetchAnimeQuery: async (searchTerm: string) => {
     if (searchTerm.trim() === "") {
