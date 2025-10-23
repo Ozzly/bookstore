@@ -7,6 +7,7 @@ type AnimeStore = {
   isLoading: boolean;
   animeResults: Anime[];
   watchedAnime: Anime[];
+  addWatchedAnime: (anime: Anime) => void;
   fetchAnimeQuery: (searchTerm: string) => Promise<void>;
 };
 
