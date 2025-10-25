@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Anime } from "../types.js";
+import type { Anime, AnimeStatus } from "../types.js";
 
 const API_BASE_URL = "https://api.jikan.moe/v4";
 
@@ -12,6 +12,7 @@ type AnimeStore = {
   addWatchedAnime: (anime: Anime) => void;
   addWatchingAnime: (anime: Anime) => void;
   addPlanToWatchAnime: (anime: Anime) => void;
+  getAnimeStatus: (mal_id: number) => AnimeStatus | null;
   fetchAnimeQuery: (searchTerm: string) => Promise<void>;
 };
 
@@ -78,6 +79,18 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
     const updatedAnime = [...planToWatchAnime, anime];
     set({ planToWatchAnime: updatedAnime });
     localStorage.setItem("planToWatchAnime", JSON.stringify(updatedAnime));
+  },
+
+  getAnimeStatus: (mal_id: number): AnimeStatus | null => {
+    const { watchedAnime, watchingAnime, planToWatchAnime } = get();
+
+    if (watchedAnime.some((anime) => anime.mal_id === mal_id)) return "watched";
+    if (watchingAnime.some((anime) => anime.mal_id === mal_id))
+      return "watching";
+    if (planToWatchAnime.some((anime) => anime.mal_id === mal_id))
+      return "planToWatch";
+
+    return null;
   },
 
   fetchAnimeQuery: async (searchTerm: string) => {
