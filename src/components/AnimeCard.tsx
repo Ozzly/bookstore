@@ -120,14 +120,14 @@ function AnimeCard({ anime }: AnimeCardProps) {
           <div className="absolute bottom-0 w-full">
             <div className="flex">
               <button
-                className={`border-3 text-ctp-base rounded-l-lg p-1 border-r-2 w-full ${getMainButtonStyle()}`}
+                className={`border-3 text-ctp-base rounded-l-lg p-1 border-r-2 w-full transition-all duration-400 hover:brightness-115 active:brightness-90 ${getMainButtonStyle()} group`}
                 onClick={() => handleStatusChangeMainButton()}
               >
                 {getButtonText()}
               </button>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger
-                  className={`border-3 border-l-2 rounded-r-lg p-1 px-2 font-bold ${getMoreOptionsButtonStyle()}`}
+                  className={`border-3 border-l-2 rounded-r-lg p-1 px-2 font-bold transition-all duration-400 hover:brightness-115 active:brightness-90 ${getMoreOptionsButtonStyle()}`}
                 >
                   +
                 </DropdownMenu.Trigger>
