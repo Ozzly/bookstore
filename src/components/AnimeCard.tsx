@@ -25,6 +25,10 @@ function AnimeCard({ anime }: AnimeCardProps) {
   } = anime;
 
   const addWatchedAnime = useAnimeStore((state) => state.addWatchedAnime);
+  const addWatchingAnime = useAnimeStore((state) => state.addWatchingAnime);
+  const addPlanToWatchAnime = useAnimeStore(
+    (state) => state.addPlanToWatchAnime
+  );
   const currentStatus = useAnimeStore((state) => state.getAnimeStatus(mal_id));
   const removeFromAllLists = useAnimeStore((state) => state.removeFromAllLists);
 
@@ -56,6 +60,12 @@ function AnimeCard({ anime }: AnimeCardProps) {
 
     if (status === "watched") {
       addWatchedAnime(anime);
+    }
+    if (status === "watching") {
+      addWatchingAnime(anime);
+    }
+    if (status === "planToWatch") {
+      addPlanToWatchAnime(anime);
     }
   }
 
@@ -107,6 +117,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                       <DropdownMenu.RadioItem
                         value="watched"
                         className="hover:bg-ctp-surface1 p-1 rounded-md"
+                        onClick={() => handleStatusChange("watched")}
                       >
                         Mark as Watched
                         <DropdownMenu.ItemIndicator />
@@ -114,6 +125,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                       <DropdownMenu.RadioItem
                         value="watching"
                         className="hover:bg-ctp-surface2 p-1 rounded-md"
+                        onClick={() => handleStatusChange("watching")}
                       >
                         Mark as Watching
                         <DropdownMenu.ItemIndicator />
@@ -121,6 +133,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                       <DropdownMenu.RadioItem
                         value="planToWatch"
                         className="hover:bg-ctp-surface2 p-1 rounded-md"
+                        onClick={() => handleStatusChange("planToWatch")}
                       >
                         Plan to Watch
                         <DropdownMenu.ItemIndicator />
