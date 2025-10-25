@@ -69,6 +69,32 @@ function AnimeCard({ anime }: AnimeCardProps) {
     }
   }
 
+  function getMainButtonStyle() {
+    switch (currentStatus) {
+      case "watched":
+        return "bg-ctp-blue border-ctp-blue";
+      case "watching":
+        return "bg-ctp-peach border-ctp-peach";
+      case "planToWatch":
+        return "bg-ctp-pink border-ctp-pink";
+      default:
+        return "bg-ctp-mauve border-ctp-mauve";
+    }
+  }
+
+  function getMoreOptionsButtonStyle() {
+    switch (currentStatus) {
+      case "watched":
+        return "border-ctp-blue text-ctp-blue";
+      case "watching":
+        return "border-ctp-peach text-ctp-peach";
+      case "planToWatch":
+        return "border-ctp-pink text-ctp-pink";
+      default:
+        return "border-ctp-mauve text-ctp-mauve";
+    }
+  }
+
   return (
     <div className="size-fit p-4 bg-ctp-surface0 rounded-lg border-ctp-surface1 hover:scale-102 hover:shadow-xl transition shadow-lg">
       <div className="flex h-full gap-4 text-ctp-text">
@@ -94,13 +120,15 @@ function AnimeCard({ anime }: AnimeCardProps) {
           <div className="absolute bottom-0 w-full">
             <div className="flex">
               <button
-                className="border-3 border-ctp-mauve rounded-l-lg p-1 border-r-2 w-full"
+                className={`border-3 text-ctp-base rounded-l-lg p-1 border-r-2 w-full ${getMainButtonStyle()}`}
                 onClick={() => handleStatusChangeMainButton()}
               >
                 {getButtonText()}
               </button>
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger className="text-ctp-mauve border-3 border-l-2 border-ctp-mauve rounded-r-lg p-1 px-2 font-bold">
+                <DropdownMenu.Trigger
+                  className={`border-3 border-l-2 rounded-r-lg p-1 px-2 font-bold ${getMoreOptionsButtonStyle()}`}
+                >
                   +
                 </DropdownMenu.Trigger>
 
