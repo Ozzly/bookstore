@@ -86,13 +86,13 @@ function AnimeCard({ anime }: AnimeCardProps) {
   function getMoreOptionsButtonStyle() {
     switch (currentStatus) {
       case "watched":
-        return "border-ctp-blue text-ctp-blue";
+        return "border-ctp-blue text-ctp-blue hover:bg-ctp-blue/20";
       case "watching":
-        return "border-ctp-peach text-ctp-peach";
+        return "border-ctp-peach text-ctp-peach hover:bg-ctp-peach/20";
       case "planToWatch":
-        return "border-ctp-pink text-ctp-pink";
+        return "border-ctp-pink text-ctp-pink hover:bg-ctp-pink/20";
       default:
-        return "border-ctp-mauve text-ctp-mauve";
+        return "border-ctp-mauve text-ctp-mauve hover:bg-ctp-mauve/20";
     }
   }
 
