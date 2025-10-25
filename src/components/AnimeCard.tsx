@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Anime } from "../types.js";
+import type { Anime, AnimeStatus } from "../types.js";
 import { DropdownMenu } from "radix-ui";
 import {
   ChevronDownIcon,
@@ -25,6 +25,39 @@ function AnimeCard({ anime }: AnimeCardProps) {
   } = anime;
 
   const addWatchedAnime = useAnimeStore((state) => state.addWatchedAnime);
+  const currentStatus = useAnimeStore((state) => state.getAnimeStatus(mal_id));
+  const removeFromAllLists = useAnimeStore((state) => state.removeFromAllLists);
+
+  function getButtonText() {
+    switch (currentStatus) {
+      case "watched":
+        return "Watched";
+      case "watching":
+        return "Watching";
+      case "planToWatch":
+        return "Planned";
+      default:
+        return "Mark Watched";
+    }
+  }
+
+  function handleStatusChangeMainButton() {
+    if (currentStatus) {
+      removeFromAllLists(mal_id);
+    } else {
+      addWatchedAnime(anime);
+    }
+  }
+
+  function handleStatusChange(status: AnimeStatus | null) {
+    if (currentStatus) {
+      removeFromAllLists(mal_id);
+    }
+
+    if (status === "watched") {
+      addWatchedAnime(anime);
+    }
+  }
 
   return (
     <div className="size-fit p-4 bg-ctp-surface0 rounded-lg border-ctp-surface1 hover:scale-102 hover:shadow-xl transition shadow-lg">
@@ -48,19 +81,17 @@ function AnimeCard({ anime }: AnimeCardProps) {
           <p className="text-center">
             {episodes || "N/A"} {episodes > 1 ? "episodes" : "episode"}
           </p>
-          <div className="absolute bottom-0">
-            <div className="">
+          <div className="absolute bottom-0 w-full">
+            <div className="flex">
               <button
-                className="border-3 border-ctp-mauve rounded-l-lg p-1 border-r-2"
-                onClick={() => addWatchedAnime(anime)}
+                className="border-3 border-ctp-mauve rounded-l-lg p-1 border-r-2 w-full"
+                onClick={() => handleStatusChangeMainButton()}
               >
-                Mark as Watched
+                {getButtonText()}
               </button>
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger>
-                  <button className="text-ctp-mauve border-3 border-l-2 border-ctp-mauve rounded-r-lg p-1 px-2 font-bold">
-                    +
-                  </button>
+                <DropdownMenu.Trigger className="text-ctp-mauve border-3 border-l-2 border-ctp-mauve rounded-r-lg p-1 px-2 font-bold">
+                  +
                 </DropdownMenu.Trigger>
 
                 <DropdownMenu.Portal>
