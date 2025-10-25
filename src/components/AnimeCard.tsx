@@ -127,7 +127,11 @@ function AnimeCard({ anime }: AnimeCardProps) {
                 {getButtonText()}
 
                 {currentStatus && (
-                  <TrashIcon className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-all duration-400 font-bold" />
+                  <TrashIcon
+                    height={18}
+                    width={18}
+                    className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-all duration-400 font-bold"
+                  />
                 )}
               </button>
               <DropdownMenu.Root>
