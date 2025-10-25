@@ -13,6 +13,7 @@ type AnimeStore = {
   addWatchingAnime: (anime: Anime) => void;
   addPlanToWatchAnime: (anime: Anime) => void;
   getAnimeStatus: (mal_id: number) => AnimeStatus | null;
+  removeFromAllLists: (mal_id: number) => void;
   fetchAnimeQuery: (searchTerm: string) => Promise<void>;
 };
 
@@ -91,6 +92,31 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
       return "planToWatch";
 
     return null;
+  },
+
+  removeFromAllLists: (mal_id: number) => {
+    // Optimise later by using getAnimeStatus first
+    const { watchedAnime, watchingAnime, planToWatchAnime } = get();
+
+    const updatedWatched = watchedAnime.filter(
+      (anime) => anime.mal_id !== mal_id
+    );
+    const updatedWatching = watchingAnime.filter(
+      (anime) => anime.mal_id !== mal_id
+    );
+    const updatedPlanned = planToWatchAnime.filter(
+      (anime) => anime.mal_id !== mal_id
+    );
+
+    set({
+      watchedAnime: updatedWatched,
+      watchingAnime: updatedWatching,
+      planToWatchAnime: updatedPlanned,
+    });
+
+    localStorage.setItem("watchedAnime", JSON.stringify(updatedWatched));
+    localStorage.setItem("watchingAnime", JSON.stringify(updatedWatching));
+    localStorage.setItem("planToWatchAnime", JSON.stringify(updatedPlanned));
   },
 
   fetchAnimeQuery: async (searchTerm: string) => {
