@@ -7,7 +7,11 @@ type AnimeStore = {
   isLoading: boolean;
   animeResults: Anime[];
   watchedAnime: Anime[];
+  watchingAnime: Anime[];
+  planToWatchAnime: Anime[];
   addWatchedAnime: (anime: Anime) => void;
+  addWatchingAnime: (anime: Anime) => void;
+  addPlanToWatchAnime: (anime: Anime) => void;
   fetchAnimeQuery: (searchTerm: string) => Promise<void>;
 };
 
@@ -45,11 +49,35 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
     return stored ? JSON.parse(stored) : [];
   })(),
 
+  watchingAnime: (() => {
+    const stored = localStorage.getItem("watchingAnime");
+    return stored ? JSON.parse(stored) : [];
+  })(),
+
+  planToWatchAnime: (() => {
+    const stored = localStorage.getItem("planToWatchAnime");
+    return stored ? JSON.parse(stored) : [];
+  })(),
+
   addWatchedAnime: (anime: Anime) => {
     const { watchedAnime } = get();
     const updatedAnime = [...watchedAnime, anime];
     set({ watchedAnime: updatedAnime });
     localStorage.setItem("watchedAnime", JSON.stringify(updatedAnime));
+  },
+
+  addWatchingAnime: (anime: Anime) => {
+    const { watchingAnime } = get();
+    const updatedAnime = [...watchingAnime, anime];
+    set({ watchingAnime: updatedAnime });
+    localStorage.setItem("watchingAnime", JSON.stringify(updatedAnime));
+  },
+
+  addPlanToWatchAnime: (anime: Anime) => {
+    const { planToWatchAnime } = get();
+    const updatedAnime = [...planToWatchAnime, anime];
+    set({ planToWatchAnime: updatedAnime });
+    localStorage.setItem("planToWatchAnime", JSON.stringify(updatedAnime));
   },
 
   fetchAnimeQuery: async (searchTerm: string) => {
