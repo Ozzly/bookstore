@@ -5,6 +5,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   PlusCircledIcon,
+  TrashIcon,
 } from "@radix-ui/react-icons";
 import { useAnimeStore } from "../stores/animeStore.js";
 
@@ -124,6 +125,10 @@ function AnimeCard({ anime }: AnimeCardProps) {
                 onClick={() => handleStatusChangeMainButton()}
               >
                 {getButtonText()}
+
+                {currentStatus && (
+                  <TrashIcon className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-all duration-400 font-bold" />
+                )}
               </button>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger
