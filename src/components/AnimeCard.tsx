@@ -76,7 +76,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
           <p className="text-center text-sm mb-2">{studio}</p>
           <div className="flex justify-around">
             <p className="">{release_season}</p>
-            <p>{score}★</p>
+            <p>{score || "N/A"}★</p>
           </div>
           <p className="text-center">
             {episodes || "N/A"} {episodes > 1 ? "episodes" : "episode"}
