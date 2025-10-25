@@ -10,10 +10,9 @@ import { useAnimeStore } from "../stores/animeStore.js";
 
 interface AnimeCardProps {
   anime: Anime;
-  children?: ReactNode;
 }
 
-function AnimeCard({ anime, children }: AnimeCardProps) {
+function AnimeCard({ anime }: AnimeCardProps) {
   const {
     mal_id,
     title,
