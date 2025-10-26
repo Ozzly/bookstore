@@ -69,7 +69,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
       case "Watching":
         return `${baseStyle} bg-ctp-peach border-ctp-peach`;
       case "Planned":
-        return `${baseStyle} bg-ctp-pink border-ctp-pink`;
+        return `${baseStyle} bg-ctp-red border-ctp-red`;
       default:
         return `${baseStyle} bg-ctp-mauve border-ctp-mauve`;
     }
@@ -85,7 +85,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
       case "Watching":
         return `${baseStyle} border-ctp-peach text-ctp-peach hover:bg-ctp-peach/20`;
       case "Planned":
-        return `${baseStyle} border-ctp-pink text-ctp-pink hover:bg-ctp-pink/20`;
+        return `${baseStyle} border-ctp-red text-ctp-red hover:bg-ctp-red/20`;
       default:
         return `${baseStyle} border-ctp-mauve text-ctp-mauve hover:bg-ctp-mauve/20`;
     }
@@ -115,10 +115,14 @@ function AnimeCard({ anime }: AnimeCardProps) {
           </p>
           <div className="absolute bottom-0 w-full">
             {currentStatus === "Watched" ? (
-              <div className="text-ctp-subtext0">Finished {dateAdded}</div>
+              <div className="text-ctp-subtext0 text-center">
+                Finished {dateAdded}
+              </div>
             ) : (
               currentStatus === "Watching" && (
-                <div className="text-ctp-subtext0">Episode X/{episodes}</div>
+                <div className="text-ctp-subtext0 text-center">
+                  Episode X/{episodes}
+                </div>
               )
             )}
             <div className="flex">
