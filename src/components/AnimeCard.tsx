@@ -147,7 +147,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                         className="hover:bg-ctp-surface2 p-1 rounded-md"
                         onClick={() => handleStatusChange("Planned")}
                       >
-                        Plan to Watch
+                        Mark as Planned
                         <DropdownMenu.ItemIndicator />
                       </DropdownMenu.RadioItem>
                     </DropdownMenu.RadioGroup>
