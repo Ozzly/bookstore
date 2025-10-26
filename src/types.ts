@@ -20,4 +20,4 @@ export interface Anime {
   studio: string; // Replace with array for multiple studios later
 }
 
-export type AnimeStatus = "watched" | "watching" | "planToWatch";
+export type AnimeStatus = "Watched" | "Watching" | "Planned";

@@ -35,11 +35,11 @@ function AnimeCard({ anime }: AnimeCardProps) {
 
   function getButtonText() {
     switch (currentStatus) {
-      case "watched":
+      case "Watched":
         return "Watched";
-      case "watching":
+      case "Watching":
         return "Watching";
-      case "planToWatch":
+      case "Planned":
         return "Planned";
       default:
         return "Mark Watched";
@@ -59,24 +59,24 @@ function AnimeCard({ anime }: AnimeCardProps) {
       removeFromAllLists(mal_id);
     }
 
-    if (status === "watched") {
+    if (status === "Watched") {
       addWatchedAnime(anime);
     }
-    if (status === "watching") {
+    if (status === "Watching") {
       addWatchingAnime(anime);
     }
-    if (status === "planToWatch") {
+    if (status === "Planned") {
       addPlanToWatchAnime(anime);
     }
   }
 
   function getColor() {
     switch (currentStatus) {
-      case "watched":
+      case "Watched":
         return "ctp-blue";
-      case "watching":
+      case "Watching":
         return "ctp-peach";
-      case "planToWatch":
+      case "Planned":
         return "ctp-pink";
       default:
         return "ctp-mauve";
@@ -141,7 +141,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                       <DropdownMenu.RadioItem
                         value="watched"
                         className="hover:bg-ctp-surface1 p-1 rounded-md"
-                        onClick={() => handleStatusChange("watched")}
+                        onClick={() => handleStatusChange("Watched")}
                       >
                         Mark as Watched
                         <DropdownMenu.ItemIndicator />
@@ -149,7 +149,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                       <DropdownMenu.RadioItem
                         value="watching"
                         className="hover:bg-ctp-surface2 p-1 rounded-md"
-                        onClick={() => handleStatusChange("watching")}
+                        onClick={() => handleStatusChange("Watching")}
                       >
                         Mark as Watching
                         <DropdownMenu.ItemIndicator />
@@ -157,7 +157,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                       <DropdownMenu.RadioItem
                         value="planToWatch"
                         className="hover:bg-ctp-surface2 p-1 rounded-md"
-                        onClick={() => handleStatusChange("planToWatch")}
+                        onClick={() => handleStatusChange("Planned")}
                       >
                         Plan to Watch
                         <DropdownMenu.ItemIndicator />

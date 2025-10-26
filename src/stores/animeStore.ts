@@ -6,9 +6,9 @@ const API_BASE_URL = "https://api.jikan.moe/v4";
 type AnimeStore = {
   isLoading: boolean;
   animeResults: Anime[];
-  watchedAnime: Anime[];
-  watchingAnime: Anime[];
-  planToWatchAnime: Anime[];
+  animeWatched: Anime[];
+  animeWatching: Anime[];
+  animePlanned: Anime[];
   addWatchedAnime: (anime: Anime) => void;
   addWatchingAnime: (anime: Anime) => void;
   addPlanToWatchAnime: (anime: Anime) => void;
@@ -46,77 +46,76 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
   isLoading: false,
   animeResults: [],
 
-  watchedAnime: (() => {
-    const stored = localStorage.getItem("watchedAnime");
+  animeWatched: (() => {
+    const stored = localStorage.getItem("animeWatched");
     return stored ? JSON.parse(stored) : [];
   })(),
 
-  watchingAnime: (() => {
-    const stored = localStorage.getItem("watchingAnime");
+  animeWatching: (() => {
+    const stored = localStorage.getItem("animeWatching");
     return stored ? JSON.parse(stored) : [];
   })(),
 
-  planToWatchAnime: (() => {
-    const stored = localStorage.getItem("planToWatchAnime");
+  animePlanned: (() => {
+    const stored = localStorage.getItem("animePlanned");
     return stored ? JSON.parse(stored) : [];
   })(),
 
   addWatchedAnime: (anime: Anime) => {
-    const { watchedAnime } = get();
-    const updatedAnime = [...watchedAnime, anime];
-    set({ watchedAnime: updatedAnime });
-    localStorage.setItem("watchedAnime", JSON.stringify(updatedAnime));
+    const { animeWatched } = get();
+    const updatedAnime = [...animeWatched, anime];
+    set({ animeWatched: updatedAnime });
+    localStorage.setItem("animeWatched", JSON.stringify(updatedAnime));
   },
 
   addWatchingAnime: (anime: Anime) => {
-    const { watchingAnime } = get();
-    const updatedAnime = [...watchingAnime, anime];
-    set({ watchingAnime: updatedAnime });
-    localStorage.setItem("watchingAnime", JSON.stringify(updatedAnime));
+    const { animeWatching } = get();
+    const updatedAnime = [...animeWatching, anime];
+    set({ animeWatching: updatedAnime });
+    localStorage.setItem("animeWatching", JSON.stringify(updatedAnime));
   },
 
   addPlanToWatchAnime: (anime: Anime) => {
-    const { planToWatchAnime } = get();
-    const updatedAnime = [...planToWatchAnime, anime];
-    set({ planToWatchAnime: updatedAnime });
-    localStorage.setItem("planToWatchAnime", JSON.stringify(updatedAnime));
+    const { animePlanned } = get();
+    const updatedAnime = [...animePlanned, anime];
+    set({ animePlanned: updatedAnime });
+    localStorage.setItem("animePlanned", JSON.stringify(updatedAnime));
   },
 
   getAnimeStatus: (mal_id: number): AnimeStatus | null => {
-    const { watchedAnime, watchingAnime, planToWatchAnime } = get();
+    const { animeWatched, animeWatching, animePlanned } = get();
 
-    if (watchedAnime.some((anime) => anime.mal_id === mal_id)) return "watched";
-    if (watchingAnime.some((anime) => anime.mal_id === mal_id))
-      return "watching";
-    if (planToWatchAnime.some((anime) => anime.mal_id === mal_id))
-      return "planToWatch";
+    if (animeWatched.some((anime) => anime.mal_id === mal_id)) return "Watched";
+    if (animeWatching.some((anime) => anime.mal_id === mal_id))
+      return "Watching";
+    if (animePlanned.some((anime) => anime.mal_id === mal_id)) return "Planned";
 
     return null;
   },
 
   removeFromAllLists: (mal_id: number) => {
     // Optimise later by using getAnimeStatus first
-    const { watchedAnime, watchingAnime, planToWatchAnime } = get();
+    const { animeWatched, animeWatching, animePlanned } = get();
 
-    const updatedWatched = watchedAnime.filter(
+    const updatedWatched = animeWatched.filter(
       (anime) => anime.mal_id !== mal_id
     );
-    const updatedWatching = watchingAnime.filter(
+    const updatedWatching = animeWatching.filter(
       (anime) => anime.mal_id !== mal_id
     );
-    const updatedPlanned = planToWatchAnime.filter(
+    const updatedPlanned = animePlanned.filter(
       (anime) => anime.mal_id !== mal_id
     );
 
     set({
-      watchedAnime: updatedWatched,
-      watchingAnime: updatedWatching,
-      planToWatchAnime: updatedPlanned,
+      animeWatched: updatedWatched,
+      animeWatching: updatedWatching,
+      animePlanned: updatedPlanned,
     });
 
-    localStorage.setItem("watchedAnime", JSON.stringify(updatedWatched));
-    localStorage.setItem("watchingAnime", JSON.stringify(updatedWatching));
-    localStorage.setItem("planToWatchAnime", JSON.stringify(updatedPlanned));
+    localStorage.setItem("animeWatched", JSON.stringify(updatedWatched));
+    localStorage.setItem("animeWatching", JSON.stringify(updatedWatching));
+    localStorage.setItem("animePlanned", JSON.stringify(updatedPlanned));
   },
 
   fetchAnimeQuery: async (searchTerm: string) => {
