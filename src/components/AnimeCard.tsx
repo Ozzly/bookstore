@@ -23,6 +23,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
     year,
     release_season,
     studio,
+    dateAdded,
   } = anime;
 
   const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
@@ -114,7 +115,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
           </p>
           <div className="absolute bottom-0 w-full">
             {currentStatus === "Watched" ? (
-              <div className="text-ctp-subtext0">Finished on DATE</div>
+              <div className="text-ctp-subtext0">Finished {dateAdded}</div>
             ) : (
               currentStatus === "Watching" && (
                 <div className="text-ctp-subtext0">Episode X/{episodes}</div>

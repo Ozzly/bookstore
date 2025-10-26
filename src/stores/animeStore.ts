@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { Anime, AnimeStatus } from "../types.js";
+import moment from "moment";
 
 const API_BASE_URL = "https://api.jikan.moe/v4";
 
@@ -62,6 +63,7 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
   addAnimeToList: (anime: Anime, listName: AnimeStatus) => {
     const currentList = get()[`anime${listName}`] as Anime[];
     if (currentList.some((a) => a.mal_id === anime.mal_id)) return;
+    anime.dateAdded = moment().format("ll");
     const updatedList = [...currentList, anime];
     set({ [`anime${listName}`]: updatedList });
     localStorage.setItem(`anime${listName}`, JSON.stringify(updatedList));
