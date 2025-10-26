@@ -1,5 +1,7 @@
-# Bookstore
+# Reckord
 
-This is meant to be a project for me to learn React.
+Reckord is a client-side media tracker, allowing you to record books, anime, movies*, tv shows*, and manga\* in one centralised location.
 
-Search books through [Open Library](https://openlibrary.org/) and store what you've read (for the time being in local storage).
+> \* not yet implemented
+
+This project is currently undergoing development, and was originally intended as a way for me to learn react, expect its direction to pivot and code quality to vary wildly
