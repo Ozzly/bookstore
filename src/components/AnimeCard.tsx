@@ -58,16 +58,35 @@ function AnimeCard({ anime }: AnimeCardProps) {
     addAnimeToList(anime, status);
   }
 
-  function getColor() {
+  function getMainButtonStyle() {
+    const baseStyle =
+      "border-3 text-ctp-base rounded-l-lg p-1 border-r-2 w-full transition-all duration-400 hover:brightness-115 active:brightness-90 group";
+
     switch (currentStatus) {
       case "Watched":
-        return "ctp-blue";
+        return `${baseStyle} bg-ctp-blue border-ctp-blue`;
       case "Watching":
-        return "ctp-peach";
+        return `${baseStyle} bg-ctp-peach border-ctp-peach`;
       case "Planned":
-        return "ctp-pink";
+        return `${baseStyle} bg-ctp-pink border-ctp-pink`;
       default:
-        return "ctp-mauve";
+        return `${baseStyle} bg-ctp-mauve border-ctp-mauve`;
+    }
+  }
+
+  function getDropdownButtonStyle() {
+    const baseStyle =
+      "border-3 border-l-2 rounded-r-lg p-1 px-2 font-bold transition-all duration-400 hover:brightness-115 active:brightness-90";
+
+    switch (currentStatus) {
+      case "Watched":
+        return `${baseStyle} border-ctp-blue text-ctp-blue hover:bg-ctp-blue/20`;
+      case "Watching":
+        return `${baseStyle} border-ctp-peach text-ctp-peach hover:bg-ctp-peach/20`;
+      case "Planned":
+        return `${baseStyle} border-ctp-pink text-ctp-pink hover:bg-ctp-pink/20`;
+      default:
+        return `${baseStyle} border-ctp-mauve text-ctp-mauve hover:bg-ctp-mauve/20`;
     }
   }
 
@@ -103,7 +122,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
             )}
             <div className="flex">
               <button
-                className={`border-3 text-ctp-base rounded-l-lg p-1 border-r-2 w-full transition-all duration-400 hover:brightness-115 active:brightness-90 group bg-${getColor()} border-${getColor()}`}
+                className={getMainButtonStyle()}
                 onClick={() => handleStatusChangeMainButton()}
               >
                 {getButtonText()}
@@ -117,9 +136,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                 )}
               </button>
               <DropdownMenu.Root>
-                <DropdownMenu.Trigger
-                  className={`border-3 border-l-2 rounded-r-lg p-1 px-2 font-bold transition-all duration-400 hover:brightness-115 active:brightness-90 border-${getColor()} text-${getColor()} hover:bg-${getColor()}/20`}
-                >
+                <DropdownMenu.Trigger className={getDropdownButtonStyle()}>
                   +
                 </DropdownMenu.Trigger>
 
