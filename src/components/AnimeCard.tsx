@@ -70,29 +70,16 @@ function AnimeCard({ anime }: AnimeCardProps) {
     }
   }
 
-  function getMainButtonStyle() {
+  function getColor() {
     switch (currentStatus) {
       case "watched":
-        return "bg-ctp-blue border-ctp-blue";
+        return "ctp-blue";
       case "watching":
-        return "bg-ctp-peach border-ctp-peach";
+        return "ctp-peach";
       case "planToWatch":
-        return "bg-ctp-pink border-ctp-pink";
+        return "ctp-pink";
       default:
-        return "bg-ctp-mauve border-ctp-mauve";
-    }
-  }
-
-  function getMoreOptionsButtonStyle() {
-    switch (currentStatus) {
-      case "watched":
-        return "border-ctp-blue text-ctp-blue hover:bg-ctp-blue/20";
-      case "watching":
-        return "border-ctp-peach text-ctp-peach hover:bg-ctp-peach/20";
-      case "planToWatch":
-        return "border-ctp-pink text-ctp-pink hover:bg-ctp-pink/20";
-      default:
-        return "border-ctp-mauve text-ctp-mauve hover:bg-ctp-mauve/20";
+        return "ctp-mauve";
     }
   }
 
@@ -121,7 +108,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
           <div className="absolute bottom-0 w-full">
             <div className="flex">
               <button
-                className={`border-3 text-ctp-base rounded-l-lg p-1 border-r-2 w-full transition-all duration-400 hover:brightness-115 active:brightness-90 ${getMainButtonStyle()} group`}
+                className={`border-3 text-ctp-base rounded-l-lg p-1 border-r-2 w-full transition-all duration-400 hover:brightness-115 active:brightness-90 group bg-${getColor()} border-${getColor()}`}
                 onClick={() => handleStatusChangeMainButton()}
               >
                 {getButtonText()}
@@ -136,7 +123,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
               </button>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger
-                  className={`border-3 border-l-2 rounded-r-lg p-1 px-2 font-bold transition-all duration-400 hover:brightness-115 active:brightness-90 ${getMoreOptionsButtonStyle()}`}
+                  className={`border-3 border-l-2 rounded-r-lg p-1 px-2 font-bold transition-all duration-400 hover:brightness-115 active:brightness-90 border-${getColor()} text-${getColor()} hover:bg-${getColor()}/20`}
                 >
                   +
                 </DropdownMenu.Trigger>
