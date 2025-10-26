@@ -10,9 +10,6 @@ type AnimeStore = {
   animeWatching: Anime[];
   animePlanned: Anime[];
   addAnimeToList: (anime: Anime, listName: AnimeStatus) => void;
-  addWatchedAnime: (anime: Anime) => void;
-  addWatchingAnime: (anime: Anime) => void;
-  addPlanToWatchAnime: (anime: Anime) => void;
   getAnimeStatus: (mal_id: number) => AnimeStatus | null;
   removeFromAllLists: (mal_id: number) => void;
   fetchAnimeQuery: (searchTerm: string) => Promise<void>;
@@ -68,27 +65,6 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
     const updatedList = [...currentList, anime];
     set({ [`anime${listName}`]: updatedList });
     localStorage.setItem(`anime${listName}`, JSON.stringify(updatedList));
-  },
-
-  addWatchedAnime: (anime: Anime) => {
-    const { animeWatched } = get();
-    const updatedAnime = [...animeWatched, anime];
-    set({ animeWatched: updatedAnime });
-    localStorage.setItem("animeWatched", JSON.stringify(updatedAnime));
-  },
-
-  addWatchingAnime: (anime: Anime) => {
-    const { animeWatching } = get();
-    const updatedAnime = [...animeWatching, anime];
-    set({ animeWatching: updatedAnime });
-    localStorage.setItem("animeWatching", JSON.stringify(updatedAnime));
-  },
-
-  addPlanToWatchAnime: (anime: Anime) => {
-    const { animePlanned } = get();
-    const updatedAnime = [...animePlanned, anime];
-    set({ animePlanned: updatedAnime });
-    localStorage.setItem("animePlanned", JSON.stringify(updatedAnime));
   },
 
   getAnimeStatus: (mal_id: number): AnimeStatus | null => {
