@@ -29,6 +29,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
   const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
   const currentStatus = useAnimeStore((state) => state.getAnimeStatus(mal_id));
   const removeFromAllLists = useAnimeStore((state) => state.removeFromAllLists);
+  const getDateAdded = useAnimeStore((state) => state.getDateAdded(mal_id));
 
   function getButtonText() {
     switch (currentStatus) {
@@ -116,7 +117,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
           <div className="absolute bottom-0 w-full">
             {currentStatus === "Watched" ? (
               <div className="text-ctp-subtext0 text-center">
-                Finished {dateAdded}
+                Finished {getDateAdded}
               </div>
             ) : (
               currentStatus === "Watching" && (

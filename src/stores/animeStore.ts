@@ -13,6 +13,7 @@ type AnimeStore = {
   addAnimeToList: (anime: Anime, listName: AnimeStatus) => void;
   getAnimeStatus: (mal_id: number) => AnimeStatus | null;
   removeFromAllLists: (mal_id: number) => void;
+  getDateAdded: (mal_id: number) => string | null;
   fetchAnimeQuery: (searchTerm: string) => Promise<void>;
 };
 
@@ -103,6 +104,13 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
     localStorage.setItem("animeWatched", JSON.stringify(updatedWatched));
     localStorage.setItem("animeWatching", JSON.stringify(updatedWatching));
     localStorage.setItem("animePlanned", JSON.stringify(updatedPlanned));
+  },
+
+  getDateAdded: (mal_id: number): string | null => {
+    const { animeWatched } = get();
+    return (
+      animeWatched.find((anime) => anime.mal_id === mal_id)?.dateAdded || null
+    );
   },
 
   fetchAnimeQuery: async (searchTerm: string) => {
