@@ -25,11 +25,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
     studio,
   } = anime;
 
-  const addWatchedAnime = useAnimeStore((state) => state.addWatchedAnime);
-  const addWatchingAnime = useAnimeStore((state) => state.addWatchingAnime);
-  const addPlanToWatchAnime = useAnimeStore(
-    (state) => state.addPlanToWatchAnime
-  );
+  const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
   const currentStatus = useAnimeStore((state) => state.getAnimeStatus(mal_id));
   const removeFromAllLists = useAnimeStore((state) => state.removeFromAllLists);
 
@@ -50,7 +46,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
     if (currentStatus) {
       removeFromAllLists(mal_id);
     } else {
-      addWatchedAnime(anime);
+      addAnimeToList(anime, "Watched");
     }
   }
 
@@ -58,16 +54,8 @@ function AnimeCard({ anime }: AnimeCardProps) {
     if (currentStatus) {
       removeFromAllLists(mal_id);
     }
-
-    if (status === "Watched") {
-      addWatchedAnime(anime);
-    }
-    if (status === "Watching") {
-      addWatchingAnime(anime);
-    }
-    if (status === "Planned") {
-      addPlanToWatchAnime(anime);
-    }
+    if (status === null) return;
+    addAnimeToList(anime, status);
   }
 
   function getColor() {
