@@ -94,6 +94,13 @@ function AnimeCard({ anime }: AnimeCardProps) {
             {episodes || "N/A"} {episodes > 1 ? "episodes" : "episode"}
           </p>
           <div className="absolute bottom-0 w-full">
+            {currentStatus === "Watched" ? (
+              <div className="text-ctp-subtext0">Finished on DATE</div>
+            ) : (
+              currentStatus === "Watching" && (
+                <div className="text-ctp-subtext0">Episode X/{episodes}</div>
+              )
+            )}
             <div className="flex">
               <button
                 className={`border-3 text-ctp-base rounded-l-lg p-1 border-r-2 w-full transition-all duration-400 hover:brightness-115 active:brightness-90 group bg-${getColor()} border-${getColor()}`}
