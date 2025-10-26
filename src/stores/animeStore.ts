@@ -9,6 +9,7 @@ type AnimeStore = {
   animeWatched: Anime[];
   animeWatching: Anime[];
   animePlanned: Anime[];
+  addAnimeToList: (anime: Anime, listName: AnimeStatus) => void;
   addWatchedAnime: (anime: Anime) => void;
   addWatchingAnime: (anime: Anime) => void;
   addPlanToWatchAnime: (anime: Anime) => void;
@@ -60,6 +61,14 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
     const stored = localStorage.getItem("animePlanned");
     return stored ? JSON.parse(stored) : [];
   })(),
+
+  addAnimeToList: (anime: Anime, listName: AnimeStatus) => {
+    const currentList = get()[`anime${listName}`] as Anime[];
+    if (currentList.some((a) => a.mal_id === anime.mal_id)) return;
+    const updatedList = [...currentList, anime];
+    set({ [`anime${listName}`]: updatedList });
+    localStorage.setItem(`anime${listName}`, JSON.stringify(updatedList));
+  },
 
   addWatchedAnime: (anime: Anime) => {
     const { animeWatched } = get();
