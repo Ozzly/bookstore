@@ -28,7 +28,9 @@ function AnimeCard({ anime }: AnimeCardProps) {
 
   const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
   const currentStatus = useAnimeStore((state) => state.getAnimeStatus(mal_id));
-  const removeFromAllLists = useAnimeStore((state) => state.removeFromAllLists);
+  const removeAnimeFromList = useAnimeStore(
+    (state) => state.removeAnimeFromList
+  );
   const getDateAdded = useAnimeStore((state) => state.getDateAdded(mal_id));
 
   function getButtonText() {
@@ -46,7 +48,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
 
   function handleStatusChangeMainButton() {
     if (currentStatus) {
-      removeFromAllLists(mal_id);
+      removeAnimeFromList(mal_id, currentStatus);
     } else {
       addAnimeToList(anime, "Watched");
     }
@@ -54,7 +56,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
 
   function handleStatusChange(status: AnimeStatus | null) {
     if (currentStatus) {
-      removeFromAllLists(mal_id);
+      removeAnimeFromList(mal_id, currentStatus);
     }
     if (status === null) return;
     addAnimeToList(anime, status);
