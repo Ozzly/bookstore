@@ -9,8 +9,6 @@ import { IoReaderOutline } from "react-icons/io5";
 type Page = "books" | "anime" | "manga" | "movies" | "shows";
 
 function Sidebar() {
-  const setSearchCategory = useSearchStore((state) => state.setSearchCategory);
-
   return (
     <div className="w-64 flex-shrink-0 h-full border-r-1 border-ctp-surface0">
       <div className="flex flex-col m-3 text-ctp-text">
