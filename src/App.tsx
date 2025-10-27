@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
 import { createBrowserRouter, Outlet } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import Home from "./components/Home.js";
-import Search from "./components/SearchInput.js";
 import Books from "./pages/Books.js";
 import Header from "./components/Header.js";
 import Anime from "./pages/Anime.js";
 import Sidebar from "./components/Sidebar.js";
+import Manga from "./pages/Manga.js";
+import Shows from "./pages/Shows.js";
+import Movies from "./pages/Movies.js";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,18 @@ const router = createBrowserRouter([
         path: "/anime",
         Component: Anime,
       },
+      {
+        path: "/manga",
+        Component: Manga,
+      },
+      {
+        path: "/movies",
+        Component: Movies,
+      },
+      {
+        path: "/shows",
+        Component: Shows,
+      },
     ],
   },
 ]);
@@ -33,15 +46,9 @@ const router = createBrowserRouter([
 function Layout() {
   return (
     <div className="h-screen flex flex-col">
-      {/* Header - fixed at top */}
       <Header />
-
-      {/* Main content area with sidebar and content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar - fixed on left */}
         <Sidebar />
-
-        {/* Main content area */}
         <div className="flex-1 overflow-auto px-4 mb-4">
           <Outlet />
         </div>
