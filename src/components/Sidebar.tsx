@@ -1,6 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router";
 import { useSearchStore } from "../stores/searchUIStore.js";
+import { PiBooks } from "react-icons/pi";
+import { FaTv, FaPlayCircle } from "react-icons/fa";
+import { BiCameraMovie } from "react-icons/bi";
+import { IoReaderOutline } from "react-icons/io5";
 
 type Page = "books" | "anime" | "manga" | "movies" | "shows";
 
@@ -12,11 +16,9 @@ function Sidebar() {
       <div className="flex flex-col m-3 text-ctp-text">
         <SidebarPageItem page="books" />
         <SidebarPageItem page="anime" />
-        <div className="py-2 hover:bg-ctp-surface0 line-through">Manga</div>
-        <div className="py-2 hover:bg-ctp-surface0 line-through">Movies</div>
-        <div className="pl-2 py-2 hover:bg-ctp-surface0 line-through">
-          TV Shows
-        </div>
+        <SidebarPageItem page="manga" />
+        <SidebarPageItem page="movies" />
+        <SidebarPageItem page="shows" />
       </div>
     </div>
   );
@@ -26,12 +28,23 @@ interface SidebarPageItemProps {
   page: Page;
 }
 
-const pageDisplayNames: Record<Page, string> = {
-  books: "Books",
-  anime: "Anime",
-  manga: "Manga",
-  movies: "Movies",
-  shows: "TV Shows",
+const pageDisplayData: Record<
+  Page,
+  { label: string; icon: React.ReactNode; disabled?: boolean }
+> = {
+  books: { label: "Books", icon: <PiBooks size={20} /> },
+  anime: { label: "Anime", icon: <FaPlayCircle size={20} /> },
+  manga: {
+    label: "Manga",
+    icon: <IoReaderOutline size={20} />,
+    disabled: true,
+  },
+  movies: {
+    label: "Movies",
+    icon: <BiCameraMovie size={20} />,
+    disabled: true,
+  },
+  shows: { label: "TV Shows", icon: <FaTv size={20} />, disabled: true },
 };
 
 function SidebarPageItem({ page }: SidebarPageItemProps) {
@@ -41,10 +54,16 @@ function SidebarPageItem({ page }: SidebarPageItemProps) {
       {({ isActive }) => (
         <div
           className={`p-1 hover:bg-ctp-surface0 w-full rounded-lg ${
-            isActive && "font-bold bg-ctp-surface1"
+            isActive && "font-bold bg-ctp-surface1 text-ctp-mauve"
           } `}
         >
-          {pageDisplayNames[page]}
+          <div
+            className={`flex items-center gap-3 p-1 ${
+              pageDisplayData[page].disabled && "line-through"
+            }`}
+          >
+            {pageDisplayData[page].icon} {pageDisplayData[page].label}
+          </div>
         </div>
       )}
     </NavLink>
