@@ -15,7 +15,7 @@ function Header() {
   const setSearchCategory = useSearchStore((state) => state.setSearchCategory);
 
   return (
-    <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 mb-3 text-ctp-text flex justify-center">
+    <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 text-ctp-text flex justify-center">
       <div className="grid grid-cols-6 items-center text-center divide-x-1 divide divide-ctp-surface1 px-4">
         <NavLink to="/">
           {({ isActive }) => (

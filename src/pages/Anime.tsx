@@ -5,8 +5,8 @@ import AnimeCard from "../components/AnimeCard.js";
 function Anime() {
   const animeSearchResults = useAnimeStore((state) => state.animeResults);
   return (
-    <div className="flex justify-center">
-      <div className="flex flex-wrap justify-center gap-3 w-[1600px]">
+    <div className="flex justify-center mt-3">
+      <div className="flex flex-wrap justify-center gap-3">
         {animeSearchResults.map((anime) => (
           <AnimeCard key={anime.mal_id} anime={anime} />
         ))}

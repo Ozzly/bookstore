@@ -6,6 +6,7 @@ import Search from "./components/SearchInput.js";
 import Books from "./pages/Books.js";
 import Header from "./components/Header.js";
 import Anime from "./pages/Anime.js";
+import Sidebar from "./components/Sidebar.js";
 
 const router = createBrowserRouter([
   {
@@ -31,12 +32,21 @@ const router = createBrowserRouter([
 
 function Layout() {
   return (
-    <>
+    <div className="h-screen flex flex-col">
+      {/* Header - fixed at top */}
       <Header />
-      <div className="px-4 mb-4">
-        <Outlet />
+
+      {/* Main content area with sidebar and content */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar - fixed on left */}
+        <Sidebar />
+
+        {/* Main content area */}
+        <div className="flex-1 overflow-auto px-4 mb-4">
+          <Outlet />
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
