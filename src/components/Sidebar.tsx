@@ -26,6 +26,14 @@ interface SidebarPageItemProps {
   page: Page;
 }
 
+const pageDisplayNames: Record<Page, string> = {
+  books: "Books",
+  anime: "Anime",
+  manga: "Manga",
+  movies: "Movies",
+  shows: "TV Shows",
+};
+
 function SidebarPageItem({ page }: SidebarPageItemProps) {
   const setSearchCategory = useSearchStore((state) => state.setSearchCategory);
   return (
@@ -36,7 +44,7 @@ function SidebarPageItem({ page }: SidebarPageItemProps) {
             isActive && "font-bold bg-ctp-surface1"
           } `}
         >
-          {page}
+          {pageDisplayNames[page]}
         </div>
       )}
     </NavLink>
