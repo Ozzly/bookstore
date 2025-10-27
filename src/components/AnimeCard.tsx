@@ -46,14 +46,6 @@ function AnimeCard({ anime }: AnimeCardProps) {
     }
   }
 
-  function handleStatusChangeMainButton() {
-    if (currentStatus) {
-      removeAnimeFromList(mal_id, currentStatus);
-    } else {
-      addAnimeToList(anime, "Watched");
-    }
-  }
-
   function handleStatusChange(status: AnimeStatus | null) {
     if (currentStatus) {
       removeAnimeFromList(mal_id, currentStatus);
@@ -131,7 +123,13 @@ function AnimeCard({ anime }: AnimeCardProps) {
             <div className="flex">
               <button
                 className={getMainButtonStyle()}
-                onClick={() => handleStatusChangeMainButton()}
+                onClick={() => {
+                  if (currentStatus) {
+                    handleStatusChange(null);
+                  } else {
+                    handleStatusChange("Watched");
+                  }
+                }}
               >
                 {getButtonText()}
 
