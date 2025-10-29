@@ -4,14 +4,15 @@ import { useSearchStore } from "../stores/searchUIStore.js";
 import { PiBooks } from "react-icons/pi";
 import { FaTv, FaPlayCircle } from "react-icons/fa";
 import { BiCameraMovie } from "react-icons/bi";
-import { IoReaderOutline } from "react-icons/io5";
+import { IoHomeOutline, IoReaderOutline } from "react-icons/io5";
 
-type Page = "books" | "anime" | "manga" | "movies" | "shows";
+type Page = "books" | "anime" | "manga" | "movies" | "shows" | "/";
 
 function Sidebar() {
   return (
     <div className="w-64 flex-shrink-0 h-full border-r-1 border-ctp-surface0">
       <div className="flex flex-col m-3 text-ctp-text">
+        <SidebarPageItem page="/" />
         <SidebarPageItem page="books" />
         <SidebarPageItem page="anime" />
         <SidebarPageItem page="manga" />
@@ -43,12 +44,16 @@ const pageDisplayData: Record<
     disabled: true,
   },
   shows: { label: "TV Shows", icon: <FaTv size={20} />, disabled: true },
+  "/": { label: "Home", icon: <IoHomeOutline size={20} /> },
 };
 
 function SidebarPageItem({ page }: SidebarPageItemProps) {
   const setSearchCategory = useSearchStore((state) => state.setSearchCategory);
   return (
-    <NavLink to={`/${page}`} onClick={() => setSearchCategory(page)}>
+    <NavLink
+      to={`${page}`}
+      onClick={() => page !== "/" && setSearchCategory(page)}
+    >
       {({ isActive }) => (
         <div
           className={`p-1 hover:bg-ctp-surface0 w-full rounded-lg ${
