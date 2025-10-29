@@ -9,7 +9,7 @@ function Anime() {
   const watchedAnime = useAnimeStore((state) => state.animeWatched);
 
   return (
-    <div className="flex justify-center mt-3">
+    <div className="flex justify-center">
       <div className="flex flex-wrap justify-center gap-3">
         {searchTerm === ""
           ? watchedAnime.map((anime) => (

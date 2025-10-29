@@ -49,7 +49,7 @@ function Layout() {
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <div className="flex-1 overflow-auto px-4 mb-4">
+        <div className="flex-1 overflow-auto p-2 pt-4">
           <Outlet />
         </div>
       </div>
