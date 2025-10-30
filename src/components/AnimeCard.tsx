@@ -137,10 +137,9 @@ function AnimeCard({ anime }: AnimeCardProps) {
               </div>
             ) : (
               currentStatus === "Watching" && (
-                <div className="text-ctp-subtext0 text-center justify-center items-center flex">
-                  Ep:
+                <div className="text-ctp-subtext0 text-center justify-center items-center flex gap-1">
                   <button
-                    className="hover:"
+                    className="hover:brightness-125 transition-all duration-300"
                     onClick={() => {
                       setCurrentEpisode(
                         mal_id,
@@ -151,7 +150,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                     <FaCircleMinus />
                   </button>
                   <input
-                    className="w-12 text-right focus:outline-none border-3 border-ctp-surface0 rounded-lg px-1 focus:border-ctp-mauve "
+                    className="w-12 text-right focus:outline-none border-3 border-transparent rounded-lg px-1 focus:border-ctp-mauve "
                     value={localCurrentEpisode}
                     onChange={(event) => {
                       if (event.target.value === "") {
@@ -176,7 +175,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                     }}
                   />
                   <button
-                    className="hover:"
+                    className="hover:brightness-125 transition-all duration-300"
                     onClick={() => {
                       setCurrentEpisode(
                         mal_id,
