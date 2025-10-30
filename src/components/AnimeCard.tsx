@@ -180,7 +180,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                       onClick={() => {
                         setCurrentEpisode(
                           mal_id,
-                          Math.min(episodes, (currentEpisode || episodes) + 1)
+                          Math.min(episodes, (currentEpisode || 0) + 1)
                         );
                       }}
                     >
