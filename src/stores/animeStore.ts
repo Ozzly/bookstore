@@ -66,6 +66,7 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
     const currentList = get()[`anime${listName}`] as Anime[];
     if (currentList.some((a) => a.mal_id === anime.mal_id)) return;
     anime.dateAdded = moment().format("ll");
+    listName === "Watching" && (anime.currentEpisode = 1);
     const updatedList = [...currentList, anime];
     set({ [`anime${listName}`]: updatedList });
     localStorage.setItem(`anime${listName}`, JSON.stringify(updatedList));
