@@ -167,6 +167,13 @@ function AnimeCard({ anime }: AnimeCardProps) {
                         (event.target as HTMLInputElement).blur();
                       }
                     }}
+                    onFocus={(event) => {
+                      const input = event.target as HTMLInputElement;
+                      input.setSelectionRange(
+                        input.value.length,
+                        input.value.length
+                      );
+                    }}
                   />
                   <button
                     className="hover:"
