@@ -109,7 +109,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
   }
 
   return (
-    <div className="size-fit p-4 bg-ctp-surface0 rounded-lg border-ctp-surface1 hover:scale-102 hover:shadow-xl transition shadow-lg">
+    <div className="size-fit p-4 bg-ctp-surface0 rounded-lg border-ctp-surface1 hover:scale-102 hover:shadow-xl transition shadow-lg group/card">
       <div className="flex h-full gap-4 text-ctp-text">
         <div className="w-[180px] h-[256px]">
           <img
@@ -122,7 +122,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
           <h2 className="font-bold line-clamp-2 leading-tight" title={title}>
             {title}
           </h2>
-          <p className="text-center text-sm mb-2">{studio}</p>
+          <p className="text-sm mb-2">{studio}</p>
           <div className="flex justify-around">
             <p className="">{release_season}</p>
             <p>{score || "N/A"}★</p>
@@ -137,54 +137,59 @@ function AnimeCard({ anime }: AnimeCardProps) {
               </div>
             ) : (
               currentStatus === "Watching" && (
-                <div className="text-ctp-subtext0 text-center justify-center items-center flex gap-1">
-                  <button
-                    className="hover:brightness-125 transition-all duration-300"
-                    onClick={() => {
-                      setCurrentEpisode(
-                        mal_id,
-                        Math.max(0, (currentEpisode || 0) - 1)
-                      );
-                    }}
-                  >
-                    <FaCircleMinus />
-                  </button>
-                  <input
-                    className="w-12 text-right focus:outline-none border-3 border-transparent rounded-lg px-1 focus:border-ctp-mauve "
-                    value={localCurrentEpisode}
-                    onChange={(event) => {
-                      if (event.target.value === "") {
-                        setLocalCurrentEpisode("");
-                      } else if (!isNaN(Number(event.target.value))) {
-                        setLocalCurrentEpisode(event.target.value);
-                      }
-                    }}
-                    onBlur={handleEpisodeSave}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        handleEpisodeSave();
-                        (event.target as HTMLInputElement).blur();
-                      }
-                    }}
-                    onFocus={(event) => {
-                      const input = event.target as HTMLInputElement;
-                      input.setSelectionRange(
-                        input.value.length,
-                        input.value.length
-                      );
-                    }}
-                  />
-                  <button
-                    className="hover:brightness-125 transition-all duration-300"
-                    onClick={() => {
-                      setCurrentEpisode(
-                        mal_id,
-                        Math.min(episodes, (currentEpisode || episodes) + 1)
-                      );
-                    }}
-                  >
-                    <FaCirclePlus />
-                  </button>
+                <div className="text-ctp-subtext0 text-center justify-center items-center flex">
+                  <div className="hidden group-hover/card:flex justify-center gap-1 mr-1">
+                    <button
+                      className="hover:brightness-125 transition-all duration-300 "
+                      onClick={() => {
+                        setCurrentEpisode(
+                          mal_id,
+                          Math.max(0, (currentEpisode || 0) - 1)
+                        );
+                      }}
+                    >
+                      <FaCircleMinus />
+                    </button>
+                    <input
+                      className={`w-12 text-right focus:outline-none border-3 rounded-lg px-1 border-ctp-surface2 focus:border-ctp-mauve`}
+                      value={localCurrentEpisode}
+                      onChange={(event) => {
+                        if (event.target.value === "") {
+                          setLocalCurrentEpisode("");
+                        } else if (!isNaN(Number(event.target.value))) {
+                          setLocalCurrentEpisode(event.target.value);
+                        }
+                      }}
+                      onBlur={handleEpisodeSave}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          handleEpisodeSave();
+                          (event.target as HTMLInputElement).blur();
+                        }
+                      }}
+                      onFocus={(event) => {
+                        const input = event.target as HTMLInputElement;
+                        input.setSelectionRange(
+                          input.value.length,
+                          input.value.length
+                        );
+                      }}
+                    />
+                    <button
+                      className="hover:brightness-125 transition-all duration-300"
+                      onClick={() => {
+                        setCurrentEpisode(
+                          mal_id,
+                          Math.min(episodes, (currentEpisode || episodes) + 1)
+                        );
+                      }}
+                    >
+                      <FaCirclePlus />
+                    </button>
+                  </div>
+                  <div className="group-hover/card:hidden mr-1">
+                    {currentEpisode}
+                  </div>
                   of {episodes || "?"}
                 </div>
               )
