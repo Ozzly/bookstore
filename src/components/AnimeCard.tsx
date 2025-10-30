@@ -94,7 +94,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
   }
 
   function handleEpisodeSave() {
-    if (localCurrentEpisode === "") {
+    if (localCurrentEpisode === "" || Number(localCurrentEpisode) > episodes) {
       setLocalCurrentEpisode(currentEpisode?.toString() || "");
       console.log("Resetting to:", currentEpisode);
     } else if (localCurrentEpisode === currentEpisode?.toString()) {
