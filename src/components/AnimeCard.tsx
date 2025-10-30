@@ -27,6 +27,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
     year,
     release_season,
     studio,
+    themes,
   } = anime;
 
   const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
@@ -146,6 +147,20 @@ function AnimeCard({ anime }: AnimeCardProps) {
           <p>
             {episodes || "N/A"} {episodes > 1 ? "episodes" : "episode"}
           </p>
+
+          <div className="h-12 overflow-hidden">
+            <div className="flex flex-wrap gap-1">
+              {themes.map((theme: string) => (
+                <div
+                  key={theme}
+                  className="text-xs bg-ctp-surface2 rounded-xl w-fit px-2 py-0.5"
+                >
+                  {theme}
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="absolute bottom-0 w-full">
             {currentStatus === "Watched" ? (
               <div className="text-ctp-subtext0 text-center">
@@ -210,6 +225,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                 </div>
               )
             )}
+
             <div className="flex">
               <button
                 className={getMainButtonStyle()}
