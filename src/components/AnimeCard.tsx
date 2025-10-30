@@ -12,6 +12,7 @@ import { SiTaketwointeractivesoftware } from "react-icons/si";
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { MdCancel } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
+import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 interface AnimeCardProps {
   anime: Anime;
 }
@@ -232,7 +233,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
               </button>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger className={getDropdownButtonStyle()}>
-                  +
+                  <PiDotsThreeOutlineVerticalFill />
                 </DropdownMenu.Trigger>
 
                 <DropdownMenu.Portal>
