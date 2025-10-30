@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { Anime, AnimeStatus } from "../types.js";
 import { DropdownMenu } from "radix-ui";
 import {
@@ -9,7 +9,8 @@ import {
 } from "@radix-ui/react-icons";
 import { useAnimeStore } from "../stores/animeStore.js";
 import { SiTaketwointeractivesoftware } from "react-icons/si";
-
+import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
+import { MdCancel } from "react-icons/md";
 interface AnimeCardProps {
   anime: Anime;
 }
@@ -39,6 +40,10 @@ function AnimeCard({ anime }: AnimeCardProps) {
   const [localCurrentEpisode, setLocalCurrentEpisode] = useState<string>(
     currentEpisode?.toString() || ""
   );
+
+  useEffect(() => {
+    setLocalCurrentEpisode(currentEpisode?.toString() || "");
+  }, [currentEpisode]);
 
   function getButtonText() {
     switch (currentStatus) {
@@ -96,12 +101,10 @@ function AnimeCard({ anime }: AnimeCardProps) {
   function handleEpisodeSave() {
     if (localCurrentEpisode === "" || Number(localCurrentEpisode) > episodes) {
       setLocalCurrentEpisode(currentEpisode?.toString() || "");
-      console.log("Resetting to:", currentEpisode);
     } else if (localCurrentEpisode === currentEpisode?.toString()) {
-      console.log("Episode is unchanged:", localCurrentEpisode);
+      return;
     } else {
       setCurrentEpisode(mal_id, Number(localCurrentEpisode));
-      console.log("Setting episode to:", localCurrentEpisode);
     }
   }
 
@@ -134,10 +137,21 @@ function AnimeCard({ anime }: AnimeCardProps) {
               </div>
             ) : (
               currentStatus === "Watching" && (
-                <div className="text-ctp-subtext0 text-center">
-                  Episode:
+                <div className="text-ctp-subtext0 text-center justify-center items-center flex">
+                  Ep:
+                  <button
+                    className="hover:"
+                    onClick={() => {
+                      setCurrentEpisode(
+                        mal_id,
+                        Math.max(0, (currentEpisode || 0) - 1)
+                      );
+                    }}
+                  >
+                    <FaCircleMinus />
+                  </button>
                   <input
-                    className="w-12 text-right focus:outline-none border-3 border-ctp-surface0 rounded-lg px-1 focus:border-ctp-mauve mx-1 "
+                    className="w-12 text-right focus:outline-none border-3 border-ctp-surface0 rounded-lg px-1 focus:border-ctp-mauve "
                     value={localCurrentEpisode}
                     onChange={(event) => {
                       if (event.target.value === "") {
@@ -154,7 +168,18 @@ function AnimeCard({ anime }: AnimeCardProps) {
                       }
                     }}
                   />
-                  /{episodes || "?"}
+                  <button
+                    className="hover:"
+                    onClick={() => {
+                      setCurrentEpisode(
+                        mal_id,
+                        Math.min(episodes, (currentEpisode || episodes) + 1)
+                      );
+                    }}
+                  >
+                    <FaCirclePlus />
+                  </button>
+                  of {episodes || "?"}
                 </div>
               )
             )}
@@ -172,7 +197,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                 {getButtonText()}
 
                 {currentStatus && (
-                  <TrashIcon
+                  <MdCancel
                     height={18}
                     width={18}
                     className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-all duration-400 font-bold"
