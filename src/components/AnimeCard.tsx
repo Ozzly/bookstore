@@ -11,6 +11,7 @@ import { useAnimeStore } from "../stores/animeStore.js";
 import { SiTaketwointeractivesoftware } from "react-icons/si";
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { MdCancel } from "react-icons/md";
+import { FaStar } from "react-icons/fa";
 interface AnimeCardProps {
   anime: Anime;
 }
@@ -123,11 +124,25 @@ function AnimeCard({ anime }: AnimeCardProps) {
             {title}
           </h2>
           <p className="text-sm mb-2">{studio}</p>
-          <div className="flex justify-around">
-            <p className="">{release_season}</p>
-            <p>{score || "N/A"}★</p>
+          <p>{release_season}</p>
+          <div
+            className={
+              score >= 8
+                ? "text-ctp-green"
+                : score >= 6
+                ? "text-ctp-yellow"
+                : score >= 5
+                ? "text-ctp-maroon"
+                : score === null
+                ? "text-ctp-subtext0"
+                : "text-ctp-red"
+            }
+          >
+            <div className="flex items-center gap-1">
+              {score || "N/A"} <FaStar />
+            </div>
           </div>
-          <p className="text-center">
+          <p>
             {episodes || "N/A"} {episodes > 1 ? "episodes" : "episode"}
           </p>
           <div className="absolute bottom-0 w-full">
