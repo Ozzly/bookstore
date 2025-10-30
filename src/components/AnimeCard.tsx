@@ -148,7 +148,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
             {episodes || "N/A"} {episodes > 1 ? "episodes" : "episode"}
           </p>
 
-          <div className="h-12 overflow-hidden">
+          <div className="h-12 overflow-hidden mt-1">
             <div className="flex flex-wrap gap-1">
               {themes.map((theme: string) => (
                 <div
