@@ -21,6 +21,17 @@ export interface Anime {
   dateAdded?: string;
   currentEpisode?: number;
   themes: string[];
+  videoType: VideoType;
 }
+
+export type VideoType =
+  | "TV"
+  | "Movie"
+  | "OVA"
+  | "ONA"
+  | "Music"
+  | "Special"
+  | "tv_special"
+  | "pv";
 
 export type AnimeStatus = "Watched" | "Watching" | "Planned";

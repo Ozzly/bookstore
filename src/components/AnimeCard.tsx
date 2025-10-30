@@ -28,6 +28,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
     release_season,
     studio,
     themes,
+    videoType,
   } = anime;
 
   const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
@@ -145,7 +146,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
             </div>
           </div>
           <p>
-            {episodes || "N/A"} {episodes > 1 ? "episodes" : "episode"}
+            {episodes || "N/A"} {videoType === "TV" ? "Episodes" : videoType}
           </p>
 
           <div className="h-12 overflow-hidden mt-1">
