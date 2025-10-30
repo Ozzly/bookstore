@@ -150,7 +150,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
 
           <div className="h-12 overflow-hidden mt-1">
             <div className="flex flex-wrap gap-1">
-              {themes.map((theme: string) => (
+              {themes?.map((theme: string) => (
                 <div
                   key={theme}
                   className="text-xs bg-ctp-surface2 rounded-xl w-fit px-2 py-0.5"
