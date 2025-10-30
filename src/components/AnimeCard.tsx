@@ -23,7 +23,6 @@ function AnimeCard({ anime }: AnimeCardProps) {
     year,
     release_season,
     studio,
-    dateAdded,
   } = anime;
 
   const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
@@ -32,6 +31,9 @@ function AnimeCard({ anime }: AnimeCardProps) {
     (state) => state.removeAnimeFromList
   );
   const getDateAdded = useAnimeStore((state) => state.getDateAdded(mal_id));
+  const currentEpisode = useAnimeStore((state) =>
+    state.getCurrentEpisode(mal_id)
+  );
 
   function getButtonText() {
     switch (currentStatus) {
@@ -116,7 +118,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
             ) : (
               currentStatus === "Watching" && (
                 <div className="text-ctp-subtext0 text-center">
-                  Episode: X/{episodes || "?"}
+                  Episode: {currentEpisode || "?"}/{episodes || "?"}
                 </div>
               )
             )}
