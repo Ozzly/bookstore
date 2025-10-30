@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import type { Anime, AnimeStatus } from "../types.js";
 import { DropdownMenu } from "radix-ui";
 import {
@@ -8,6 +8,7 @@ import {
   TrashIcon,
 } from "@radix-ui/react-icons";
 import { useAnimeStore } from "../stores/animeStore.js";
+import { SiTaketwointeractivesoftware } from "react-icons/si";
 
 interface AnimeCardProps {
   anime: Anime;
@@ -33,6 +34,10 @@ function AnimeCard({ anime }: AnimeCardProps) {
   const dateAdded = useAnimeStore((state) => state.getDateAdded(mal_id));
   const currentEpisode = useAnimeStore((state) =>
     state.getCurrentEpisode(mal_id)
+  );
+  const setCurrentEpisode = useAnimeStore((state) => state.setCurrentEpisode);
+  const [localCurrentEpisode, setLocalCurrentEpisode] = useState<string>(
+    currentEpisode?.toString() || ""
   );
 
   function getButtonText() {
@@ -88,6 +93,18 @@ function AnimeCard({ anime }: AnimeCardProps) {
     }
   }
 
+  function handleEpisodeSave() {
+    if (localCurrentEpisode === "") {
+      setLocalCurrentEpisode(currentEpisode?.toString() || "");
+      console.log("Resetting to:", currentEpisode);
+    } else if (localCurrentEpisode === currentEpisode?.toString()) {
+      console.log("Episode is unchanged:", localCurrentEpisode);
+    } else {
+      setCurrentEpisode(mal_id, Number(localCurrentEpisode));
+      console.log("Setting episode to:", localCurrentEpisode);
+    }
+  }
+
   return (
     <div className="size-fit p-4 bg-ctp-surface0 rounded-lg border-ctp-surface1 hover:scale-102 hover:shadow-xl transition shadow-lg">
       <div className="flex h-full gap-4 text-ctp-text">
@@ -118,7 +135,26 @@ function AnimeCard({ anime }: AnimeCardProps) {
             ) : (
               currentStatus === "Watching" && (
                 <div className="text-ctp-subtext0 text-center">
-                  Episode: {currentEpisode || "?"}/{episodes || "?"}
+                  Episode:
+                  <input
+                    className="w-12 text-right focus:outline-none border-3 border-ctp-surface0 rounded-lg px-1 focus:border-ctp-mauve mx-1 "
+                    value={localCurrentEpisode}
+                    onChange={(event) => {
+                      if (event.target.value === "") {
+                        setLocalCurrentEpisode("");
+                      } else if (!isNaN(Number(event.target.value))) {
+                        setLocalCurrentEpisode(event.target.value);
+                      }
+                    }}
+                    onBlur={handleEpisodeSave}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        handleEpisodeSave();
+                        (event.target as HTMLInputElement).blur();
+                      }
+                    }}
+                  />
+                  /{episodes || "?"}
                 </div>
               )
             )}

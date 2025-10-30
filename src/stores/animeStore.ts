@@ -15,6 +15,10 @@ type AnimeStore = {
   removeAnimeFromList: (mal_id: number, listName: AnimeStatus) => void;
   getDateAdded: (mal_id: number) => string | null;
   getCurrentEpisode: (mal_id: number) => number | null;
+  setCurrentEpisode: (
+    mal_id: number,
+    updatedEpisodeCount: number | null
+  ) => void;
   fetchAnimeQuery: (searchTerm: string) => Promise<void>;
 };
 
@@ -100,9 +104,30 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
   getCurrentEpisode: (mal_id: number): number | null => {
     const { animeWatching } = get();
     return (
-      animeWatching.find((anime) => anime.mal_id === mal_id)?.currentEpisode ||
+      animeWatching.find((anime) => anime.mal_id === mal_id)?.currentEpisode ??
       null
     );
+  },
+
+  setCurrentEpisode: (mal_id: number, updatedEpisodeCount: number | null) => {
+    const { animeWatching } = get();
+    const index = animeWatching.findIndex((anime) => anime.mal_id === mal_id);
+    if (index === -1) return;
+
+    const currentAnime = animeWatching[index];
+    const updatedEpisode = {
+      ...currentAnime,
+      currentEpisode: updatedEpisodeCount,
+    } as Anime;
+    const updatedList = [
+      ...animeWatching.slice(0, index),
+      updatedEpisode,
+      ...animeWatching.slice(index + 1),
+    ];
+    set({
+      animeWatching: updatedList,
+    });
+    localStorage.setItem("animeWatching", JSON.stringify(updatedList));
   },
 
   fetchAnimeQuery: async (searchTerm: string) => {
