@@ -116,7 +116,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
             ) : (
               currentStatus === "Watching" && (
                 <div className="text-ctp-subtext0 text-center">
-                  Episode X/{episodes}
+                  Episode: X/{episodes || "?"}
                 </div>
               )
             )}

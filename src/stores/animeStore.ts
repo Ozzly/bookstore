@@ -14,6 +14,7 @@ type AnimeStore = {
   getAnimeStatus: (mal_id: number) => AnimeStatus | null;
   removeAnimeFromList: (mal_id: number, listName: AnimeStatus) => void;
   getDateAdded: (mal_id: number) => string | null;
+  getCurrentEpisode: (mal_id: number) => number | null;
   fetchAnimeQuery: (searchTerm: string) => Promise<void>;
 };
 
@@ -92,6 +93,14 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
     const { animeWatched } = get();
     return (
       animeWatched.find((anime) => anime.mal_id === mal_id)?.dateAdded || null
+    );
+  },
+
+  getCurrentEpisode: (mal_id: number): number | null => {
+    const { animeWatching } = get();
+    return (
+      animeWatching.find((anime) => anime.mal_id === mal_id)?.currentEpisode ||
+      null
     );
   },
 

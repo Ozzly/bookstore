@@ -19,6 +19,7 @@ export interface Anime {
   release_season: string;
   studio: string; // Replace with array for multiple studios later
   dateAdded?: string;
+  currentEpisode?: number;
 }
 
 export type AnimeStatus = "Watched" | "Watching" | "Planned";
