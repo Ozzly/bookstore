@@ -126,7 +126,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
           <h2 className="font-bold line-clamp-2 leading-tight" title={title}>
             {title}
           </h2>
-          <p className="text-sm mb-2">{studio}</p>
+          <p className="text-sm mb-1">{studio}</p>
           <p>{release_season}</p>
           <div
             className={
