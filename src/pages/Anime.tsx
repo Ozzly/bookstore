@@ -3,7 +3,7 @@ import { useAnimeStore } from "../stores/animeStore.js";
 import AnimeCard from "../components/AnimeCard.js";
 import { useSearchStore } from "../stores/searchUIStore.js";
 import { BarLoader } from "react-spinners";
-import { ToggleGroup } from "radix-ui";
+import { RadioGroup } from "radix-ui";
 import {
   TextAlignLeftIcon,
   TextAlignCenterIcon,
@@ -13,28 +13,28 @@ import {
 function ToggleGroupItem({ value }: { value: string }) {
   function getStyle() {
     const baseStyle =
-      "border-3 rounded-lg px-4 py-1 data-[state=on]:text-ctp-base";
+      "border-3 rounded-lg px-4 py-1 data-[state=checked]:text-ctp-base";
     switch (value) {
       case "All":
-        return `${baseStyle} border-ctp-mauve data-[state=on]:bg-ctp-mauve text-ctp-mauve`;
+        return `${baseStyle} border-ctp-mauve data-[state=checked]:bg-ctp-mauve text-ctp-mauve`;
       case "Watched":
-        return `${baseStyle} border-ctp-blue data-[state=on]:bg-ctp-blue text-ctp-blue`;
+        return `${baseStyle} border-ctp-blue data-[state=checked]:bg-ctp-blue text-ctp-blue`;
       case "Watching":
-        return `${baseStyle} border-ctp-peach data-[state=on]:bg-ctp-peach text-ctp-peach`;
+        return `${baseStyle} border-ctp-peach data-[state=checked]:bg-ctp-peach text-ctp-peach`;
       case "Planned":
-        return `${baseStyle} border-ctp-red data-[state=on]:bg-ctp-red text-ctp-red`;
+        return `${baseStyle} border-ctp-red data-[state=checked]:bg-ctp-red text-ctp-red`;
       default:
         return baseStyle;
     }
   }
   return (
-    <ToggleGroup.Item
+    <RadioGroup.Item
       value={value}
       aria-label={`Select ${value} Anime`}
       className={getStyle()}
     >
       {value}
-    </ToggleGroup.Item>
+    </RadioGroup.Item>
   );
 }
 
@@ -52,7 +52,7 @@ function Anime() {
     return allAnime;
   });
 
-  const [filterStatus, setFilterStatus] = React.useState("all");
+  const [filterStatus, setFilterStatus] = React.useState("All");
   useEffect(() => {
     switch (filterStatus) {
       case "All":
@@ -83,8 +83,7 @@ function Anime() {
       {searchTerm === "" ? (
         <div className="w-full">
           <div className="flex">
-            <ToggleGroup.Root
-              type="single"
+            <RadioGroup.Root
               defaultValue="All"
               value={filterStatus}
               onValueChange={(value) => setFilterStatus(value)}
@@ -94,7 +93,7 @@ function Anime() {
               <ToggleGroupItem value="Watched" />
               <ToggleGroupItem value="Watching" />
               <ToggleGroupItem value="Planned" />
-            </ToggleGroup.Root>
+            </RadioGroup.Root>
           </div>
           <div className="text-ctp-text text-center font-bold text-xl mb-4">
             Your Anime Collection
