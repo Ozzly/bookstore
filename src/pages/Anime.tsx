@@ -81,8 +81,8 @@ function Anime() {
   return (
     <div className="flex justify-center">
       {searchTerm === "" ? (
-        <div>
-          <div>
+        <div className="w-full">
+          <div className="flex">
             <ToggleGroup.Root
               type="single"
               defaultValue="All"
