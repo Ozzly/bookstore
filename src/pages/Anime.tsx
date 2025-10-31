@@ -11,11 +11,27 @@ import {
 } from "@radix-ui/react-icons";
 
 function ToggleGroupItem({ value }: { value: string }) {
+  function getStyle() {
+    const baseStyle =
+      "border-3 rounded-lg px-4 py-1 data-[state=on]:text-ctp-base";
+    switch (value) {
+      case "All":
+        return `${baseStyle} border-ctp-mauve data-[state=on]:bg-ctp-mauve text-ctp-mauve`;
+      case "Watched":
+        return `${baseStyle} border-ctp-blue data-[state=on]:bg-ctp-blue text-ctp-blue`;
+      case "Watching":
+        return `${baseStyle} border-ctp-peach data-[state=on]:bg-ctp-peach text-ctp-peach`;
+      case "Planned":
+        return `${baseStyle} border-ctp-red data-[state=on]:bg-ctp-red text-ctp-red`;
+      default:
+        return baseStyle;
+    }
+  }
   return (
     <ToggleGroup.Item
       value={value}
       aria-label={`Select ${value} Anime`}
-      className="text-ctp-mauve border-3 border-ctp-mauve rounded-lg px-4 py-1  data-[state=on]:bg-ctp-mauve data-[state=on]:text-ctp-base"
+      className={getStyle()}
     >
       {value}
     </ToggleGroup.Item>
