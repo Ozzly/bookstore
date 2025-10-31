@@ -3,7 +3,7 @@ import { RouterProvider } from "react-router/dom";
 import Home from "./pages/Home.js";
 import Books from "./pages/Books.js";
 import Header from "./components/Header.js";
-import Anime from "./pages/Anime.js";
+import AnimePage from "./pages/Anime.js";
 import Sidebar from "./components/Sidebar.js";
 import Manga from "./pages/Manga.js";
 import Shows from "./pages/Shows.js";
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/anime",
-        Component: Anime,
+        Component: AnimePage,
       },
       {
         path: "/manga",

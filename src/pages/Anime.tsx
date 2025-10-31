@@ -34,7 +34,7 @@ function ToggleGroupItem({ value }: { value: string }) {
   );
 }
 
-function Anime() {
+function AnimePage() {
   const animeSearchResults = useAnimeStore((state) => state.animeResults);
   const searchTerm = useSearchStore((state) => state.searchTerm);
   const watchedAnime = useAnimeStore((state) => state.animeWatched);
@@ -123,4 +123,4 @@ function Anime() {
   );
 }
 
-export default Anime;
+export default AnimePage;
