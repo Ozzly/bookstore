@@ -4,11 +4,7 @@ import AnimeCard from "../components/AnimeCard.js";
 import { useSearchStore } from "../stores/searchUIStore.js";
 import { BarLoader } from "react-spinners";
 import { RadioGroup } from "radix-ui";
-import {
-  TextAlignLeftIcon,
-  TextAlignCenterIcon,
-  TextAlignRightIcon,
-} from "@radix-ui/react-icons";
+import type { Anime, AnimeStatus } from "../types.js";
 
 function ToggleGroupItem({ value }: { value: string }) {
   function getStyle() {
@@ -46,13 +42,15 @@ function Anime() {
   const plannedAnime = useAnimeStore((state) => state.animePlanned);
   const isLoading = useSearchStore((state) => state.isLoading);
 
-  const [animeSummary, setAnimeSummary] = React.useState(() => {
+  const [animeSummary, setAnimeSummary] = React.useState<Anime[]>(() => {
     const allAnime = [...watchedAnime, ...watchingAnime, ...plannedAnime];
     allAnime.sort((a, b) => a.title.localeCompare(b.title));
     return allAnime;
   });
 
-  const [filterStatus, setFilterStatus] = React.useState("All");
+  const [filterStatus, setFilterStatus] = React.useState<"All" | AnimeStatus>(
+    "All"
+  );
   useEffect(() => {
     let animeList: Anime[] = [];
     switch (filterStatus) {
@@ -81,7 +79,9 @@ function Anime() {
             <RadioGroup.Root
               defaultValue="All"
               value={filterStatus}
-              onValueChange={(value) => setFilterStatus(value)}
+              onValueChange={(value) =>
+                setFilterStatus(value as "All" | AnimeStatus)
+              }
               className="flex gap-2"
             >
               <ToggleGroupItem value="All" />
