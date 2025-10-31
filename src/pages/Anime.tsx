@@ -8,14 +8,21 @@ function Anime() {
   const animeSearchResults = useAnimeStore((state) => state.animeResults);
   const searchTerm = useSearchStore((state) => state.searchTerm);
   const watchedAnime = useAnimeStore((state) => state.animeWatched);
+  const watchingAnime = useAnimeStore((state) => state.animeWatching);
+  const plannedAnime = useAnimeStore((state) => state.animePlanned);
   const isLoading = useSearchStore((state) => state.isLoading);
+
+  const allAnime = [...watchedAnime, ...watchingAnime, ...plannedAnime];
+  allAnime.sort((a, b) => a.title.localeCompare(b.title));
 
   return (
     <div className="flex justify-center">
       {searchTerm === "" ? (
-        watchedAnime.map((anime) => (
-          <AnimeCard key={anime.mal_id} anime={anime} />
-        ))
+        <div className="flex flex-wrap justify-center gap-3">
+          {allAnime.map((anime) => (
+            <AnimeCard key={anime.mal_id} anime={anime} />
+          ))}
+        </div>
       ) : isLoading ? (
         <div>
           <h2 className="text-ctp-text text-center font-bold text-xl mb-10">
