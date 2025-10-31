@@ -46,26 +46,34 @@ function Anime() {
   const plannedAnime = useAnimeStore((state) => state.animePlanned);
   const isLoading = useSearchStore((state) => state.isLoading);
 
-  const [animeSummary, setAnimeSummary] = React.useState([
-    ...watchedAnime,
-    ...watchingAnime,
-    ...plannedAnime,
-  ]);
+  const [animeSummary, setAnimeSummary] = React.useState(() => {
+    const allAnime = [...watchedAnime, ...watchingAnime, ...plannedAnime];
+    allAnime.sort((a, b) => a.title.localeCompare(b.title));
+    return allAnime;
+  });
 
   const [filterStatus, setFilterStatus] = React.useState("all");
   useEffect(() => {
     switch (filterStatus) {
       case "All":
-        setAnimeSummary([...watchedAnime, ...watchingAnime, ...plannedAnime]);
+        const allAnime = [...watchedAnime, ...watchingAnime, ...plannedAnime];
+        allAnime.sort((a, b) => a.title.localeCompare(b.title));
+        setAnimeSummary(allAnime);
         break;
       case "Watched":
-        setAnimeSummary([...watchedAnime]);
+        const watchedList = [...watchedAnime];
+        watchedList.sort((a, b) => a.title.localeCompare(b.title));
+        setAnimeSummary([...watchedList]);
         break;
       case "Watching":
-        setAnimeSummary([...watchingAnime]);
+        const watchingList = [...watchingAnime];
+        watchingList.sort((a, b) => a.title.localeCompare(b.title));
+        setAnimeSummary([...watchingList]);
         break;
       case "Planned":
-        setAnimeSummary([...plannedAnime]);
+        const plannedList = [...plannedAnime];
+        plannedList.sort((a, b) => a.title.localeCompare(b.title));
+        setAnimeSummary([...plannedList]);
         break;
     }
   }, [filterStatus]);
@@ -77,7 +85,7 @@ function Anime() {
           <div>
             <ToggleGroup.Root
               type="single"
-              defaultValue="all"
+              defaultValue="All"
               value={filterStatus}
               onValueChange={(value) => setFilterStatus(value)}
               className="flex gap-2"
