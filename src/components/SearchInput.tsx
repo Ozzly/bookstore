@@ -8,6 +8,7 @@ import { useAnimeStore } from "../stores/animeStore.js";
 function Search() {
   const searchTerm = useSearchStore((state) => state.searchTerm);
   const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
+  const setIsLoading = useSearchStore((state) => state.setIsLoading);
   const fetchBooksQuery = useBookStore((state) => state.fetchBooksQuery);
   const navigate = useNavigate();
   const searchCategory = useSearchStore((state) => state.searchCategory);
@@ -16,16 +17,22 @@ function Search() {
   const [searchDebounce] = useDebounce(localSearchTerm, 1000);
   useEffect(() => {
     setSearchTerm(searchDebounce);
-    switch (searchCategory) {
-      case "books":
-        fetchBooksQuery(searchDebounce);
-        break;
-      case "anime":
-        fetchAnimeQuery(searchDebounce);
-        break;
-    }
+    handleSearchChange();
     searchDebounce && navigate(`/${searchCategory}`);
   }, [searchDebounce]);
+
+  async function handleSearchChange() {
+    setIsLoading(true);
+    switch (searchCategory) {
+      case "books":
+        await fetchBooksQuery(searchDebounce);
+        break;
+      case "anime":
+        await fetchAnimeQuery(searchDebounce);
+        break;
+    }
+    setIsLoading(false);
+  }
 
   return (
     <div className="flex items-center border-3 border-ctp-surface0 rounded-xl focus-within:border-ctp-mauve transition-colors mb-3 mt-3">
