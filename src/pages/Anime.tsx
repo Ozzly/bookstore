@@ -54,29 +54,24 @@ function Anime() {
 
   const [filterStatus, setFilterStatus] = React.useState("All");
   useEffect(() => {
+    let animeList: Anime[] = [];
     switch (filterStatus) {
       case "All":
-        const allAnime = [...watchedAnime, ...watchingAnime, ...plannedAnime];
-        allAnime.sort((a, b) => a.title.localeCompare(b.title));
-        setAnimeSummary(allAnime);
+        animeList = [...watchedAnime, ...watchingAnime, ...plannedAnime];
         break;
       case "Watched":
-        const watchedList = [...watchedAnime];
-        watchedList.sort((a, b) => a.title.localeCompare(b.title));
-        setAnimeSummary([...watchedList]);
+        animeList = [...watchedAnime];
         break;
       case "Watching":
-        const watchingList = [...watchingAnime];
-        watchingList.sort((a, b) => a.title.localeCompare(b.title));
-        setAnimeSummary([...watchingList]);
+        animeList = [...watchingAnime];
         break;
       case "Planned":
-        const plannedList = [...plannedAnime];
-        plannedList.sort((a, b) => a.title.localeCompare(b.title));
-        setAnimeSummary([...plannedList]);
+        animeList = [...plannedAnime];
         break;
     }
-  }, [filterStatus]);
+    animeList.sort((a, b) => a.title.localeCompare(b.title));
+    setAnimeSummary(animeList);
+  }, [filterStatus, watchedAnime, watchingAnime, plannedAnime]);
 
   return (
     <div className="flex justify-center">
