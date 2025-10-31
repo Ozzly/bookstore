@@ -12,17 +12,15 @@ function Search() {
   const navigate = useNavigate();
   const searchCategory = useSearchStore((state) => state.searchCategory);
   const fetchAnimeQuery = useAnimeStore((state) => state.fetchAnimeQuery);
-
-  const [searchDebounce] = useDebounce(searchTerm, 1000);
+  const [localSearchTerm, setLocalSearchTerm] = React.useState(searchTerm);
+  const [searchDebounce] = useDebounce(localSearchTerm, 1000);
   useEffect(() => {
-    console.log(searchCategory);
+    setSearchTerm(searchDebounce);
     switch (searchCategory) {
       case "books":
-        console.log("fetching books");
         fetchBooksQuery(searchDebounce);
         break;
       case "anime":
-        console.log("fetching anime");
         fetchAnimeQuery(searchDebounce);
         break;
     }
@@ -35,15 +33,15 @@ function Search() {
         <input
           type="text"
           placeholder={`Searching by ${searchCategory}`}
-          value={searchTerm}
+          value={localSearchTerm}
           onChange={(event) => {
-            setSearchTerm(event.target.value);
+            setLocalSearchTerm(event.target.value);
           }}
           className="focus:outline-none w-3xs sm:w-sm"
         />
         <button
-          onClick={() => setSearchTerm("")}
-          className={searchTerm || "hidden"}
+          onClick={() => setLocalSearchTerm("")}
+          className={localSearchTerm || "hidden"}
         >
           ✕
         </button>
