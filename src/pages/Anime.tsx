@@ -5,7 +5,9 @@ import { useSearchStore } from "../stores/searchUIStore.js";
 import { BarLoader } from "react-spinners";
 import { RadioGroup } from "radix-ui";
 import type { Anime, AnimeStatus } from "../types.js";
-
+import { Select } from "radix-ui";
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
+import { FaSortAlphaDown, FaSortNumericDownAlt } from "react-icons/fa";
 function ToggleGroupItem({ value }: { value: string }) {
   function getStyle() {
     const baseStyle =
@@ -34,6 +36,22 @@ function ToggleGroupItem({ value }: { value: string }) {
   );
 }
 
+function SelectItem({ value }: { value: "Title" | "Rating" }) {
+  return (
+    <Select.Item
+      value={value}
+      className="hover:bg-ctp-surface1 rounded-md py-1 px-2 data-[state=checked]:text-ctp-mauve data-[state=checked]:font-bold"
+    >
+      <Select.ItemText>
+        <div className="flex items-center gap-2">
+          {value}
+          {value === "Title" ? <FaSortAlphaDown /> : <FaSortNumericDownAlt />}
+        </div>
+      </Select.ItemText>
+    </Select.Item>
+  );
+}
+
 function AnimePage() {
   const animeSearchResults = useAnimeStore((state) => state.animeResults);
   const searchTerm = useSearchStore((state) => state.searchTerm);
@@ -51,6 +69,8 @@ function AnimePage() {
   const [filterStatus, setFilterStatus] = React.useState<"All" | AnimeStatus>(
     "All"
   );
+  const [sortBy, setSortBy] = React.useState<"Title" | "Rating">("Title");
+
   useEffect(() => {
     let animeList: Anime[] = [];
     switch (filterStatus) {
@@ -75,20 +95,58 @@ function AnimePage() {
     <div className="flex justify-center">
       {searchTerm === "" ? (
         <div className="w-full">
-          <div className="flex">
-            <RadioGroup.Root
-              defaultValue="All"
-              value={filterStatus}
-              onValueChange={(value) =>
-                setFilterStatus(value as "All" | AnimeStatus)
-              }
-              className="flex gap-2"
-            >
-              <ToggleGroupItem value="All" />
-              <ToggleGroupItem value="Watched" />
-              <ToggleGroupItem value="Watching" />
-              <ToggleGroupItem value="Planned" />
-            </RadioGroup.Root>
+          <div className="flex gap-3">
+            <div className="flex">
+              <RadioGroup.Root
+                defaultValue="All"
+                value={filterStatus}
+                onValueChange={(value) =>
+                  setFilterStatus(value as "All" | AnimeStatus)
+                }
+                className="flex gap-2"
+              >
+                <ToggleGroupItem value="All" />
+                <ToggleGroupItem value="Watched" />
+                <ToggleGroupItem value="Watching" />
+                <ToggleGroupItem value="Planned" />
+              </RadioGroup.Root>
+            </div>
+            <div>
+              <Select.Root
+                value={sortBy}
+                onValueChange={(value) => {
+                  console.log(value);
+                }}
+              >
+                <Select.Trigger
+                  className="text-ctp-text border-3 border-ctp-surface0 rounded-lg flex items-center px-3 py-1 gap-2 hover:brightness-120 transition-all duration-400 justify-between"
+                  aria-label="Sort By"
+                >
+                  <Select.Value>Sort: {sortBy}</Select.Value>
+                  <Select.Icon className="SelectIcon">
+                    <ChevronDownIcon />
+                  </Select.Icon>
+                </Select.Trigger>
+                <Select.Portal>
+                  <Select.Content
+                    position="popper"
+                    alignOffset={6}
+                    className="SelectContent z-10 bg-ctp-surface0 text-ctp-text rounded-lg show-lg p-3 border-2 border-ctp-surface1"
+                  >
+                    <Select.ScrollUpButton className="SelectScrollButton">
+                      <ChevronUpIcon />
+                    </Select.ScrollUpButton>
+                    <Select.Viewport className="">
+                      <SelectItem value="Title" />
+                      <SelectItem value="Rating" />
+                    </Select.Viewport>
+                    <Select.ScrollDownButton className="SelectScrollButton">
+                      <ChevronDownIcon />
+                    </Select.ScrollDownButton>
+                  </Select.Content>
+                </Select.Portal>
+              </Select.Root>
+            </div>
           </div>
           <div className="text-ctp-text text-center font-bold text-xl mb-4">
             Your Anime Collection
