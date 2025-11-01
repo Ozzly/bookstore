@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Search from "./SearchInput.js";
 import { Link, NavLink } from "react-router";
 import { Select } from "radix-ui";
 import { useSearchStore } from "../stores/searchUIStore.js";
+import { useBookStore } from "../stores/bookStore.js";
+import { useAnimeStore } from "../stores/animeStore.js";
+import { useNavigate } from "react-router";
+
 import {
   CheckIcon,
   ChevronDownIcon,
@@ -14,9 +18,41 @@ function Header() {
   const searchCategory = useSearchStore((state) => state.searchCategory);
   const setSearchCategory = useSearchStore((state) => state.setSearchCategory);
 
+  const fetchBooksQuery = useBookStore((state) => state.fetchBooksQuery);
+  const fetchAnimeQuery = useAnimeStore((state) => state.fetchAnimeQuery);
+
+  const setIsLoading = useSearchStore((state) => state.setIsLoading);
+
+  const searchTerm = useSearchStore((state) => state.searchTerm);
+  const setSearchTerm = useSearchStore((state) => state.setSearchTerm);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    handleSearchChange();
+    searchTerm && navigate(`/${searchCategory}`);
+  }, [searchCategory, searchTerm]);
+
+  async function handleSearchChange() {
+    setIsLoading(true);
+    switch (searchCategory) {
+      case "books":
+        await fetchBooksQuery(searchTerm);
+        break;
+      case "anime":
+        await fetchAnimeQuery(searchTerm);
+        break;
+    }
+    setIsLoading(false);
+  }
+
   return (
     <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 text-ctp-text flex justify-center">
-      <Search />
+      <Search
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        placeholder={`Searching by ${searchCategory}`}
+      />
 
       <Select.Root
         value={searchCategory}
