@@ -8,6 +8,7 @@ import type { Anime, AnimeStatus } from "../types.js";
 import { Select } from "radix-ui";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { FaSortAlphaDown, FaSortNumericDownAlt } from "react-icons/fa";
+import Search from "../components/SearchInput.js";
 function ToggleGroupItem({ value }: { value: string }) {
   function getStyle() {
     const baseStyle =
@@ -60,6 +61,8 @@ function AnimePage() {
   const plannedAnime = useAnimeStore((state) => state.animePlanned);
   const isLoading = useSearchStore((state) => state.isLoading);
 
+  const [summarySearchTerm, setSummarySearchTerm] = React.useState("");
+
   const [animeSummary, setAnimeSummary] = React.useState<Anime[]>(() => {
     const allAnime = [...watchedAnime, ...watchingAnime, ...plannedAnime];
     allAnime.sort((a, b) => a.title.localeCompare(b.title));
@@ -87,24 +90,43 @@ function AnimePage() {
         animeList = [...plannedAnime];
         break;
     }
+    if (summarySearchTerm !== "") {
+      animeList = animeList.filter((anime) =>
+        anime.title.toLowerCase().includes(summarySearchTerm.toLowerCase())
+      );
+    }
+
     if (sortBy === "Title") {
       animeList.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === "Rating") {
       animeList.sort((a, b) => (b.score || 0) - (a.score || 0));
     }
     setAnimeSummary(animeList);
-  }, [filterStatus, watchedAnime, watchingAnime, plannedAnime, sortBy]);
+  }, [
+    filterStatus,
+    watchedAnime,
+    watchingAnime,
+    plannedAnime,
+    sortBy,
+    summarySearchTerm,
+  ]);
 
   return (
     <div className="flex justify-center">
       {searchTerm === "" ? (
         <div className="w-full">
-          <div className="text-ctp-text text-center font-bold text-xl mb-1">
+          <div className="text-ctp-text font-bold text-xl mb-2 ml-2">
             Your Anime Collection
           </div>
-          <div className="flex gap-2">
-            <div></div>
-            <div className="flex mb-3">
+          <div className="flex gap-2 items-center mb-4">
+            <div>
+              <Search
+                searchTerm={summarySearchTerm}
+                setSearchTerm={setSummarySearchTerm}
+                placeholder="Search your anime collection..."
+              />
+            </div>
+            <div className="flex">
               <RadioGroup.Root
                 defaultValue="All"
                 value={filterStatus}
