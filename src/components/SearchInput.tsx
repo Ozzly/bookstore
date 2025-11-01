@@ -10,11 +10,17 @@ interface SearchProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
   placeholder: string;
+  debounce?: number;
 }
 
-function Search({ searchTerm, setSearchTerm, placeholder }: SearchProps) {
+function Search({
+  searchTerm,
+  setSearchTerm,
+  placeholder,
+  debounce,
+}: SearchProps) {
   const [localSearchTerm, setLocalSearchTerm] = React.useState(searchTerm);
-  const [searchDebounce] = useDebounce(localSearchTerm, 1000);
+  const [searchDebounce] = useDebounce(localSearchTerm, debounce || 1000);
 
   useEffect(() => {
     setSearchTerm(searchDebounce);

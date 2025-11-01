@@ -124,6 +124,7 @@ function AnimePage() {
                 searchTerm={summarySearchTerm}
                 setSearchTerm={setSummarySearchTerm}
                 placeholder="Search your anime collection..."
+                debounce={300}
               />
             </div>
             <div className="flex">
