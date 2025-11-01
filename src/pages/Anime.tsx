@@ -87,9 +87,13 @@ function AnimePage() {
         animeList = [...plannedAnime];
         break;
     }
-    animeList.sort((a, b) => a.title.localeCompare(b.title));
+    if (sortBy === "Title") {
+      animeList.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortBy === "Rating") {
+      animeList.sort((a, b) => (b.score || 0) - (a.score || 0));
+    }
     setAnimeSummary(animeList);
-  }, [filterStatus, watchedAnime, watchingAnime, plannedAnime]);
+  }, [filterStatus, watchedAnime, watchingAnime, plannedAnime, sortBy]);
 
   return (
     <div className="flex justify-center">
@@ -115,7 +119,7 @@ function AnimePage() {
               <Select.Root
                 value={sortBy}
                 onValueChange={(value) => {
-                  console.log(value);
+                  setSortBy(value as "Title" | "Rating");
                 }}
               >
                 <Select.Trigger
