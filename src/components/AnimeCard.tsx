@@ -103,7 +103,10 @@ function AnimeCard({ anime }: AnimeCardProps) {
   }
 
   function handleEpisodeSave() {
-    if (localCurrentEpisode === "" || Number(localCurrentEpisode) > episodes) {
+    if (
+      localCurrentEpisode === "" ||
+      (Number(localCurrentEpisode) > episodes && episodes)
+    ) {
       setLocalCurrentEpisode(currentEpisode?.toString() || "");
     } else if (localCurrentEpisode === currentEpisode?.toString()) {
       return;
@@ -210,10 +213,10 @@ function AnimeCard({ anime }: AnimeCardProps) {
                     <button
                       className="hover:brightness-125 transition-all duration-300"
                       onClick={() => {
-                        setCurrentEpisode(
-                          mal_id,
-                          Math.min(episodes, (currentEpisode || 0) + 1)
-                        );
+                        const localCurrentEpisode = episodes
+                          ? Math.min(episodes, (currentEpisode || 0) + 1)
+                          : (currentEpisode || 0) + 1;
+                        setCurrentEpisode(mal_id, localCurrentEpisode);
                       }}
                     >
                       <FaCirclePlus />
