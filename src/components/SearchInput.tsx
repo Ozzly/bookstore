@@ -34,7 +34,7 @@ function Search({ searchTerm, setSearchTerm, placeholder }: SearchProps) {
         />
         <button
           onClick={() => setLocalSearchTerm("")}
-          className={localSearchTerm || "hidden"}
+          className={localSearchTerm ? "opacity-100" : "opacity-0"}
         >
           ✕
         </button>
