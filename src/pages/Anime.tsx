@@ -99,8 +99,12 @@ function AnimePage() {
     <div className="flex justify-center">
       {searchTerm === "" ? (
         <div className="w-full">
-          <div className="flex gap-3">
-            <div className="flex">
+          <div className="text-ctp-text text-center font-bold text-xl mb-1">
+            Your Anime Collection
+          </div>
+          <div className="flex gap-2">
+            <div></div>
+            <div className="flex mb-3">
               <RadioGroup.Root
                 defaultValue="All"
                 value={filterStatus}
@@ -152,9 +156,7 @@ function AnimePage() {
               </Select.Root>
             </div>
           </div>
-          <div className="text-ctp-text text-center font-bold text-xl mb-4">
-            Your Anime Collection
-          </div>
+
           <div className="flex flex-wrap justify-center gap-3">
             {animeSummary.map((anime) => (
               <AnimeCard key={anime.mal_id} anime={anime} />
