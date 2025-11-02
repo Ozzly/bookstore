@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <div className="max-w-4xl mx-auto px-6 py-8">
       <div className="text-center mb-12">
@@ -80,11 +83,17 @@ function Home() {
           your collection.
         </p>
         <div className="flex justify-center gap-4">
-          <span className="px-4 py-2 bg-ctp-blue text-ctp-base rounded-lg font-medium">
-            Search for anime →
+          <span
+            className="px-4 py-2 bg-ctp-blue text-ctp-base rounded-lg font-medium"
+            onClick={() => navigate("/anime")}
+          >
+            Search for Anime →
           </span>
-          <span className="px-4 py-2 bg-ctp-green text-ctp-base rounded-lg font-medium">
-            Search for books →
+          <span
+            className="px-4 py-2 bg-ctp-green text-ctp-base rounded-lg font-medium"
+            onClick={() => navigate("/books")}
+          >
+            Search for Books →
           </span>
         </div>
       </div>
