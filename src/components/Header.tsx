@@ -47,52 +47,54 @@ function Header() {
   }
 
   return (
-    <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 text-ctp-text flex justify-center">
-      <Search
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        placeholder={`Searching by ${searchCategory}`}
-      />
+    <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 text-ctp-text flex justify-center mt-1">
+      <div className="flex mb-2">
+        <Search
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          placeholder={`Searching by ${searchCategory}`}
+        />
 
-      <Select.Root
-        value={searchCategory}
-        onValueChange={(value) => {
-          setSearchCategory(value as Category);
-          console.log(value);
-          console.log(value as Category);
-        }}
-      >
-        <Select.Trigger
-          className="border-3 border-ctp-surface0 rounded-xl w-33 ml-3 my-3 flex items-center px-3 gap-2 hover:border-ctp-mauve justify-between"
-          aria-label="Category"
+        <Select.Root
+          value={searchCategory}
+          onValueChange={(value) => {
+            setSearchCategory(value as Category);
+            console.log(value);
+            console.log(value as Category);
+          }}
         >
-          <Select.Value placeholder="Select a category..." />
-          <Select.Icon className="SelectIcon">
-            <ChevronDownIcon />
-          </Select.Icon>
-        </Select.Trigger>
-        <Select.Portal>
-          <Select.Content
-            position="popper"
-            alignOffset={6}
-            className="SelectContent z-10 bg-ctp-surface0 text-ctp-text rounded-lg show-lg p-3 border-2 border-ctp-surface1"
+          <Select.Trigger
+            className="border-3 border-ctp-surface0 rounded-xl w-33 ml-3 flex items-center px-3 hover:border-ctp-mauve justify-between"
+            aria-label="Category"
           >
-            <Select.ScrollUpButton className="SelectScrollButton">
-              <ChevronUpIcon />
-            </Select.ScrollUpButton>
-            <Select.Viewport className="">
-              <SelectItem value="books">Books</SelectItem>
-              <SelectItem value="anime">Anime</SelectItem>
-              <SelectItem value="manga">Manga</SelectItem>
-              <SelectItem value="movies">Movies</SelectItem>
-              <SelectItem value="shows">Shows</SelectItem>
-            </Select.Viewport>
-            <Select.ScrollDownButton className="SelectScrollButton">
+            <Select.Value placeholder="Select a category..." />
+            <Select.Icon className="SelectIcon">
               <ChevronDownIcon />
-            </Select.ScrollDownButton>
-          </Select.Content>
-        </Select.Portal>
-      </Select.Root>
+            </Select.Icon>
+          </Select.Trigger>
+          <Select.Portal>
+            <Select.Content
+              position="popper"
+              alignOffset={6}
+              className="SelectContent z-10 bg-ctp-surface0 text-ctp-text rounded-lg show-lg p-3 border-2 border-ctp-surface1"
+            >
+              <Select.ScrollUpButton className="SelectScrollButton">
+                <ChevronUpIcon />
+              </Select.ScrollUpButton>
+              <Select.Viewport className="">
+                <SelectItem value="books">Books</SelectItem>
+                <SelectItem value="anime">Anime</SelectItem>
+                <SelectItem value="manga">Manga</SelectItem>
+                <SelectItem value="movies">Movies</SelectItem>
+                <SelectItem value="shows">Shows</SelectItem>
+              </Select.Viewport>
+              <Select.ScrollDownButton className="SelectScrollButton">
+                <ChevronDownIcon />
+              </Select.ScrollDownButton>
+            </Select.Content>
+          </Select.Portal>
+        </Select.Root>
+      </div>
     </div>
   );
 }
