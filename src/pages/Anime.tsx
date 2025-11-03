@@ -9,10 +9,11 @@ import { Select } from "radix-ui";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { FaSortAlphaDown, FaSortNumericDownAlt } from "react-icons/fa";
 import Search from "../components/SearchInput.js";
+
 function ToggleGroupItem({ value }: { value: string }) {
   function getStyle() {
     const baseStyle =
-      "border-3 rounded-lg px-4 py-1 data-[state=checked]:text-ctp-base";
+      "border-3 rounded-lg px-4 py-1 data-[state=checked]:text-ctp-base hover:brightness-120 transition-all duration-400";
     switch (value) {
       case "All":
         return `${baseStyle} border-ctp-mauve data-[state=checked]:bg-ctp-mauve text-ctp-mauve`;
