@@ -158,7 +158,14 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
 
       const transformedData = data.data.map(transformAPIData);
       console.log(transformedData);
-      set({ animeResults: transformedData || [] });
+
+      const uniqueMap = new Map<number, Anime>();
+      transformedData.forEach((anime: Anime) => {
+        uniqueMap.set(anime.mal_id, anime);
+      });
+      const uniqueData = Array.from(uniqueMap.values());
+
+      set({ animeResults: uniqueData || [] });
     } catch (error) {
       console.log(`Error fetching anime: ${error}`);
     } finally {
