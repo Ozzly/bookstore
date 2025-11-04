@@ -212,7 +212,7 @@ function MediaPageTemplate({ config }: { config: MediaConfig }) {
 
           <div className="flex flex-wrap justify-center gap-3">
             {mediaSummary.map((item) => (
-              <AnimeCard key={item.mal_id} anime={item} />
+              <CardComponent key={item.id} item={item} />
             ))}
           </div>
         </div>
@@ -231,7 +231,7 @@ function MediaPageTemplate({ config }: { config: MediaConfig }) {
           </h2>
           <div className="flex flex-wrap justify-center gap-3">
             {results.map((item) => (
-              <AnimeCard key={item.mal_id} anime={item} />
+              <CardComponent key={item.id} item={item} />
             ))}
           </div>
         </div>

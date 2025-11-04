@@ -40,7 +40,7 @@ const transformAPIData = (data: any): Anime => {
   const genresAndThemes = [...themes, ...genres];
 
   return {
-    mal_id: data.mal_id,
+    id: data.mal_id,
     title: data.title,
     score: data.score,
     cover_image: data.images.jpg.image_url,
@@ -74,7 +74,7 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
 
   addAnimeToList: (anime: Anime, listName: AnimeStatus) => {
     const currentList = get()[`anime${listName}`] as Anime[];
-    if (currentList.some((a) => a.mal_id === anime.mal_id)) return;
+    if (currentList.some((a) => a.id === anime.id)) return;
     anime.dateAdded = moment().format("ll");
     listName === "Watching" && (anime.currentEpisode = 1);
     const updatedList = [...currentList, anime];
@@ -85,39 +85,35 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
   getAnimeStatus: (mal_id: number): AnimeStatus | null => {
     const { animeWatched, animeWatching, animePlanned } = get();
 
-    if (animeWatched.some((anime) => anime.mal_id === mal_id)) return "Watched";
-    if (animeWatching.some((anime) => anime.mal_id === mal_id))
-      return "Watching";
-    if (animePlanned.some((anime) => anime.mal_id === mal_id)) return "Planned";
+    if (animeWatched.some((anime) => anime.id === mal_id)) return "Watched";
+    if (animeWatching.some((anime) => anime.id === mal_id)) return "Watching";
+    if (animePlanned.some((anime) => anime.id === mal_id)) return "Planned";
 
     return null;
   },
 
   removeAnimeFromList: (mal_id: number, listName: AnimeStatus) => {
     const currentList = get()[`anime${listName}`] as Anime[];
-    const updatedList = currentList.filter((anime) => anime.mal_id !== mal_id);
+    const updatedList = currentList.filter((anime) => anime.id !== mal_id);
     set({ [`anime${listName}`]: updatedList });
     localStorage.setItem(`anime${listName}`, JSON.stringify(updatedList));
   },
 
   getDateAdded: (mal_id: number): string | null => {
     const { animeWatched } = get();
-    return (
-      animeWatched.find((anime) => anime.mal_id === mal_id)?.dateAdded || null
-    );
+    return animeWatched.find((anime) => anime.id === mal_id)?.dateAdded || null;
   },
 
   getCurrentEpisode: (mal_id: number): number | null => {
     const { animeWatching } = get();
     return (
-      animeWatching.find((anime) => anime.mal_id === mal_id)?.currentEpisode ??
-      null
+      animeWatching.find((anime) => anime.id === mal_id)?.currentEpisode ?? null
     );
   },
 
   setCurrentEpisode: (mal_id: number, updatedEpisodeCount: number | null) => {
     const { animeWatching } = get();
-    const index = animeWatching.findIndex((anime) => anime.mal_id === mal_id);
+    const index = animeWatching.findIndex((anime) => anime.id === mal_id);
     if (index === -1) return;
 
     const currentAnime = animeWatching[index];
@@ -161,7 +157,7 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
 
       const uniqueMap = new Map<number, Anime>();
       transformedData.forEach((anime: Anime) => {
-        uniqueMap.set(anime.mal_id, anime);
+        uniqueMap.set(anime.id, anime);
       });
       const uniqueData = Array.from(uniqueMap.values());
 

@@ -14,12 +14,12 @@ import { MdCancel } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 interface AnimeCardProps {
-  anime: Anime;
+  item: Anime;
 }
 
-function AnimeCard({ anime }: AnimeCardProps) {
+function AnimeCard({ item }: AnimeCardProps) {
   const {
-    mal_id,
+    id,
     title,
     score,
     cover_image,
@@ -29,17 +29,15 @@ function AnimeCard({ anime }: AnimeCardProps) {
     studio,
     themes,
     videoType,
-  } = anime;
+  } = item;
 
   const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
-  const currentStatus = useAnimeStore((state) => state.getAnimeStatus(mal_id));
+  const currentStatus = useAnimeStore((state) => state.getAnimeStatus(id));
   const removeAnimeFromList = useAnimeStore(
     (state) => state.removeAnimeFromList
   );
-  const dateAdded = useAnimeStore((state) => state.getDateAdded(mal_id));
-  const currentEpisode = useAnimeStore((state) =>
-    state.getCurrentEpisode(mal_id)
-  );
+  const dateAdded = useAnimeStore((state) => state.getDateAdded(id));
+  const currentEpisode = useAnimeStore((state) => state.getCurrentEpisode(id));
   const setCurrentEpisode = useAnimeStore((state) => state.setCurrentEpisode);
   const [localCurrentEpisode, setLocalCurrentEpisode] = useState<string>(
     currentEpisode?.toString() || ""
@@ -64,10 +62,10 @@ function AnimeCard({ anime }: AnimeCardProps) {
 
   function handleStatusChange(status: AnimeStatus | null) {
     if (currentStatus) {
-      removeAnimeFromList(mal_id, currentStatus);
+      removeAnimeFromList(id, currentStatus);
     }
     if (status === null) return;
-    addAnimeToList(anime, status);
+    addAnimeToList(item, status);
   }
 
   function getMainButtonStyle() {
@@ -111,7 +109,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
     } else if (localCurrentEpisode === currentEpisode?.toString()) {
       return;
     } else {
-      setCurrentEpisode(mal_id, Number(localCurrentEpisode));
+      setCurrentEpisode(id, Number(localCurrentEpisode));
     }
   }
 
@@ -178,7 +176,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                       className="hover:brightness-125 transition-all duration-300 "
                       onClick={() => {
                         setCurrentEpisode(
-                          mal_id,
+                          id,
                           Math.max(0, (currentEpisode || 0) - 1)
                         );
                       }}
@@ -216,7 +214,7 @@ function AnimeCard({ anime }: AnimeCardProps) {
                         const localCurrentEpisode = episodes
                           ? Math.min(episodes, (currentEpisode || 0) + 1)
                           : (currentEpisode || 0) + 1;
-                        setCurrentEpisode(mal_id, localCurrentEpisode);
+                        setCurrentEpisode(id, localCurrentEpisode);
                       }}
                     >
                       <FaCirclePlus />
