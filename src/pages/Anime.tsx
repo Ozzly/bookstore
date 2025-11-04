@@ -115,7 +115,7 @@ function AnimePage() {
   return (
     <div className="flex justify-center">
       {searchTerm === "" ? (
-        <div className="w-full">
+        <div className="flex flex-col items-center">
           <div className="text-ctp-text font-bold text-xl mb-2 ml-2">
             Your Anime Collection
           </div>
