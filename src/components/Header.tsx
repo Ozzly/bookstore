@@ -48,7 +48,7 @@ function Header() {
 
   return (
     <div className="w-full border-b-1 border-ctp-surface0 sticky top-0 bg-ctp-base z-10 text-ctp-text flex justify-center mt-1">
-      <div className="flex mb-2">
+      <div className="flex my-3">
         <Search
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
