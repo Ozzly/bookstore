@@ -1,10 +1,7 @@
-import React, { useEffect, useMemo } from "react";
-import { useAnimeStore } from "../stores/animeStore.js";
-import AnimeCard from "./AnimeCard.js";
+import React, { useMemo } from "react";
 import { useSearchStore } from "../stores/searchUIStore.js";
 import { BarLoader } from "react-spinners";
 import { RadioGroup } from "radix-ui";
-import type { Anime, AnimeStatus } from "../types.js";
 import { Select } from "radix-ui";
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import { FaSortAlphaDown, FaSortNumericDownAlt } from "react-icons/fa";
@@ -75,22 +72,11 @@ function MediaPageTemplate({ config }: { config: MediaConfig }) {
 
   const { results, completed, progress, planned } = config.useStore();
 
-  // const animeSearchResults = useAnimeStore((state) => state.animeResults);
-  // const watchedAnime = useAnimeStore((state) => state.animeWatched);
-  // const watchingAnime = useAnimeStore((state) => state.animeWatching);
-  // const plannedAnime = useAnimeStore((state) => state.animePlanned);
-
   const [summarySearchTerm, setSummarySearchTerm] = React.useState("");
   const [filterStatus, setFilterStatus] = React.useState<string>("All");
   const [sortBy, setSortBy] = React.useState<string>(
     config.sortOptions[0] || "Title"
   );
-
-  // const [animeSummary, setAnimeSummary] = React.useState<Anime[]>(() => {
-  //   const allAnime = [...watchedAnime, ...watchingAnime, ...plannedAnime];
-  //   allAnime.sort((a, b) => a.title.localeCompare(b.title));
-  //   return allAnime;
-  // });
 
   const mediaSummary = useMemo(() => {
     let mediaList: any[] = [];
