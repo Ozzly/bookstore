@@ -68,7 +68,9 @@ function AnimeCard({ item }: AnimeCardProps) {
             {title}
           </h2>
           <p className="text-sm mb-1">{studio}</p>
-          <p>{release_season}</p>
+          <p>
+            {release_season} {year}
+          </p>
           <div
             className={
               score >= 8

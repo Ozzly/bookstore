@@ -31,9 +31,7 @@ const transformAPIData = (data: any): Anime => {
     return "Unknown";
   }
 
-  const releaseSeason = `${getSeason(data.aired.prop.from.month)} ${
-    data.aired.prop.from.year
-  }`;
+  const releaseSeason = getSeason(data.aired.prop.from.month);
 
   const themes = data.themes.map((theme: any) => theme.name);
   const genres = data.genres.map((genre: any) => genre.name);
@@ -45,7 +43,7 @@ const transformAPIData = (data: any): Anime => {
     score: data.score,
     cover_image: data.images.jpg.image_url,
     episodes: data.episodes,
-    year: data.year,
+    year: data.aired.prop.from.year,
     release_season: releaseSeason,
     studio: data.studios[0]?.name || "Unknown", // Should replace with logic to handle multiple studios
     themes: genresAndThemes,
