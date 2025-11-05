@@ -4,6 +4,7 @@ import { useAnimeStore } from "../stores/animeStore.js";
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 import StatusButton from "./StatusButton.js";
+import NumberInputWithButtons from "./NumberInputWithButtons.js";
 interface AnimeCardProps {
   item: Anime;
 }
@@ -30,13 +31,6 @@ function AnimeCard({ item }: AnimeCardProps) {
   const dateAdded = useAnimeStore((state) => state.getDateAdded(id));
   const currentEpisode = useAnimeStore((state) => state.getCurrentEpisode(id));
   const setCurrentEpisode = useAnimeStore((state) => state.setCurrentEpisode);
-  const [localCurrentEpisode, setLocalCurrentEpisode] = useState<string>(
-    currentEpisode?.toString() || ""
-  );
-
-  useEffect(() => {
-    setLocalCurrentEpisode(currentEpisode?.toString() || "");
-  }, [currentEpisode]);
 
   function getButtonText() {
     switch (currentStatus) {
@@ -57,19 +51,6 @@ function AnimeCard({ item }: AnimeCardProps) {
     }
     if (status === null) return;
     addAnimeToList(item, status);
-  }
-
-  function handleEpisodeSave() {
-    if (
-      localCurrentEpisode === "" ||
-      (Number(localCurrentEpisode) > episodes && episodes)
-    ) {
-      setLocalCurrentEpisode(currentEpisode?.toString() || "");
-    } else if (localCurrentEpisode === currentEpisode?.toString()) {
-      return;
-    } else {
-      setCurrentEpisode(id, Number(localCurrentEpisode));
-    }
   }
 
   return (
@@ -130,54 +111,14 @@ function AnimeCard({ item }: AnimeCardProps) {
             ) : (
               currentStatus === "progress" && (
                 <div className="text-ctp-subtext0 text-center justify-center items-center flex">
-                  <div className="hidden group-hover/card:flex justify-center gap-1 mr-1">
-                    <button
-                      className="hover:brightness-125 transition-all duration-300 "
-                      onClick={() => {
-                        setCurrentEpisode(
-                          id,
-                          Math.max(0, (currentEpisode || 0) - 1)
-                        );
+                  <div className="hidden group-hover/card:flex justify-center mr-1">
+                    <NumberInputWithButtons
+                      count={currentEpisode || 0}
+                      setCount={(newCount) => {
+                        setCurrentEpisode(id, newCount);
                       }}
-                    >
-                      <FaCircleMinus />
-                    </button>
-                    <input
-                      className={`w-12 text-right focus:outline-none border-3 rounded-lg px-1 border-ctp-surface2 focus:border-ctp-mauve`}
-                      value={localCurrentEpisode}
-                      onChange={(event) => {
-                        if (event.target.value === "") {
-                          setLocalCurrentEpisode("");
-                        } else if (!isNaN(Number(event.target.value))) {
-                          setLocalCurrentEpisode(event.target.value);
-                        }
-                      }}
-                      onBlur={handleEpisodeSave}
-                      onKeyDown={(event) => {
-                        if (event.key === "Enter") {
-                          handleEpisodeSave();
-                          (event.target as HTMLInputElement).blur();
-                        }
-                      }}
-                      onFocus={(event) => {
-                        const input = event.target as HTMLInputElement;
-                        input.setSelectionRange(
-                          input.value.length,
-                          input.value.length
-                        );
-                      }}
+                      maxCount={episodes}
                     />
-                    <button
-                      className="hover:brightness-125 transition-all duration-300"
-                      onClick={() => {
-                        const localCurrentEpisode = episodes
-                          ? Math.min(episodes, (currentEpisode || 0) + 1)
-                          : (currentEpisode || 0) + 1;
-                        setCurrentEpisode(id, localCurrentEpisode);
-                      }}
-                    >
-                      <FaCirclePlus />
-                    </button>
                   </div>
                   <div className="group-hover/card:hidden mr-1">
                     {currentEpisode}
