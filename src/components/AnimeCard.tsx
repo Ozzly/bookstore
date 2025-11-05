@@ -40,18 +40,18 @@ function AnimeCard({ item }: AnimeCardProps) {
 
   function getButtonText() {
     switch (currentStatus) {
-      case "Watched":
+      case "completed":
         return "Watched";
-      case "Watching":
+      case "progress":
         return "Watching";
-      case "Planned":
+      case "planned":
         return "Planned";
       default:
         return "Mark Watched";
     }
   }
 
-  function handleStatusChange(status: AnimeStatus | null) {
+  function handleStatusChange(status: GenericStatus | null) {
     if (currentStatus) {
       removeAnimeFromList(id, currentStatus);
     }
@@ -69,21 +69,6 @@ function AnimeCard({ item }: AnimeCardProps) {
       return;
     } else {
       setCurrentEpisode(id, Number(localCurrentEpisode));
-    }
-  }
-
-  function convertStatusToGeneric(
-    status: AnimeStatus | null
-  ): GenericStatus | null {
-    switch (status) {
-      case "Watched":
-        return "completed";
-      case "Watching":
-        return "progress";
-      case "Planned":
-        return "planned";
-      default:
-        return null;
     }
   }
 
@@ -138,12 +123,12 @@ function AnimeCard({ item }: AnimeCardProps) {
           </div>
 
           <div className="absolute bottom-0 w-full">
-            {currentStatus === "Watched" ? (
+            {currentStatus === "completed" ? (
               <div className="text-ctp-subtext0 text-center">
                 Finished {dateAdded}
               </div>
             ) : (
-              currentStatus === "Watching" && (
+              currentStatus === "progress" && (
                 <div className="text-ctp-subtext0 text-center justify-center items-center flex">
                   <div className="hidden group-hover/card:flex justify-center gap-1 mr-1">
                     <button
@@ -202,7 +187,7 @@ function AnimeCard({ item }: AnimeCardProps) {
               )
             )}
             <StatusButton
-              currentStatus={convertStatusToGeneric(currentStatus)}
+              currentStatus={currentStatus}
               handleStatusChange={handleStatusChange}
               getButtonText={getButtonText}
             />

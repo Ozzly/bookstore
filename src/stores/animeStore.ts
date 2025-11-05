@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Anime, AnimeStatus } from "../types.js";
+import type { Anime, AnimeStatus, GenericStatus } from "../types.js";
 import moment from "moment";
 
 const API_BASE_URL = "https://api.jikan.moe/v4";
@@ -10,9 +10,9 @@ type AnimeStore = {
   animeWatched: Anime[];
   animeWatching: Anime[];
   animePlanned: Anime[];
-  addAnimeToList: (anime: Anime, listName: AnimeStatus) => void;
-  getAnimeStatus: (mal_id: number) => AnimeStatus | null;
-  removeAnimeFromList: (mal_id: number, listName: AnimeStatus) => void;
+  addAnimeToList: (anime: Anime, listName: GenericStatus) => void;
+  getAnimeStatus: (mal_id: number) => GenericStatus | null;
+  removeAnimeFromList: (mal_id: number, listName: GenericStatus) => void;
   getDateAdded: (mal_id: number) => string | null;
   getCurrentEpisode: (mal_id: number) => number | null;
   setCurrentEpisode: (
@@ -58,45 +58,102 @@ export const useAnimeStore = create<AnimeStore>((set, get) => ({
   animeResults: [],
 
   animeWatched: (() => {
-    const stored = localStorage.getItem("animeWatched");
+    const stored = localStorage.getItem("anime_completed");
     return stored ? JSON.parse(stored) : [];
   })(),
 
   animeWatching: (() => {
-    const stored = localStorage.getItem("animeWatching");
+    const stored = localStorage.getItem("anime_progress");
     return stored ? JSON.parse(stored) : [];
   })(),
 
   animePlanned: (() => {
-    const stored = localStorage.getItem("animePlanned");
+    const stored = localStorage.getItem("anime_planned");
     return stored ? JSON.parse(stored) : [];
   })(),
 
-  addAnimeToList: (anime: Anime, listName: AnimeStatus) => {
-    const currentList = get()[`anime${listName}`] as Anime[];
+  addAnimeToList: (anime: Anime, status: GenericStatus) => {
+    let currentList: Anime[];
+    let storageKey: string;
+
+    switch (status) {
+      case "completed":
+        currentList = get().animeWatched;
+        storageKey = "anime_completed";
+        break;
+      case "progress":
+        currentList = get().animeWatching;
+        storageKey = "anime_progress";
+        break;
+      case "planned":
+        currentList = get().animePlanned;
+        storageKey = "anime_planned";
+        break;
+      default:
+        return;
+    }
+
     if (currentList.some((a) => a.id === anime.id)) return;
     anime.dateAdded = moment().format("ll");
-    listName === "Watching" && (anime.currentEpisode = 1);
+    status === "progress" && (anime.currentEpisode = 1);
     const updatedList = [...currentList, anime];
-    set({ [`anime${listName}`]: updatedList });
-    localStorage.setItem(`anime${listName}`, JSON.stringify(updatedList));
+
+    switch (status) {
+      case "completed":
+        set({ animeWatched: updatedList });
+        break;
+      case "progress":
+        set({ animeWatching: updatedList });
+        break;
+      case "planned":
+        set({ animePlanned: updatedList });
+        break;
+    }
+
+    localStorage.setItem(storageKey, JSON.stringify(updatedList));
   },
 
-  getAnimeStatus: (mal_id: number): AnimeStatus | null => {
+  getAnimeStatus: (mal_id: number): GenericStatus | null => {
     const { animeWatched, animeWatching, animePlanned } = get();
 
-    if (animeWatched.some((anime) => anime.id === mal_id)) return "Watched";
-    if (animeWatching.some((anime) => anime.id === mal_id)) return "Watching";
-    if (animePlanned.some((anime) => anime.id === mal_id)) return "Planned";
+    if (animeWatched.some((anime) => anime.id === mal_id)) return "completed";
+    if (animeWatching.some((anime) => anime.id === mal_id)) return "progress";
+    if (animePlanned.some((anime) => anime.id === mal_id)) return "planned";
 
     return null;
   },
 
-  removeAnimeFromList: (mal_id: number, listName: AnimeStatus) => {
-    const currentList = get()[`anime${listName}`] as Anime[];
+  removeAnimeFromList: (mal_id: number, status: GenericStatus) => {
+    let currentList: Anime[];
+    switch (status) {
+      case "completed":
+        currentList = get().animeWatched;
+        break;
+      case "progress":
+        currentList = get().animeWatching;
+        break;
+      case "planned":
+        currentList = get().animePlanned;
+        break;
+      default:
+        return;
+    }
+
     const updatedList = currentList.filter((anime) => anime.id !== mal_id);
-    set({ [`anime${listName}`]: updatedList });
-    localStorage.setItem(`anime${listName}`, JSON.stringify(updatedList));
+
+    switch (status) {
+      case "completed":
+        set({ animeWatched: updatedList });
+        break;
+      case "progress":
+        set({ animeWatching: updatedList });
+        break;
+      case "planned":
+        set({ animePlanned: updatedList });
+        break;
+    }
+
+    localStorage.setItem(`anime_${status}`, JSON.stringify(updatedList));
   },
 
   getDateAdded: (mal_id: number): string | null => {
