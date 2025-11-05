@@ -35,3 +35,5 @@ export type VideoType =
   | "pv";
 
 export type AnimeStatus = "Watched" | "Watching" | "Planned";
+
+export type GenericStatus = "completed" | "progress" | "planned";

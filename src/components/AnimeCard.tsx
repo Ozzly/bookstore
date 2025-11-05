@@ -1,18 +1,9 @@
 import { useEffect, useState, type ReactNode } from "react";
-import type { Anime, AnimeStatus } from "../types.js";
-import { DropdownMenu } from "radix-ui";
-import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-  PlusCircledIcon,
-  TrashIcon,
-} from "@radix-ui/react-icons";
+import type { Anime, AnimeStatus, GenericStatus } from "../types.js";
 import { useAnimeStore } from "../stores/animeStore.js";
-import { SiTaketwointeractivesoftware } from "react-icons/si";
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
-import { MdCancel } from "react-icons/md";
 import { FaStar } from "react-icons/fa";
-import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
+import StatusButton from "./StatusButton.js";
 interface AnimeCardProps {
   item: Anime;
 }
@@ -68,38 +59,6 @@ function AnimeCard({ item }: AnimeCardProps) {
     addAnimeToList(item, status);
   }
 
-  function getMainButtonStyle() {
-    const baseStyle =
-      "border-3 text-ctp-base rounded-l-lg p-1 border-r-2 w-full transition-all duration-400 hover:brightness-115 active:brightness-90 group";
-
-    switch (currentStatus) {
-      case "Watched":
-        return `${baseStyle} bg-ctp-blue border-ctp-blue`;
-      case "Watching":
-        return `${baseStyle} bg-ctp-peach border-ctp-peach`;
-      case "Planned":
-        return `${baseStyle} bg-ctp-red border-ctp-red`;
-      default:
-        return `${baseStyle} bg-ctp-mauve border-ctp-mauve`;
-    }
-  }
-
-  function getDropdownButtonStyle() {
-    const baseStyle =
-      "border-3 border-l-2 rounded-r-lg p-1 px-2 font-bold transition-all duration-400 hover:brightness-115 active:brightness-90";
-
-    switch (currentStatus) {
-      case "Watched":
-        return `${baseStyle} border-ctp-blue text-ctp-blue hover:bg-ctp-blue/20`;
-      case "Watching":
-        return `${baseStyle} border-ctp-peach text-ctp-peach hover:bg-ctp-peach/20`;
-      case "Planned":
-        return `${baseStyle} border-ctp-red text-ctp-red hover:bg-ctp-red/20`;
-      default:
-        return `${baseStyle} border-ctp-mauve text-ctp-mauve hover:bg-ctp-mauve/20`;
-    }
-  }
-
   function handleEpisodeSave() {
     if (
       localCurrentEpisode === "" ||
@@ -110,6 +69,21 @@ function AnimeCard({ item }: AnimeCardProps) {
       return;
     } else {
       setCurrentEpisode(id, Number(localCurrentEpisode));
+    }
+  }
+
+  function convertStatusToGeneric(
+    status: AnimeStatus | null
+  ): GenericStatus | null {
+    switch (status) {
+      case "Watched":
+        return "completed";
+      case "Watching":
+        return "progress";
+      case "Planned":
+        return "planned";
+      default:
+        return null;
     }
   }
 
@@ -227,72 +201,11 @@ function AnimeCard({ item }: AnimeCardProps) {
                 </div>
               )
             )}
-
-            <div className="flex">
-              <button
-                className={getMainButtonStyle()}
-                onClick={() => {
-                  if (currentStatus) {
-                    handleStatusChange(null);
-                  } else {
-                    handleStatusChange("Watched");
-                  }
-                }}
-              >
-                {getButtonText()}
-
-                {currentStatus && (
-                  <MdCancel
-                    height={18}
-                    width={18}
-                    className="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-all duration-400 font-bold"
-                  />
-                )}
-              </button>
-              <DropdownMenu.Root>
-                <DropdownMenu.Trigger className={getDropdownButtonStyle()}>
-                  <PiDotsThreeOutlineVerticalFill />
-                </DropdownMenu.Trigger>
-
-                <DropdownMenu.Portal>
-                  <DropdownMenu.Content
-                    className="bg-ctp-base p-2 rounded-lg shadow-lg border-ctp-surface1 border-3 text-ctp-text"
-                    side="top"
-                    align="end"
-                  >
-                    <DropdownMenu.Label />
-                    <DropdownMenu.Item />
-
-                    <DropdownMenu.RadioGroup>
-                      <DropdownMenu.RadioItem
-                        value="watched"
-                        className="hover:bg-ctp-surface1 p-1 rounded-md"
-                        onClick={() => handleStatusChange("Watched")}
-                      >
-                        Mark as Watched
-                        <DropdownMenu.ItemIndicator />
-                      </DropdownMenu.RadioItem>
-                      <DropdownMenu.RadioItem
-                        value="watching"
-                        className="hover:bg-ctp-surface2 p-1 rounded-md"
-                        onClick={() => handleStatusChange("Watching")}
-                      >
-                        Mark as Watching
-                        <DropdownMenu.ItemIndicator />
-                      </DropdownMenu.RadioItem>
-                      <DropdownMenu.RadioItem
-                        value="planToWatch"
-                        className="hover:bg-ctp-surface2 p-1 rounded-md"
-                        onClick={() => handleStatusChange("Planned")}
-                      >
-                        Mark as Planned
-                        <DropdownMenu.ItemIndicator />
-                      </DropdownMenu.RadioItem>
-                    </DropdownMenu.RadioGroup>
-                  </DropdownMenu.Content>
-                </DropdownMenu.Portal>
-              </DropdownMenu.Root>
-            </div>
+            <StatusButton
+              currentStatus={convertStatusToGeneric(currentStatus)}
+              handleStatusChange={handleStatusChange}
+              getButtonText={getButtonText}
+            />
           </div>
         </div>
       </div>
