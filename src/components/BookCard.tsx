@@ -1,15 +1,12 @@
-import React from "react";
 import { useState } from "react";
 import type { Book } from "../types.js";
 import { useBookStore } from "../stores/bookStore.js";
 
 interface BookCardProps {
-  book: Book;
-  isMarkedRead: boolean;
-  isPlannedToRead: boolean;
+  item: Book;
 }
 
-function BookCard({ book, isMarkedRead, isPlannedToRead }: BookCardProps) {
+function BookCard({ item: book }: BookCardProps) {
   const [showDropdown, setShowDropdown] = useState(false);
   const toggleCompletedBook = useBookStore(
     (state) => state.toggleCompletedBook
@@ -54,7 +51,7 @@ function BookCard({ book, isMarkedRead, isPlannedToRead }: BookCardProps) {
       </div>
 
       <div className="flex justify-center">
-        <button
+        {/* <button
           onClick={() => toggleCompletedBook(book)}
           title={isMarkedRead ? "Remove from Read" : "Mark as Read"}
           disabled={isPlannedToRead}
@@ -81,8 +78,8 @@ function BookCard({ book, isMarkedRead, isPlannedToRead }: BookCardProps) {
               d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"
             />
           </svg>
-        </button>
-        <button
+        </button> */}
+        {/* <button
           onClick={() => togglePlanToRead(book)}
           title="Add to Plan to Read"
           disabled={isMarkedRead}
@@ -109,7 +106,7 @@ function BookCard({ book, isMarkedRead, isPlannedToRead }: BookCardProps) {
               d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0 1 20.25 6v12A2.25 2.25 0 0 1 18 20.25H6A2.25 2.25 0 0 1 3.75 18V6A2.25 2.25 0 0 1 6 3.75h1.5m9 0h-9"
             />
           </svg>
-        </button>
+        </button> */}
 
         <button
           onClick={() => setShowDropdown((prev) => !prev)}
