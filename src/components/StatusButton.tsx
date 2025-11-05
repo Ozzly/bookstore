@@ -2,11 +2,11 @@ import React from "react";
 import { DropdownMenu } from "radix-ui";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { MdCancel } from "react-icons/md";
-import type { AnimeStatus, GenericStatus } from "../types.js";
+import type { GenericStatus } from "../types.js";
 
 interface StatusButtonProps {
   currentStatus: GenericStatus | null;
-  handleStatusChange: (status: AnimeStatus | null) => void;
+  handleStatusChange: (status: GenericStatus | null) => void;
   getButtonText: () => string;
 }
 
@@ -55,7 +55,7 @@ function StatusButton({
           if (currentStatus) {
             handleStatusChange(null);
           } else {
-            handleStatusChange("Watched");
+            handleStatusChange("completed");
           }
         }}
       >
@@ -85,25 +85,25 @@ function StatusButton({
 
             <DropdownMenu.RadioGroup>
               <DropdownMenu.RadioItem
-                value="watched"
+                value="completed"
                 className="hover:bg-ctp-surface1 p-1 rounded-md"
-                onClick={() => handleStatusChange("Watched")}
+                onClick={() => handleStatusChange("completed")}
               >
-                Mark as Watched
+                Mark as Completed
                 <DropdownMenu.ItemIndicator />
               </DropdownMenu.RadioItem>
               <DropdownMenu.RadioItem
-                value="watching"
+                value="progress"
                 className="hover:bg-ctp-surface2 p-1 rounded-md"
-                onClick={() => handleStatusChange("Watching")}
+                onClick={() => handleStatusChange("progress")}
               >
-                Mark as Watching
+                Mark as Progress
                 <DropdownMenu.ItemIndicator />
               </DropdownMenu.RadioItem>
               <DropdownMenu.RadioItem
-                value="planToWatch"
+                value="planned"
                 className="hover:bg-ctp-surface2 p-1 rounded-md"
-                onClick={() => handleStatusChange("Planned")}
+                onClick={() => handleStatusChange("planned")}
               >
                 Mark as Planned
                 <DropdownMenu.ItemIndicator />
