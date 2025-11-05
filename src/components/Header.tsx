@@ -1,17 +1,12 @@
 import React, { useEffect } from "react";
 import Search from "./SearchInput.js";
-import { Link, NavLink } from "react-router";
 import { Select } from "radix-ui";
 import { useSearchStore } from "../stores/searchUIStore.js";
 import { useBookStore } from "../stores/bookStore.js";
 import { useAnimeStore } from "../stores/animeStore.js";
 import { useNavigate } from "react-router";
 
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from "@radix-ui/react-icons";
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import type { Category } from "../types.js";
 
 function Header() {

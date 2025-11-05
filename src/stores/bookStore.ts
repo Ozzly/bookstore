@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Book, Category } from "../types.js";
+import type { Book } from "../types.js";
 
 const API_BASE_URL = "https://openlibrary.org";
 const API_OPTIONS = {

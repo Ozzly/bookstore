@@ -1,4 +1,3 @@
-import React from "react";
 import { DropdownMenu } from "radix-ui";
 import { PiDotsThreeOutlineVerticalFill } from "react-icons/pi";
 import { MdCancel } from "react-icons/md";

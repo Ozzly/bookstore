@@ -1,4 +1,3 @@
-import React from "react";
 import MediaPageTemplate from "../components/MediaPageTemplate.js";
 import { animeConfig } from "../configs/mediaConfigs.js";
 

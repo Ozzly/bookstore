@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 
 interface NumberInputWithButtonsProps {

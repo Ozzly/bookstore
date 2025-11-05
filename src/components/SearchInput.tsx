@@ -1,9 +1,5 @@
 import React, { useEffect } from "react";
-import { useSearchStore } from "../stores/searchUIStore.js";
 import { useDebounce } from "use-debounce";
-import { useNavigate } from "react-router";
-import { useBookStore } from "../stores/bookStore.js";
-import { useAnimeStore } from "../stores/animeStore.js";
 import { IoSearch } from "react-icons/io5";
 
 interface SearchProps {

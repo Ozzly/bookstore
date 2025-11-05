@@ -1,7 +1,5 @@
-import { useEffect, useState, type ReactNode } from "react";
-import type { Anime, AnimeStatus, GenericStatus } from "../types.js";
+import type { Anime, GenericStatus } from "../types.js";
 import { useAnimeStore } from "../stores/animeStore.js";
-import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { FaStar } from "react-icons/fa";
 import StatusButton from "./StatusButton.js";
 import NumberInputWithButtons from "./NumberInputWithButtons.js";

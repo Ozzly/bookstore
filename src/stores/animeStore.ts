@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Anime, AnimeStatus, GenericStatus } from "../types.js";
+import type { Anime, GenericStatus } from "../types.js";
 import moment from "moment";
 
 const API_BASE_URL = "https://api.jikan.moe/v4";
