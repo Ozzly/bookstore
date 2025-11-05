@@ -1,5 +1,8 @@
 import AnimeCard from "../components/AnimeCard.js";
 import { useAnimeStore } from "../stores/animeStore.js";
+import type { Anime, Book } from "../types.js";
+
+type Media = Anime[] | Book[];
 
 export interface MediaConfig {
   title: string;
@@ -11,10 +14,10 @@ export interface MediaConfig {
   };
   cardComponent: React.ComponentType<any>;
   useStore: () => {
-    results: any[];
-    completed: any[];
-    progress: any[];
-    planned: any[];
+    results: Media;
+    completed: Media;
+    progress: Media;
+    planned: Media;
   };
   sortOptions: string[];
 }
