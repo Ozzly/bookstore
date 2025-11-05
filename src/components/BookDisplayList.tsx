@@ -24,7 +24,7 @@ function BookDisplayList({
           <div className="flex overflow-y-scroll gap-4 w-full py-2">
             {books.map((book) => (
               <BookCard
-                key={book.key}
+                key={book.id}
                 book={book}
                 isMarkedRead={isMarkedRead}
                 isPlannedToRead={isPlannedToRead}

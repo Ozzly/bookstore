@@ -1,5 +1,7 @@
 import AnimeCard from "../components/AnimeCard.js";
+import BookCard from "../components/BookCard.js";
 import { useAnimeStore } from "../stores/animeStore.js";
+import { useBookStore } from "../stores/bookStore.js";
 import type { Anime, Book } from "../types.js";
 
 type Media = Anime[] | Book[];
@@ -16,7 +18,7 @@ export interface MediaConfig {
   useStore: () => {
     results: Media;
     completed: Media;
-    progress: Media;
+    progress?: Media;
     planned: Media;
   };
   sortOptions: string[];
@@ -38,6 +40,26 @@ export const animeConfig: MediaConfig = {
       completed: store.animeWatched,
       progress: store.animeWatching,
       planned: store.animePlanned,
+    };
+  },
+  sortOptions: ["Title", "Rating"],
+};
+
+export const bookConfig: MediaConfig = {
+  title: "Books",
+  searchPlaceholder: "Search your book collection...",
+  statusOptions: {
+    completed: "Read",
+    progress: "Reading",
+    planned: "Planned",
+  },
+  cardComponent: BookCard,
+  useStore: () => {
+    const store = useBookStore();
+    return {
+      results: store.bookResults,
+      completed: store.completedBooks,
+      planned: store.planToReadBooks,
     };
   },
   sortOptions: ["Title", "Rating"],

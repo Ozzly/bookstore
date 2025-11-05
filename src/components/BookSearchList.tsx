@@ -13,11 +13,11 @@ function BookSearchList({ books, readBooks, planToReadBooks }: BookListProps) {
     <ul className="flex flex-wrap justify-center gap-4">
       {books.map((book) => (
         <BookCard
-          key={book.key}
+          key={book.id}
           book={book}
-          isMarkedRead={readBooks && readBooks.some((b) => b.key === book.key)}
+          isMarkedRead={readBooks && readBooks.some((b) => b.id === book.id)}
           isPlannedToRead={
-            planToReadBooks && planToReadBooks.some((b) => b.key === book.key)
+            planToReadBooks && planToReadBooks.some((b) => b.id === book.id)
           }
         />
       ))}

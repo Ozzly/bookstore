@@ -83,13 +83,13 @@ function MediaPageTemplate({ config }: { config: MediaConfig }) {
 
     switch (filterStatus) {
       case "All":
-        mediaList = [...completed, ...progress, ...planned];
+        mediaList = [...completed, ...(progress || []), ...planned];
         break;
       case config.statusOptions.completed:
         mediaList = [...completed];
         break;
       case config.statusOptions.progress:
-        mediaList = [...progress];
+        mediaList = [...(progress || [])];
         break;
       case config.statusOptions.planned:
         mediaList = [...planned];

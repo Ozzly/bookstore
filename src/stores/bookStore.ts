@@ -75,17 +75,17 @@ export const useBookStore = create<BookStore>((set, get) => ({
 
   removeCompletedBook: (bookKey: string) => {
     const { completedBooks } = get();
-    const updatedBooks = completedBooks.filter((b) => b.key !== bookKey);
+    const updatedBooks = completedBooks.filter((b) => b.id !== bookKey);
     set({ completedBooks: updatedBooks });
     localStorage.setItem("completedBooks", JSON.stringify(updatedBooks));
   },
 
   toggleCompletedBook: (book: Book) => {
     const { completedBooks, addCompletedBook, removeCompletedBook } = get();
-    const exists = completedBooks.some((b) => b.key === book.key);
+    const exists = completedBooks.some((b) => b.id === book.id);
 
     if (exists) {
-      removeCompletedBook(book.key);
+      removeCompletedBook(book.id);
     } else {
       addCompletedBook(book);
     }
@@ -100,17 +100,17 @@ export const useBookStore = create<BookStore>((set, get) => ({
 
   removePlanToRead: (bookKey: string) => {
     const { planToReadBooks } = get();
-    const updatedBooks = planToReadBooks.filter((b) => b.key !== bookKey);
+    const updatedBooks = planToReadBooks.filter((b) => b.id !== bookKey);
     set({ planToReadBooks: updatedBooks });
     localStorage.setItem("planToReadBooks", JSON.stringify(updatedBooks));
   },
 
   togglePlanToRead: (book: Book) => {
     const { planToReadBooks, addPlanToRead, removePlanToRead } = get();
-    const exists = planToReadBooks.some((b) => b.key === book.key);
+    const exists = planToReadBooks.some((b) => b.id === book.id);
 
     if (exists) {
-      removePlanToRead(book.key);
+      removePlanToRead(book.id);
     } else {
       addPlanToRead(book);
     }
