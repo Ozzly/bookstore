@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Book } from "../types.js";
+import type { Book, GenericStatus } from "../types.js";
 
 const API_BASE_URL = "https://openlibrary.org";
 const API_OPTIONS = {
@@ -9,23 +9,54 @@ const API_OPTIONS = {
   },
 };
 
+const transformAPIData = (data: any): Book => {
+  return {
+    id: data.key,
+    title: data.title,
+    cover_i: data.cover_i,
+    first_publish_year: data.first_publish_year,
+    author_name: data.author_name || [],
+    edition_count: data.edition_count,
+  };
+};
+
 type BookStore = {
   isLoading: boolean;
   bookResults: Book[];
   fetchBooksQuery: (searchTerm: string) => Promise<void>;
   completedBooks: Book[];
   planToReadBooks: Book[];
-  addCompletedBook: (book: Book) => void;
-  removeCompletedBook: (bookKey: string) => void;
-  toggleCompletedBook: (book: Book) => void;
-  addPlanToRead: (book: Book) => void;
-  removePlanToRead: (bookKey: string) => void;
-  togglePlanToRead: (book: Book) => void;
+  booksProgress: Book[];
+  getBookStatus: (id: string) => GenericStatus | null;
 };
 
 export const useBookStore = create<BookStore>((set, get) => ({
   isLoading: true,
   bookResults: [],
+
+  completedBooks: (() => {
+    const stored = localStorage.getItem("completedBooks");
+    return stored ? JSON.parse(stored) : [];
+  })(),
+  planToReadBooks: (() => {
+    const stored = localStorage.getItem("planToReadBooks");
+    return stored ? JSON.parse(stored) : [];
+  })(),
+  booksProgress: (() => {
+    const stored = localStorage.getItem("booksProgress");
+    return stored ? JSON.parse(stored) : [];
+  })(),
+
+  getBookStatus: (id: string): GenericStatus | null => {
+    const { completedBooks, planToReadBooks, booksProgress } = get();
+
+    if (completedBooks.some((book) => book.id === id)) return "completed";
+    if (booksProgress.some((book) => book.id === id)) return "progress";
+    if (planToReadBooks.some((book) => book.id === id)) return "planned";
+
+    return null;
+  },
+
   fetchBooksQuery: async (searchTerm) => {
     set({ isLoading: true });
 
@@ -39,7 +70,7 @@ export const useBookStore = create<BookStore>((set, get) => ({
       }
 
       const data = await response.json();
-      console.log(data);
+      const transformedData = data.docs.map(transformAPIData);
 
       if (data.Response === "False") {
         // setErrorMessage(data.Error || "Failed to fetch movies");
@@ -47,72 +78,13 @@ export const useBookStore = create<BookStore>((set, get) => ({
         return;
       }
 
-      set({ bookResults: data.docs || [] });
+      set({ bookResults: transformedData || [] });
     } catch (error) {
       console.log(`Error fetching book: ${error}`);
       //   setErrorMessage("Error fetching books.");
     } finally {
       set({ isLoading: false });
       console.log(`Finished fetching books`);
-    }
-  },
-
-  completedBooks: (() => {
-    const stored = localStorage.getItem("completedBooks");
-    return stored ? JSON.parse(stored) : [];
-  })(),
-  planToReadBooks: (() => {
-    const stored = localStorage.getItem("planToReadBooks");
-    return stored ? JSON.parse(stored) : [];
-  })(),
-
-  addCompletedBook: (book: Book) => {
-    const { completedBooks } = get();
-    const updatedBooks = [...completedBooks, book];
-    set({ completedBooks: updatedBooks });
-    localStorage.setItem("completedBooks", JSON.stringify(updatedBooks));
-  },
-
-  removeCompletedBook: (bookKey: string) => {
-    const { completedBooks } = get();
-    const updatedBooks = completedBooks.filter((b) => b.id !== bookKey);
-    set({ completedBooks: updatedBooks });
-    localStorage.setItem("completedBooks", JSON.stringify(updatedBooks));
-  },
-
-  toggleCompletedBook: (book: Book) => {
-    const { completedBooks, addCompletedBook, removeCompletedBook } = get();
-    const exists = completedBooks.some((b) => b.id === book.id);
-
-    if (exists) {
-      removeCompletedBook(book.id);
-    } else {
-      addCompletedBook(book);
-    }
-  },
-
-  addPlanToRead: (book: Book) => {
-    const { planToReadBooks } = get();
-    const updatedBooks = [...planToReadBooks, book];
-    set({ planToReadBooks: updatedBooks });
-    localStorage.setItem("planToReadBooks", JSON.stringify(updatedBooks));
-  },
-
-  removePlanToRead: (bookKey: string) => {
-    const { planToReadBooks } = get();
-    const updatedBooks = planToReadBooks.filter((b) => b.id !== bookKey);
-    set({ planToReadBooks: updatedBooks });
-    localStorage.setItem("planToReadBooks", JSON.stringify(updatedBooks));
-  },
-
-  togglePlanToRead: (book: Book) => {
-    const { planToReadBooks, addPlanToRead, removePlanToRead } = get();
-    const exists = planToReadBooks.some((b) => b.id === book.id);
-
-    if (exists) {
-      removePlanToRead(book.id);
-    } else {
-      addPlanToRead(book);
     }
   },
 }));
