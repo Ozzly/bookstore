@@ -130,7 +130,7 @@ function AnimeCard({ item }: AnimeCardProps) {
             <StatusButton
               currentStatus={currentStatus}
               handleStatusChange={handleStatusChange}
-              getButtonText={getButtonText}
+              buttonText={getButtonText()}
             />
           </div>
         </div>

@@ -6,13 +6,13 @@ import type { GenericStatus } from "../types.js";
 interface StatusButtonProps {
   currentStatus: GenericStatus | null;
   handleStatusChange: (status: GenericStatus | null) => void;
-  getButtonText: () => string;
+  buttonText: string;
 }
 
 function StatusButton({
   currentStatus,
   handleStatusChange,
-  getButtonText,
+  buttonText,
 }: StatusButtonProps) {
   function getMainButtonStyle() {
     const baseStyle =
@@ -58,7 +58,7 @@ function StatusButton({
           }
         }}
       >
-        {getButtonText()}
+        {buttonText}
 
         {currentStatus && (
           <MdCancel
