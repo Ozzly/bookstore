@@ -1,9 +1,8 @@
 import type { Anime, GenericStatus } from "../types.js";
 import { useAnimeStore } from "../stores/animeStore.js";
 import { FaStar } from "react-icons/fa";
-import StatusButton from "./StatusButton.js";
-import NumberInputWithButtons from "./NumberInputWithButtons.js";
 import MediaCard from "./MediaCard.js";
+import StatusWithExtraInfo from "./StatusWithExtraInfo.js";
 interface AnimeCardProps {
   item: Anime;
 }
@@ -22,16 +21,17 @@ function AnimeCard({ item }: AnimeCardProps) {
     videoType,
   } = item;
 
-  const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
   const currentStatus = useAnimeStore((state) => state.getAnimeStatus(id));
+
+  const dateAdded = useAnimeStore((state) => state.getDateAdded(id));
+  const currentEpisode = useAnimeStore((state) => state.getCurrentEpisode(id));
   const removeAnimeFromList = useAnimeStore(
     (state) => state.removeAnimeFromList
   );
-  const dateAdded = useAnimeStore((state) => state.getDateAdded(id));
-  const currentEpisode = useAnimeStore((state) => state.getCurrentEpisode(id));
+  const addAnimeToList = useAnimeStore((state) => state.addAnimeToList);
   const setCurrentEpisode = useAnimeStore((state) => state.setCurrentEpisode);
 
-  function getButtonText() {
+  function getButtonText(): string {
     switch (currentStatus) {
       case "completed":
         return "Watched";
@@ -44,12 +44,16 @@ function AnimeCard({ item }: AnimeCardProps) {
     }
   }
 
-  function handleStatusChange(status: GenericStatus | null) {
-    if (currentStatus) {
-      removeAnimeFromList(id, currentStatus);
+  function onStatusChange(status: GenericStatus | null) {
+    if (status) {
+      removeAnimeFromList(id, status);
     }
     if (status === null) return;
     addAnimeToList(item, status);
+  }
+
+  function onCountChange(newCount: number) {
+    setCurrentEpisode(id, newCount);
   }
 
   return (
@@ -96,33 +100,14 @@ function AnimeCard({ item }: AnimeCardProps) {
       </div>
 
       <div className="absolute bottom-0 w-full">
-        {currentStatus === "completed" ? (
-          <div className="text-ctp-subtext0 text-center">
-            Finished {dateAdded}
-          </div>
-        ) : (
-          currentStatus === "progress" && (
-            <div className="text-ctp-subtext0 text-center justify-center items-center flex">
-              <div className="hidden group-hover/card:flex justify-center mr-1">
-                <NumberInputWithButtons
-                  count={currentEpisode || 0}
-                  setCount={(newCount) => {
-                    setCurrentEpisode(id, newCount);
-                  }}
-                  maxCount={episodes}
-                />
-              </div>
-              <div className="group-hover/card:hidden mr-1">
-                {currentEpisode}
-              </div>
-              of {episodes || "?"}
-            </div>
-          )
-        )}
-        <StatusButton
-          currentStatus={currentStatus}
-          handleStatusChange={handleStatusChange}
+        <StatusWithExtraInfo
+          status={currentStatus}
+          dateAdded={dateAdded || null}
+          count={currentEpisode || null}
+          maxCount={episodes || null}
           buttonText={getButtonText()}
+          onStatusChange={onStatusChange}
+          onCountChange={onCountChange}
         />
       </div>
     </MediaCard>
