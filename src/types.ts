@@ -7,6 +7,7 @@ export interface Book {
   cover_i: number;
   currentPage?: number;
   dateAdded?: string;
+  pages: number;
 }
 
 export type Category = "books" | "anime" | "manga" | "movies" | "shows";

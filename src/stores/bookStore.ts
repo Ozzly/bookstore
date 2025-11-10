@@ -18,6 +18,7 @@ const transformAPIData = (data: any): Book => {
     first_publish_year: data.first_publish_year,
     author_name: data.author_name || [],
     edition_count: data.edition_count,
+    pages: data.number_of_pages_median,
   };
 };
 
@@ -175,7 +176,7 @@ export const useBookStore = create<BookStore>((set, get) => ({
     try {
       const endpoint = `${API_BASE_URL}/search.json?title=${encodeURIComponent(
         searchTerm
-      )}`;
+      )}&fields=number_of_pages_median,ratings_average,key,title,cover_i,first_publish_year,author_name,edition_count`;
       const response = await fetch(endpoint, API_OPTIONS);
       if (!response.ok) {
         throw new Error("Failed to fetch books");

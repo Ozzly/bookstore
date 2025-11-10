@@ -8,8 +8,15 @@ interface BookCardProps {
 }
 
 function BookCard({ item: book }: BookCardProps) {
-  const { id, title, author_name, edition_count, first_publish_year, cover_i } =
-    book;
+  const {
+    id,
+    title,
+    author_name,
+    edition_count,
+    first_publish_year,
+    cover_i,
+    pages,
+  } = book;
 
   const currentStatus = useBookStore((state) => state.getBookStatus(id));
   const dateAdded = useBookStore((state) => state.getDateAdded(id));
@@ -62,7 +69,7 @@ function BookCard({ item: book }: BookCardProps) {
           status={currentStatus}
           dateAdded={dateAdded}
           count={currentPage || 0}
-          maxCount={10}
+          maxCount={pages}
           buttonText={getButtonText()}
           onStatusChange={onStatusChange}
           onCountChange={onCountChange}
