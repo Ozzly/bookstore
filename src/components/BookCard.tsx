@@ -1,4 +1,4 @@
-import type { Book } from "../types.js";
+import type { Book, GenericStatus } from "../types.js";
 import { useBookStore } from "../stores/bookStore.js";
 import MediaCard from "./MediaCard.js";
 import StatusWithExtraInfo from "./StatusWithExtraInfo.js";
@@ -12,6 +12,11 @@ function BookCard({ item: book }: BookCardProps) {
     book;
 
   const currentStatus = useBookStore((state) => state.getBookStatus(id));
+  const dateAdded = useBookStore((state) => state.getDateAdded(id));
+  const currentPage = useBookStore((state) => state.getCurrentPage(id));
+  const removeBookFromList = useBookStore((state) => state.removeBookFromList);
+  const addBookToList = useBookStore((state) => state.addBookToList);
+  const setCurrentPage = useBookStore((state) => state.setCurrentPage);
 
   function getButtonText(): string {
     switch (currentStatus) {
@@ -22,8 +27,20 @@ function BookCard({ item: book }: BookCardProps) {
       case "planned":
         return "Planned";
       default:
-        return "Mark Watched";
+        return "Mark Read";
     }
+  }
+
+  function onStatusChange(status: GenericStatus | null) {
+    if (status) {
+      removeBookFromList(id, status);
+    }
+    if (status === null) return;
+    addBookToList(book, status);
+  }
+
+  function onCountChange(newCount: number) {
+    setCurrentPage(id, newCount);
   }
 
   return (
@@ -43,12 +60,12 @@ function BookCard({ item: book }: BookCardProps) {
       <div className="absolute bottom-0 w-full">
         <StatusWithExtraInfo
           status={currentStatus}
-          dateAdded={"temp"}
-          count={0}
+          dateAdded={dateAdded}
+          count={currentPage || 0}
           maxCount={10}
           buttonText={getButtonText()}
-          onStatusChange={() => console.log("statusChanged")}
-          onCountChange={() => console.log("countChanged")}
+          onStatusChange={onStatusChange}
+          onCountChange={onCountChange}
         />
       </div>
     </MediaCard>
