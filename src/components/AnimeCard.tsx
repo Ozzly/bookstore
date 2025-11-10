@@ -3,6 +3,7 @@ import { useAnimeStore } from "../stores/animeStore.js";
 import { FaStar } from "react-icons/fa";
 import MediaCard from "./MediaCard.js";
 import StatusWithExtraInfo from "./StatusWithExtraInfo.js";
+import PublicRating from "./PublicRating.js";
 interface AnimeCardProps {
   item: Anime;
 }
@@ -65,23 +66,7 @@ function AnimeCard({ item }: AnimeCardProps) {
       <p>
         {release_season} {year}
       </p>
-      <div
-        className={
-          score >= 8
-            ? "text-ctp-green"
-            : score >= 6
-            ? "text-ctp-yellow"
-            : score >= 5
-            ? "text-ctp-maroon"
-            : score === null
-            ? "text-ctp-subtext0"
-            : "text-ctp-red"
-        }
-      >
-        <div className="flex items-center gap-1">
-          {score || "N/A"} <FaStar />
-        </div>
-      </div>
+      <PublicRating score={score} />
       <p>
         {episodes || "N/A"} {videoType === "TV" ? "Episodes" : videoType}
       </p>
