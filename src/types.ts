@@ -8,6 +8,7 @@ export interface Book {
   currentPage?: number;
   dateAdded?: string;
   pages: number;
+  score: number;
 }
 
 export type Category = "books" | "anime" | "manga" | "movies" | "shows";

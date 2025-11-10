@@ -19,6 +19,7 @@ const transformAPIData = (data: any): Book => {
     author_name: data.author_name || [],
     edition_count: data.edition_count,
     pages: data.number_of_pages_median,
+    score: data.ratings_average,
   };
 };
 

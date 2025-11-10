@@ -2,6 +2,7 @@ import type { Book, GenericStatus } from "../types.js";
 import { useBookStore } from "../stores/bookStore.js";
 import MediaCard from "./MediaCard.js";
 import StatusWithExtraInfo from "./StatusWithExtraInfo.js";
+import PublicRating from "./PublicRating.js";
 
 interface BookCardProps {
   item: Book;
@@ -16,6 +17,7 @@ function BookCard({ item: book }: BookCardProps) {
     first_publish_year,
     cover_i,
     pages,
+    score,
   } = book;
 
   const currentStatus = useBookStore((state) => state.getBookStatus(id));
@@ -63,6 +65,7 @@ function BookCard({ item: book }: BookCardProps) {
         {title}
       </h2>
       <p className="text-sm mb-1 line-clamp-2">{author_name.join(", ")}</p>
+      <PublicRating score={score * 2} />
 
       <div className="absolute bottom-0 w-full">
         <StatusWithExtraInfo
