@@ -99,6 +99,44 @@ export const useBookStore = create<BookStore>((set, get) => ({
     return null;
   },
 
+  removeBookFromList: (id: string, status: GenericStatus) => {
+    let currentList: Book[];
+    let storageKey: string;
+
+    switch (status) {
+      case "completed":
+        currentList = get().completedBooks;
+        storageKey = "books_completed";
+        break;
+      case "progress":
+        currentList = get().booksProgress;
+        storageKey = "books_progress";
+        break;
+      case "planned":
+        currentList = get().planToReadBooks;
+        storageKey = "books_planned";
+        break;
+      default:
+        return;
+    }
+
+    const updatedList = currentList.filter((b) => b.id !== id);
+
+    switch (status) {
+      case "completed":
+        set({ completedBooks: updatedList });
+        break;
+      case "progress":
+        set({ booksProgress: updatedList });
+        break;
+      case "planned":
+        set({ planToReadBooks: updatedList });
+        break;
+    }
+
+    localStorage.setItem(storageKey, JSON.stringify(updatedList));
+  },
+
   fetchBooksQuery: async (searchTerm) => {
     set({ isLoading: true });
 
