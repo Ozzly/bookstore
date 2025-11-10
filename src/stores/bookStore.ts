@@ -137,6 +137,16 @@ export const useBookStore = create<BookStore>((set, get) => ({
     localStorage.setItem(storageKey, JSON.stringify(updatedList));
   },
 
+  getDateAdded: (id: string): string | null => {
+    const { completedBooks } = get();
+    return completedBooks.find((book) => book.id === id)?.dateAdded || null;
+  },
+
+  getCurrentPage: (id: string): number | null => {
+    const { booksProgress } = get();
+    return booksProgress.find((book) => book.id === id)?.currentPage || null;
+  },
+
   fetchBooksQuery: async (searchTerm) => {
     set({ isLoading: true });
 
