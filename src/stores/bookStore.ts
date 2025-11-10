@@ -29,6 +29,11 @@ type BookStore = {
   planToReadBooks: Book[];
   booksProgress: Book[];
   getBookStatus: (id: string) => GenericStatus | null;
+  addBookToList: (book: Book, status: GenericStatus) => void;
+  removeBookFromList: (id: string, status: GenericStatus) => void;
+  getDateAdded: (id: string) => string | null;
+  getCurrentPage: (id: string) => number | null;
+  setCurrentPage: (id: string, page: number) => void;
 };
 
 export const useBookStore = create<BookStore>((set, get) => ({
