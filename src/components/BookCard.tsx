@@ -65,7 +65,12 @@ function BookCard({ item: book }: BookCardProps) {
         {title}
       </h2>
       <p className="text-sm mb-1 line-clamp-2">{author_name.join(", ")}</p>
+      <p>{first_publish_year}</p>
       <PublicRating score={score} />
+      <p>{edition_count} editions</p>
+      <p title="Page median across editions">
+        {pages ? `${pages}*` : "N/A"} pages
+      </p>
 
       <div className="absolute bottom-0 w-full">
         <StatusWithExtraInfo
