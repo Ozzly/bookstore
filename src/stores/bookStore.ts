@@ -35,15 +35,15 @@ export const useBookStore = create<BookStore>((set, get) => ({
   bookResults: [],
 
   completedBooks: (() => {
-    const stored = localStorage.getItem("completedBooks");
-    return stored ? JSON.parse(stored) : [];
-  })(),
-  planToReadBooks: (() => {
-    const stored = localStorage.getItem("planToReadBooks");
+    const stored = localStorage.getItem("books_completed");
     return stored ? JSON.parse(stored) : [];
   })(),
   booksProgress: (() => {
-    const stored = localStorage.getItem("booksProgress");
+    const stored = localStorage.getItem("books_progress");
+    return stored ? JSON.parse(stored) : [];
+  })(),
+  planToReadBooks: (() => {
+    const stored = localStorage.getItem("books_planned");
     return stored ? JSON.parse(stored) : [];
   })(),
 
