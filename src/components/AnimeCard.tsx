@@ -45,8 +45,8 @@ function AnimeCard({ item }: AnimeCardProps) {
   }
 
   function onStatusChange(status: GenericStatus | null) {
-    if (status) {
-      removeAnimeFromList(id, status);
+    if (currentStatus) {
+      removeAnimeFromList(id, currentStatus);
     }
     if (status === null) return;
     addAnimeToList(item, status);

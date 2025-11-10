@@ -32,8 +32,8 @@ function BookCard({ item: book }: BookCardProps) {
   }
 
   function onStatusChange(status: GenericStatus | null) {
-    if (status) {
-      removeBookFromList(id, status);
+    if (currentStatus) {
+      removeBookFromList(id, currentStatus);
     }
     if (status === null) return;
     addBookToList(book, status);
