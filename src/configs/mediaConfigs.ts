@@ -59,6 +59,7 @@ export const bookConfig: MediaConfig = {
     return {
       results: store.bookResults,
       completed: store.completedBooks,
+      progress: store.booksProgress,
       planned: store.planToReadBooks,
     };
   },
