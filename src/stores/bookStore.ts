@@ -11,6 +11,7 @@ const API_OPTIONS = {
 };
 
 const transformAPIData = (data: any): Book => {
+  const scoreOfTen = data.ratings_average ? data.ratings_average * 2 : null;
   return {
     id: data.key,
     title: data.title,
@@ -19,7 +20,7 @@ const transformAPIData = (data: any): Book => {
     author_name: data.author_name || [],
     edition_count: data.edition_count,
     pages: data.number_of_pages_median,
-    score: data.ratings_average,
+    score: scoreOfTen,
   };
 };
 

@@ -65,7 +65,7 @@ function BookCard({ item: book }: BookCardProps) {
         {title}
       </h2>
       <p className="text-sm mb-1 line-clamp-2">{author_name.join(", ")}</p>
-      <PublicRating score={score * 2} />
+      <PublicRating score={score} />
 
       <div className="absolute bottom-0 w-full">
         <StatusWithExtraInfo
