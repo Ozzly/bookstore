@@ -147,6 +147,23 @@ export const useBookStore = create<BookStore>((set, get) => ({
     return booksProgress.find((book) => book.id === id)?.currentPage || null;
   },
 
+  setCurrentPage: (id: string, page: number) => {
+    const { booksProgress } = get();
+    const index = booksProgress.findIndex((b) => b.id === id);
+    if (index === -1) return;
+
+    const currentBook = booksProgress[index];
+    const updatedBook = { ...currentBook, currentPage: page } as Book;
+    const updatedList = [
+      ...booksProgress.slice(0, index),
+      updatedBook,
+      ...booksProgress.slice(index + 1),
+    ];
+    set({ booksProgress: updatedList });
+
+    localStorage.setItem("books_progress", JSON.stringify(updatedList));
+  },
+
   fetchBooksQuery: async (searchTerm) => {
     set({ isLoading: true });
 
