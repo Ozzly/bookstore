@@ -1,7 +1,9 @@
 import AnimeCard from "../components/AnimeCard.js";
 import BookCard from "../components/BookCard.js";
+import MangaCard from "../components/MangaCard.js";
 import { useAnimeStore } from "../stores/animeStore.js";
 import { useBookStore } from "../stores/bookStore.js";
+import { useMangaStore } from "../stores/mangaStore.js";
 import type { Anime, Book } from "../types.js";
 
 type Media = Anime[] | Book[];
@@ -61,6 +63,27 @@ export const bookConfig: MediaConfig = {
       completed: store.completedBooks,
       progress: store.booksProgress,
       planned: store.planToReadBooks,
+    };
+  },
+  sortOptions: ["Title", "Rating"],
+};
+
+export const mangaConfig: MediaConfig = {
+  title: "Manga",
+  searchPlaceholder: "Search your manga collection...",
+  statusOptions: {
+    completed: "Read",
+    progress: "Reading",
+    planned: "Planned",
+  },
+  cardComponent: MangaCard,
+  useStore: () => {
+    const store = useMangaStore();
+    return {
+      results: store.mangaResults,
+      completed: store.mangaCompleted,
+      progress: store.mangaProgress,
+      planned: store.mangaPlanned,
     };
   },
   sortOptions: ["Title", "Rating"],
