@@ -41,3 +41,19 @@ export type VideoType =
 export type AnimeStatus = "Watched" | "Watching" | "Planned";
 
 export type GenericStatus = "completed" | "progress" | "planned";
+
+export interface Manga {
+  id: number;
+  title: string;
+  score: number;
+  authors: string[];
+  cover_image: string;
+  type: string;
+  chapters: number | null;
+  volumes: number | null;
+  releaseStatus: string;
+  releaseYear: number | null;
+  themes: string[];
+  dateAdded?: string;
+  currentChapter?: number;
+}
