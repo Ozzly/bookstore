@@ -1,7 +1,9 @@
 import React from "react";
+import MediaPageTemplate from "../components/MediaPageTemplate.js";
+import { mangaConfig } from "../configs/mediaConfigs.js";
 
 function Manga() {
-  return <div>Manga</div>;
+  return <MediaPageTemplate config={mangaConfig} />;
 }
 
 export default Manga;
