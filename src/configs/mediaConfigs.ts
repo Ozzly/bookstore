@@ -4,9 +4,9 @@ import MangaCard from "../components/MangaCard.js";
 import { useAnimeStore } from "../stores/animeStore.js";
 import { useBookStore } from "../stores/bookStore.js";
 import { useMangaStore } from "../stores/mangaStore.js";
-import type { Anime, Book } from "../types.js";
+import type { Anime, Book, Manga } from "../types.js";
 
-type Media = Anime[] | Book[];
+type Media = Anime[] | Book[] | Manga[];
 
 export interface MediaConfig {
   title: string;
