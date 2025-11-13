@@ -36,7 +36,6 @@ const pageDisplayData: Record<
   manga: {
     label: "Manga",
     icon: <IoReaderOutline size={20} />,
-    disabled: true,
   },
   movies: {
     label: "Movies",
