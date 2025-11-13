@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import type { Category } from "../types.js";
+import { useMangaStore } from "../stores/mangaStore.js";
 
 function Header() {
   const searchCategory = useSearchStore((state) => state.searchCategory);
@@ -15,6 +16,7 @@ function Header() {
 
   const fetchBooksQuery = useBookStore((state) => state.fetchBooksQuery);
   const fetchAnimeQuery = useAnimeStore((state) => state.fetchAnimeQuery);
+  const fetchMangaQuery = useMangaStore((state) => state.fetchMangaQuery);
 
   const setIsLoading = useSearchStore((state) => state.setIsLoading);
 
@@ -36,6 +38,9 @@ function Header() {
         break;
       case "anime":
         await fetchAnimeQuery(searchTerm);
+        break;
+      case "manga":
+        await fetchMangaQuery(searchTerm);
         break;
     }
     setIsLoading(false);
