@@ -120,7 +120,8 @@ function MediaPageTemplate({ config }: { config: MediaConfig }) {
           <div className="text-ctp-text font-bold text-xl mb-2 ml-2">
             Your {config.title} Collection
           </div>
-          <div className="flex gap-2 items-center mb-4">
+          {/* Summary Toolbar */}
+          <div className="flex flex-wrap gap-2 items-center justify-center mb-4">
             <div>
               <Search
                 searchTerm={summarySearchTerm}
@@ -129,12 +130,12 @@ function MediaPageTemplate({ config }: { config: MediaConfig }) {
                 debounce={300}
               />
             </div>
-            <div className="flex">
+            <div className="flex flex-wrap justify-center">
               <RadioGroup.Root
                 defaultValue="All"
                 value={filterStatus}
                 onValueChange={(value) => setFilterStatus(value)}
-                className="flex gap-2"
+                className="flex gap-2 flex-wrap justify-center"
               >
                 <ToggleGroupItem
                   value="All"
